@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Results{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <table style="width:100%">
+    <tr>
+      <th>Title</th>
+      <th>Year</th>
+      <th>Runtime</th>
+      <th>Genres</th>
+      <th>Cast</th>
+      <th>IMDb Score</th>
+    </tr>
+    {% for movie in movies %}
+      <tr>
+        <td>{{ movie['imdb_title'] }}</td>
+        <td>{{ movie['imdb_year'] }}</td>
+        <td>{{ movie['runtime'] }}</td>
+        <td>{{ movie['genres'] }}</td>
+        <td>{{ movie['cast'] }}</td>
+        <td>{{ movie['imdb_score'] }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
+

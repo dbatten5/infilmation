@@ -1,0 +1,8 @@
+name: 
+channels:
+  - defaults
+dependencies:
+  - python=3.9
+  - pip:
+    - Flask==1.1.2
+    - Phylm<1.0.0

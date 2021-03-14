@@ -9,7 +9,7 @@ from flask import (
 from infilmation.database import db_session
 from infilmation.models import Movie
 
-bp = Blueprint('movie', __name__, url_prefix='/')
+bp = Blueprint('main', __name__, url_prefix='/')
 
 @bp.route('/', methods=('GET','POST'))
 def home():

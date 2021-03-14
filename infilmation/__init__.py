@@ -27,7 +27,7 @@ def create_app(test_config=None):
     from . import database
     database.init_app(app)
 
-    from . import movie
-    app.register_blueprint(movie.bp)
+    from . import main
+    app.register_blueprint(main.bp)
 
     return app

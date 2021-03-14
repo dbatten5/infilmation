@@ -6,3 +6,4 @@ dependencies:
   - pip:
     - Flask==1.1.2
     - Phylm<1.0.0
+    - Flask-SQLAlchemy==2.4.4

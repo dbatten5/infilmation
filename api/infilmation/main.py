@@ -29,3 +29,8 @@ def results():
     key = request.args.get('film')
     retrieved_movies = Movie.query.filter_by(key=key).all()
     return render_template('results.html', movies=retrieved_movies)
+
+
+@bp.route('/thing', methods=('GET',))
+def thing():
+    return {'thing': 'thing!'}

@@ -22,7 +22,7 @@ def create_app(test_config=None):
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'infilmation.sqlite'),
-        SQLALCHEMY_DATABASE_URI='sqlite:////tmp/test.db',
+        SQLALCHEMY_DATABASE_URI=os.path.join(app.instance_path, 'infilmation.db'),
         SQLALCHEMY_TRACK_MODIFICATIONS=False
     )
 

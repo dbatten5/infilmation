@@ -1,6 +1,19 @@
 import os
 
 from flask import Flask
+from flask.cli import with_appcontext
+from flask_sqlalchemy import SQLAlchemy
+import click
+
+db = SQLAlchemy()
+
+
+@click.command('init-db')
+@with_appcontext
+def init_db_command():
+    """Clear the existing data and create new tables."""
+    db.create_all()
+    click.echo('Initialized the database.')
 
 
 def create_app(test_config=None):
@@ -8,7 +21,9 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'infilmation.sqlite')
+        DATABASE=os.path.join(app.instance_path, 'infilmation.sqlite'),
+        SQLALCHEMY_DATABASE_URI='sqlite:////tmp/test.db',
+        SQLALCHEMY_TRACK_MODIFICATIONS=False
     )
 
     if test_config is None:
@@ -24,8 +39,8 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    from . import database
-    database.init_app(app)
+    db.init_app(app)
+    app.cli.add_command(init_db_command)
 
     from . import main
     app.register_blueprint(main.bp)

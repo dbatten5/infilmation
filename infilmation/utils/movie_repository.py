@@ -2,7 +2,7 @@
 from hashlib import sha1
 from phylm.movie import Movie as Phylm
 from infilmation.models import Movie
-from infilmation.database import db_session
+from infilmation import db
 
 
 def generate_movie_key(title):
@@ -43,8 +43,8 @@ def store_from_title(title):
         rt_audience_score=m.rt_audience_score(),
         rt_low_confidence=m.rt_low_confidence()
     )
-    db_session.add(new_movie)
-    db_session.commit()
+    db.session.add(new_movie)
+    db.session.commit()
     return new_movie
 
 

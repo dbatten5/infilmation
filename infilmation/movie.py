@@ -1,12 +1,13 @@
 import functools
-from phylm.movie import Movie
+from phylm.movie import Movie as Phylm
 from hashlib import sha1
 
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
 
-from infilmation.db import get_db
+from infilmation.database import db_session
+from infilmation.models import Movie
 
 bp = Blueprint('movie', __name__, url_prefix='/')
 
@@ -15,66 +16,35 @@ def home():
     if request.method == 'POST':
         title = request.form['title']
         key = sha1(str.encode(title.lower().strip())).hexdigest()
-        db = get_db()
-        retrieved_movie = db.execute(
-            'SELECT m.id'
-            ' FROM movie m'
-            ' WHERE m.key = ?',
-            (key,)
-        ).fetchone()
+        retrieved_movie = Movie.query.filter(Movie.key == key).first()
 
         if not retrieved_movie:
-            m = Movie(title)
-            db.execute(
-                """INSERT INTO movie (
-                    key,
-                    title,
-                    year,
-                    genres,
-                    runtime,
-                    cast,
-                    directors,
-                    plot,
-                    imdb_title,
-                    imdb_year,
-                    imdb_score,
-                    imdb_low_confidence,
-                    mtc_title,
-                    mtc_year,
-                    mtc_score,
-                    mtc_low_confidence,
-                    rt_title,
-                    rt_year,
-                    rt_tomato_score,
-                    rt_audience_score,
-                    rt_low_confidence
-                )"""
-                'VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
-                (
-                    key,
-                    m.title,
-                    m.year,
-                    m.genres(),
-                    m.runtime(),
-                    m.cast(),
-                    m.directors(),
-                    m.plot(),
-                    m.imdb_title(),
-                    m.imdb_year(),
-                    m.imdb_score(),
-                    m.imdb_low_confidence(),
-                    m.mtc_title(),
-                    m.mtc_year(),
-                    m.mtc_score(),
-                    m.mtc_low_confidence(),
-                    m.rt_title(),
-                    m.rt_year(),
-                    m.rt_tomato_score(),
-                    m.rt_audience_score(),
-                    m.rt_low_confidence()
-                )
+            m = Phylm(title)
+            new_movie = Movie(
+                key=key,
+                title=m.title,
+                year=m.year,
+                genres=m.genres(),
+                runtime=m.runtime(),
+                cast=m.cast(),
+                directors=m.directors(),
+                plot=m.plot(),
+                imdb_title=m.imdb_title(),
+                imdb_year=m.imdb_year(),
+                imdb_score=m.imdb_score(),
+                imdb_low_confidence=m.imdb_low_confidence(),
+                mtc_title=m.mtc_title(),
+                mtc_year=m.mtc_year(),
+                mtc_score=m.mtc_score(),
+                mtc_low_confidence=m.mtc_low_confidence(),
+                rt_title=m.rt_title(),
+                rt_year=m.rt_year(),
+                rt_tomato_score=m.rt_tomato_score(),
+                rt_audience_score=m.rt_audience_score(),
+                rt_low_confidence=m.rt_low_confidence()
             )
-            db.commit()
+            db_session.add(new_movie)
+            db_session.commit()
 
         return redirect(url_for('movie.results', film=key))
 
@@ -84,11 +54,5 @@ def home():
 @bp.route('/results', methods=('GET',))
 def results():
     key = request.args.get('film')
-    db = get_db()
-    retrieved_movies = db.execute(
-        'SELECT m.imdb_title, m.runtime, m.genres, m.cast, m.imdb_score, m.imdb_year'
-        ' FROM movie m'
-        ' WHERE m.key = ?',
-        (key,)
-    ).fetchall()
+    retrieved_movies = Movie.query.filter_by(key=key).all()
     return render_template('results.html', movies=retrieved_movies)

@@ -3,9 +3,11 @@ import os
 from flask import Flask
 from flask.cli import with_appcontext
 from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
 import click
 
 db = SQLAlchemy()
+ma = Marshmallow()
 
 
 @click.command('init-db')
@@ -19,10 +21,11 @@ def init_db_command():
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
+    sqlite_db_path=os.path.join(app.instance_path, 'infilmation.db')
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'infilmation.sqlite'),
-        SQLALCHEMY_DATABASE_URI=os.path.join(app.instance_path, 'infilmation.db'),
+        SQLALCHEMY_DATABASE_URI=f"sqlite:///{sqlite_db_path}",
         SQLALCHEMY_TRACK_MODIFICATIONS=False
     )
 
@@ -42,7 +45,9 @@ def create_app(test_config=None):
     db.init_app(app)
     app.cli.add_command(init_db_command)
 
-    from . import main
-    app.register_blueprint(main.bp)
+    ma.init_app(app)
+
+    from .resources import film
+    app.register_blueprint(film.film_bp)
 
     return app

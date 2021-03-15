@@ -1,70 +1,54 @@
-# Getting Started with Create React App
+# infilmation
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A Flask web app to aggregate data from various sources for a given film.
 
-## Available Scripts
+*information* + *film* = ***infilmation***
 
-In the project directory, you can run:
+## Running webserver locally
 
-### `npm start`
+The commands in this section are to be run from the `api` directory: 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```bash
+cd api
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Installing the environment
 
-### `npm test`
+For `conda` users, run from the project root:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+conda env create -f environment.yml
+conda activate infilmatiom
+```
 
-### `npm run build`
+For `pip` users, it's recommended to first create a virtual environment:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+python3 -m venv venv
+. venv/bin/activate
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Then run from the project root:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+pip install -r requirements.txt
+```
 
-### `npm run eject`
+### Starting the webserver
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+First initialize the database with (only need to run this once):
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+flask init-db
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Start the webserver:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+export FLASK_APP=infilmation
+export FLASK_ENV=development
+flask run
+```
 
-## Learn More
+Visit `http://127.0.0.1:5000/` and away you go.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

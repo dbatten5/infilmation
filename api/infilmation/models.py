@@ -1,7 +1,8 @@
 from infilmation import db
+from infilmation import ma
 
-class Movie(db.Model):
-    __tablename__ = 'movie'
+class Film(db.Model):
+    __tablename__ = 'film'
 
     id = db.Column(db.Integer, primary_key=True)
     key = db.Column(db.String(50), unique=True)
@@ -27,4 +28,9 @@ class Movie(db.Model):
     rt_low_confidence = db.Column(db.Integer)
 
     def __repr__(self):
-        return '<Movie %r>' % (self.key)
+        return '<Film %r %r>' % (self.key, self.imdb_title())
+
+
+class FilmSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Film

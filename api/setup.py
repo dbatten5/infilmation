@@ -9,6 +9,7 @@ setup(
     install_requires=[
         'flask',
         'phylm',
-        'Flask-SQLAlchemy'
+        'Flask-SQLAlchemy',
+        'marshmallow-sqlalchemy'
     ],
 )

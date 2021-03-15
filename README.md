@@ -4,7 +4,13 @@ A Flask web app to aggregate data from various sources for a given film.
 
 *information* + *film* = ***infilmation***
 
-## Running locally
+## Running webserver locally
+
+The commands in this section are to be run from the `api` directory: 
+
+```bash
+cd api
+```
 
 ### Installing the environment
 
@@ -28,7 +34,7 @@ Then run from the project root:
 pip install -r requirements.txt
 ```
 
-### Running the application
+### Starting the webserver
 
 First initialize the database with (only need to run this once):
 
@@ -39,9 +45,10 @@ flask init-db
 Start the webserver:
 
 ```bash
-export FLASK_APP=infilmation                                                                                                                                                   main  ✱
+export FLASK_APP=infilmation
 export FLASK_ENV=development
 flask run
 ```
 
 Visit `http://127.0.0.1:5000/` and away you go.
+

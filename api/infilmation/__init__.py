@@ -15,6 +15,7 @@ ma = Marshmallow()
 def init_db_command():
     """Clear the existing data and create new tables."""
     db.create_all()
+    db.session.commit()
     click.echo('Initialized the database.')
 
 

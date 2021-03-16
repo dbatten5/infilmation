@@ -16,19 +16,19 @@ class Film(db.Model):
     imdb_title = db.Column(db.String(255))
     imdb_year = db.Column(db.Integer)
     imdb_score = db.Column(db.String(255))
-    imdb_low_confidence = db.Column(db.Integer)
+    imdb_low_confidence = db.Column(db.Boolean)
     mtc_title = db.Column(db.String(255))
     mtc_year = db.Column(db.Integer)
     mtc_score = db.Column(db.String(255))
-    mtc_low_confidence = db.Column(db.Integer)
+    mtc_low_confidence = db.Column(db.Boolean)
     rt_title = db.Column(db.String(255))
     rt_year = db.Column(db.Integer)
     rt_tomato_score = db.Column(db.String(255))
     rt_audience_score = db.Column(db.String(255))
-    rt_low_confidence = db.Column(db.Integer)
+    rt_low_confidence = db.Column(db.Boolean)
 
     def __repr__(self):
-        return '<Film %r %r>' % (self.key, self.imdb_title())
+        return f"<Film {self.key} {self.imdb_title}>"
 
 
 class FilmSchema(ma.SQLAlchemyAutoSchema):

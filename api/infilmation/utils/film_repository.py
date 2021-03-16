@@ -1,7 +1,7 @@
 """Module to store some utilities based on the Film model"""
 from hashlib import sha1
 from phylm import Phylm
-from infilmation.models import Film
+from infilmation.models.film import Film
 from infilmation import db
 
 

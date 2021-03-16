@@ -15,6 +15,7 @@ ma = Marshmallow()
 def init_db_command():
     """Clear the existing data and create new tables."""
     db.create_all()
+    db.session.commit()
     click.echo('Initialized the database.')
 
 
@@ -47,7 +48,8 @@ def create_app(test_config=None):
 
     ma.init_app(app)
 
-    from .resources import film
+    from .resources import film, batch
     app.register_blueprint(film.film_bp)
+    app.register_blueprint(batch.batch_bp)
 
     return app

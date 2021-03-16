@@ -1,5 +1,7 @@
+import uuid
 from infilmation import db
 from infilmation import ma
+from infilmation.models.film import FilmSchema
 
 batch_film_table = db.Table('batch_film', db.Model.metadata,
     db.Column('batch_id', db.Integer, db.ForeignKey('batch.id')),
@@ -14,5 +16,16 @@ class Batch(db.Model):
     raw = db.Column(db.Text)
     films = db.relationship('Film', secondary=batch_film_table)
 
+    def __init__(self, **kwargs):
+        super(Batch, self).__init__(**kwargs)
+        self.key = uuid.uuid4().hex
+
     def __repr__(self):
         return '<Batch %r>' % (self.key,)
+
+
+class BatchSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Batch
+
+    films = ma.List(ma.Nested(FilmSchema))

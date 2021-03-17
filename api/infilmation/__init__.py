@@ -6,9 +6,10 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import click
 
+from instance.config import app_config
+
 db = SQLAlchemy()
 ma = Marshmallow()
-
 
 @click.command('init-db')
 @with_appcontext
@@ -19,23 +20,12 @@ def init_db_command():
     click.echo('Initialized the database.')
 
 
-def create_app(test_config=None):
+def create_app(config_name):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
-    sqlite_db_path=os.path.join(app.instance_path, 'infilmation.db')
-    app.config.from_mapping(
-        SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'infilmation.sqlite'),
-        SQLALCHEMY_DATABASE_URI=f"sqlite:///{sqlite_db_path}",
-        SQLALCHEMY_TRACK_MODIFICATIONS=False
-    )
-
-    if test_config is None:
-        # load the instance config, if it exists, when not testing
-        app.config.from_pyfile('config.py', silent=True)
-    else:
-        # load the test config if passed in
-        app.config.from_mapping(test_config)
+    app.config.from_object(app_config[config_name])
+    app.config.from_pyfile('config.py')
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # ensure the instance folder exists
     try:

@@ -15,6 +15,7 @@ class Batch(db.Model):
     key = db.Column(db.String(50), unique=True)
     raw = db.Column(db.Text)
     films = db.relationship('Film', secondary=batch_film_table)
+    task_id = db.Column(db.Integer, db.ForeignKey('task.id'), nullable=True)
 
     def __init__(self, **kwargs):
         super(Batch, self).__init__(**kwargs)

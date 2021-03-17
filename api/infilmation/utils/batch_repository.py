@@ -13,8 +13,8 @@ def create_batch(titles_str):
     for title in titles:
         if delay:
             time.sleep(delay)
+            delay = 0
         film = get_from_title(title)
-        delay = 0
         if not film:
             film = store_from_title(title)
             delay = random.randint(3,30)

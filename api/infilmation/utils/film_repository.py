@@ -1,27 +1,20 @@
 """Module to store some utilities based on the Film model"""
-from hashlib import sha1
 from phylm import Phylm
 from infilmation.models.film import Film
 from infilmation import db
-
-
-def generate_film_key(title):
-    """Generate a sha1 from the title to be stored as the Film key"""
-    return sha1(str.encode(title.lower().strip())).hexdigest()
+from infilmation.utils.general import generate_key
 
 
 def get_from_title(title):
     """Return the first film for a given title"""
-    key = generate_film_key(title)
+    key = generate_key(title)
     return Film.query.filter(Film.key == key).first()
 
 
 def store_from_title(title):
     """Store a new film based on a given title"""
-    key = generate_film_key(title)
     phylm = Phylm(title)
     new_film = Film(
-        key=key,
         title=phylm.title,
         year=phylm.year,
         genres=phylm.genres(),

@@ -1,5 +1,6 @@
 from infilmation import db
 from infilmation import ma
+from infilmation.utils.general import generate_key
 
 class Film(db.Model):
     __tablename__ = 'film'
@@ -26,6 +27,10 @@ class Film(db.Model):
     rt_tomato_score = db.Column(db.String(255))
     rt_audience_score = db.Column(db.String(255))
     rt_low_confidence = db.Column(db.Boolean)
+
+    def __init__(self, **kwargs):
+        super(Film, self).__init__(**kwargs)
+        self.key = kwargs.get('key', generate_key(self.title))
 
     def __repr__(self):
         return f"<Film {self.key} {self.imdb_title}>"

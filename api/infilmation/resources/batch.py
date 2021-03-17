@@ -9,7 +9,7 @@ batch_schema = BatchSchema()
 def create():
     titles = request.json['titles']
     batch = create_batch(titles)
-    return jsonify(batch_schema.dump(batch))
+    return jsonify(batch_schema.dump(batch)), 201
 
 
 @batch_bp.route('/batch/<key>', methods=('GET',))

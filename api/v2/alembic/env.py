@@ -17,7 +17,7 @@ fileConfig(config.config_file_name)
 # add your model's MetaData object here
 # for 'autogenerate' support
 # from myapp import mymodel
-from app.database import Base
+from app.db.base import Base
 target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
@@ -26,7 +26,7 @@ target_metadata = Base.metadata
 # ... etc.
 
 def get_url():
-    return os.getenv("SQLALCHEMY_DATABASE_URL", "sqlite:///./infilmation.db")
+    return os.getenv("SQLALCHEMY_DATABASE_URL")
 
 def run_migrations_offline():
     """Run migrations in 'offline' mode.

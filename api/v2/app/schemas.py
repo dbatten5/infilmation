@@ -6,6 +6,10 @@ class FilmBase(BaseModel):
     title: str
 
 
+class FilmCreate(FilmBase):
+    pass
+
+
 class Film(FilmBase):
     id: int
     key: str
@@ -34,7 +38,11 @@ class Film(FilmBase):
 
 
 class BatchBase(BaseModel):
-    raw: str
+    raw_titles: str
+
+
+class BatchCreate(BatchBase):
+    pass
 
 
 class Batch(BatchBase):

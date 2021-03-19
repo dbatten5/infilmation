@@ -1,8 +1,8 @@
 """First migration
 
-Revision ID: 55259ccd3c01
+Revision ID: 2bdb811bc5c2
 Revises: 
-Create Date: 2021-03-19 10:02:18.350150
+Create Date: 2021-03-19 23:50:43.298368
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '55259ccd3c01'
+revision = '2bdb811bc5c2'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,7 +21,7 @@ def upgrade():
     op.create_table('batch',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('key', sa.String(length=50), nullable=True),
-    sa.Column('raw', sa.Text(), nullable=True),
+    sa.Column('raw_titles', sa.Text(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('key')
     )
@@ -35,10 +35,10 @@ def upgrade():
     sa.Column('cast', sa.String(length=255), nullable=True),
     sa.Column('directors', sa.String(length=255), nullable=True),
     sa.Column('plot', sa.String(length=255), nullable=True),
-    sa.Column('imtitle', sa.String(length=255), nullable=True),
-    sa.Column('imyear', sa.Integer(), nullable=True),
-    sa.Column('imscore', sa.String(length=255), nullable=True),
-    sa.Column('imlow_confidence', sa.Boolean(), nullable=True),
+    sa.Column('imdb_title', sa.String(length=255), nullable=True),
+    sa.Column('imdb_year', sa.Integer(), nullable=True),
+    sa.Column('imdb_score', sa.String(length=255), nullable=True),
+    sa.Column('imdb_low_confidence', sa.Boolean(), nullable=True),
     sa.Column('mtc_title', sa.String(length=255), nullable=True),
     sa.Column('mtc_year', sa.Integer(), nullable=True),
     sa.Column('mtc_score', sa.String(length=255), nullable=True),

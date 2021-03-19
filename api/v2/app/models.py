@@ -2,16 +2,17 @@ import uuid
 from sqlalchemy import Boolean, Column, Integer, String, Table, ForeignKey, Text
 from sqlalchemy.orm import relationship
 
-from .database import Base
+from app.utils import generate_key
+from app.db.base_class import Base
+
 
 batch_film_table = Table('batch_film', Base.metadata,
     Column('batch_id', Integer, ForeignKey('batch.id')),
     Column('film_id', Integer, ForeignKey('film.id'))
 )
 
-class Film(Base):
-    __tablename__ = 'film'
 
+class Film(Base):
     id = Column(Integer, primary_key=True, index=True)
     key = Column(String(50), unique=True)
     title = Column(String(255))
@@ -21,10 +22,10 @@ class Film(Base):
     cast = Column(String(255))
     directors = Column(String(255))
     plot = Column(String(255))
-    imtitle = Column(String(255))
-    imyear = Column(Integer)
-    imscore = Column(String(255))
-    imlow_confidence = Column(Boolean)
+    imdb_title = Column(String(255))
+    imdb_year = Column(Integer)
+    imdb_score = Column(String(255))
+    imdb_low_confidence = Column(Boolean)
     mtc_title = Column(String(255))
     mtc_year = Column(Integer)
     mtc_score = Column(String(255))
@@ -35,15 +36,18 @@ class Film(Base):
     rt_audience_score = Column(String(255))
     rt_low_confidence = Column(Boolean)
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.key = kwargs.get('key', generate_key(self.title))
+
     def __repr__(self):
-        return f"<Film {self.key} {self.imdb_title}>"
+        return f"<Film {self.key} {self.imdb_title or self.title}>"
+
 
 class Batch(Base):
-    __tablename__ = 'batch'
-
     id = Column(Integer, primary_key=True)
     key = Column(String(50), unique=True)
-    raw = Column(Text)
+    raw_titles = Column(Text)
     films = relationship('Film', secondary=batch_film_table)
 
     def __init__(self, **kwargs):

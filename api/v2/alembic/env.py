@@ -20,13 +20,15 @@ fileConfig(config.config_file_name)
 from app.db.base import Base
 target_metadata = Base.metadata
 
+from app.config import settings
+
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
 def get_url():
-    return os.getenv("SQLALCHEMY_DATABASE_URL")
+    return settings.sqlalchemy_database_uri
 
 def run_migrations_offline():
     """Run migrations in 'offline' mode.

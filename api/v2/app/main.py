@@ -1,7 +1,7 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, BackgroundTasks
 from sqlalchemy.orm import Session
 
-from . import schemas, crud
+from . import schemas, crud, tasks
 from app.db.session import SessionLocal
 
 app = FastAPI()
@@ -14,6 +14,12 @@ def get_db():
         db.close()
 
 
-@app.post('/batches/', response_model=schemas.Batch)
-def create_batch(batch: schemas.BatchCreate, db: Session = Depends(get_db)):
-    return crud.create_batch(db=db, batch=batch)
+@app.post('/batches/',  response_model=schemas.Batch)
+def create_batch(
+    batch: schemas.BatchCreate,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db)
+):
+    db_batch = crud.create_batch(db=db, batch=batch)
+    background_tasks.add_task(tasks.process_films, db, db_batch)
+    return db_batch

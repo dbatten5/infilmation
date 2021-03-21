@@ -5,8 +5,10 @@ from sqlalchemy.orm import Session
 
 from .crud import get_film_by_title, create_film
 from .schemas import BatchCreate, FilmCreate
+from .models import Batch
 
-def process_films(db: Session, batch: BatchCreate):
+
+def process_films(db: Session, batch: BatchCreate) -> Batch:
     titles = batch.raw_titles.splitlines()
     delay = 0
     for title in titles:

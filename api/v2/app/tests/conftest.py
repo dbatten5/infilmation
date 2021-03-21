@@ -11,7 +11,7 @@ from app.main import app, get_db
 
 
 def get_test_db_session() -> Session:
-    sqlalchemy_database_url = "sqlite:///:memory:"
+    sqlalchemy_database_url = "sqlite:////tmp/test.db"
     engine = create_engine(
         sqlalchemy_database_url, connect_args={"check_same_thread": False}
     )

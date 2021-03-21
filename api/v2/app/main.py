@@ -14,6 +14,11 @@ def get_db():
         db.close()
 
 
+@app.get('/batches/{batch_key}',  response_model=schemas.Batch)
+def get_batch(batch_key: str, db: Session = Depends(get_db)):
+    return crud.get_batch_by_key(db=db, key=batch_key)
+
+
 @app.post('/batches/',  response_model=schemas.Batch)
 def create_batch(
     batch: schemas.BatchCreate,

@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional, Any
 from pydantic import BaseModel
 
 
@@ -13,42 +13,43 @@ class FilmCreate(FilmBase):
 class Film(FilmBase):
     id: int
     key: str
-    year: int
-    genres: str
-    runtime: str
-    cast: str
-    directors: str
-    plot: str
-    imtitle: str
-    imyear: int
-    imscore: str
-    imlow_confidence: bool
-    mtc_title: str
-    mtc_year: int
-    mtc_score: str
-    mtc_low_confidence: bool
-    rt_title: str
-    rt_year: int
-    rt_tomato_score: str
-    rt_audience_score: str
-    rt_low_confidence: bool
+    year: Optional[int]
+    genres: Optional[str]
+    runtime: Optional[str]
+    cast: Optional[str]
+    directors: Optional[str]
+    plot: Optional[str]
+    imdb_title: Optional[str]
+    imdb_year: Optional[int]
+    imdb_score: Optional[str]
+    imdb_low_confidence: Optional[bool]
+    mtc_title: Optional[str]
+    mtc_year: Optional[int]
+    mtc_score: Optional[str]
+    mtc_low_confidence: Optional[bool]
+    rt_title: Optional[str]
+    rt_year: Optional[int]
+    rt_tomato_score: Optional[str]
+    rt_audience_score: Optional[str]
+    rt_low_confidence: Optional[bool]
 
     class Config:
         orm_mode = True
 
 
 class BatchBase(BaseModel):
-    raw_titles: str
+    pass
 
 
 class BatchCreate(BatchBase):
-    pass
+    raw_titles: str
 
 
 class Batch(BatchBase):
     id: int
     key: str
     films: List[Film] = []
+    completion: int
 
     class Config:
         orm_mode = True

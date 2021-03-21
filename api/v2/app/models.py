@@ -56,3 +56,17 @@ class Batch(Base):
 
     def __repr__(self):
         return f"<Batch {self.key}>"
+
+    @property
+    def initial_count(self):
+        stripped_titles = self.raw_titles.rstrip('\n')
+        if not stripped_titles:
+            return 0
+        return stripped_titles.count('\n') + 1
+
+    @property
+    def completion(self):
+        films_count = len(self.films)
+        if films_count == 0:
+            return 0
+        return (len(self.films) / self.initial_count) * 100

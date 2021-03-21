@@ -12,12 +12,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const FilmInput = () => {
+const FilmInput = ({ films, onChange }) => {
   const classes = useStyles();
-
-  const [films, setFilms] = React.useState('');
-
-  const handleChange = (event) => setFilms(event.target.value);
 
   return (
     <TextField
@@ -27,7 +23,7 @@ const FilmInput = () => {
       fullWidth
       multiline
       value={films}
-      onChange={handleChange}
+      onChange={onChange}
       variant="outlined"
       className={classes.field}
       InputProps={{ className: classes.input }}

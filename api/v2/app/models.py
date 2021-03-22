@@ -1,6 +1,18 @@
 import uuid
-from sqlalchemy import Boolean, Column, Integer, String, Table, ForeignKey, Text
+from enum import Enum
+
+from sqlalchemy import (
+    Boolean,
+    Column,
+    Integer,
+    String,
+    Table,
+    ForeignKey,
+    Text,
+    Float,
+)
 from sqlalchemy.orm import relationship
+from sqlalchemy.dialects.postgresql import ENUM as pgEnum
 
 from app.utils import generate_key
 from app.db.base_class import Base
@@ -44,10 +56,18 @@ class Film(Base):
         return f"<Film {self.key} {self.imdb_title or self.title}>"
 
 
+class BatchStatus(str, Enum):
+    pending = 'pending'
+    started = 'started'
+    finished = 'finished'
+
+
 class Batch(Base):
     id = Column(Integer, primary_key=True)
     key = Column(String(50), unique=True)
     raw_titles = Column(Text)
+    completion = Column(Float, default=0.0, nullable=False)
+    status = Column(pgEnum(BatchStatus), nullable=False, default='pending')
     films = relationship('Film', secondary=batch_film_table)
 
     def __init__(self, **kwargs):
@@ -63,10 +83,3 @@ class Batch(Base):
         if not stripped_titles:
             return 0
         return stripped_titles.count('\n') + 1
-
-    @property
-    def completion(self):
-        films_count = len(self.films)
-        if films_count == 0:
-            return 0
-        return (len(self.films) / self.initial_count) * 100

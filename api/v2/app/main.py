@@ -19,7 +19,7 @@ def get_batch(batch_key: str, db: Session = Depends(get_db)):
     return crud.get_batch_by_key(db=db, key=batch_key)
 
 
-@app.post('/batches/',  response_model=schemas.Batch)
+@app.post('/batches/',  response_model=schemas.BatchCreateOut)
 def create_batch(
     batch: schemas.BatchCreate,
     background_tasks: BackgroundTasks,

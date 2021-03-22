@@ -45,11 +45,16 @@ class BatchCreate(BatchBase):
     raw_titles: str
 
 
+class BatchCreateOut(BatchBase):
+    key: str
+
+
 class Batch(BatchBase):
     id: int
     key: str
     films: List[Film] = []
     completion: int
+    status: str
 
     class Config:
         orm_mode = True

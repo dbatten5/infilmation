@@ -1,3 +1,5 @@
+from typing import List
+
 import uuid
 from enum import Enum
 
@@ -13,6 +15,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import ENUM as pgEnum
+from sqlalchemy.orm import Session
 
 from app.utils import generate_key
 from app.db.base_class import Base
@@ -24,15 +27,30 @@ batch_film_table = Table('batch_film', Base.metadata,
 )
 
 
+film_genre_table = Table('film_genre', Base.metadata,
+    Column('film_id', Integer, ForeignKey('film.id')),
+    Column('genre_id', Integer, ForeignKey('genre.id'))
+)
+
+
+director_film_table = Table('director_film', Base.metadata,
+    Column('director_id', Integer, ForeignKey('director.id')),
+    Column('film_id', Integer, ForeignKey('film.id'))
+)
+
+
+actor_film_table = Table('actor_film', Base.metadata,
+    Column('actor_id', Integer, ForeignKey('actor.id')),
+    Column('film_id', Integer, ForeignKey('film.id'))
+)
+
+
 class Film(Base):
     id = Column(Integer, primary_key=True, index=True)
     key = Column(String(50), unique=True)
     title = Column(String(255))
     year = Column(Integer)
-    genres = Column(String(255))
     runtime = Column(String(255))
-    cast = Column(String(255))
-    directors = Column(String(255))
     plot = Column(String(255))
     imdb_title = Column(String(255))
     imdb_year = Column(Integer)
@@ -47,6 +65,10 @@ class Film(Base):
     rt_tomato_score = Column(String(255))
     rt_audience_score = Column(String(255))
     rt_low_confidence = Column(Boolean)
+
+    cast = relationship('Actor', secondary=actor_film_table)
+    directors = relationship('Director', secondary=director_film_table)
+    genres = relationship('Genre', secondary=film_genre_table)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -83,3 +105,18 @@ class Batch(Base):
         if not stripped_titles:
             return 0
         return stripped_titles.count('\n') + 1
+
+
+class Genre(Base):
+    id = Column(Integer, primary_key=True)
+    name = Column(String(50), unique=True)
+
+
+class Actor(Base):
+    id = Column(Integer, primary_key=True)
+    name = Column(String, unique=True)
+
+
+class Director(Base):
+    id = Column(Integer, primary_key=True)
+    name = Column(String, unique=True)

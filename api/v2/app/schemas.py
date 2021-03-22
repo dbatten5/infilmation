@@ -1,5 +1,21 @@
 from typing import List, Optional, Any
+
 from pydantic import BaseModel
+
+
+class SimpleBase(BaseModel):
+    name: str
+
+
+class Simple(SimpleBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
+class SimpleCreate(SimpleBase):
+    pass
 
 
 class FilmBase(BaseModel):
@@ -14,10 +30,10 @@ class Film(FilmBase):
     id: int
     key: str
     year: Optional[int]
-    genres: Optional[str]
+    genres: Optional[List[Simple]]
     runtime: Optional[str]
-    cast: Optional[str]
-    directors: Optional[str]
+    cast: Optional[List[Simple]]
+    directors: Optional[List[Simple]]
     plot: Optional[str]
     imdb_title: Optional[str]
     imdb_year: Optional[int]
@@ -47,6 +63,9 @@ class BatchCreate(BatchBase):
 
 class BatchCreateOut(BatchBase):
     key: str
+
+    class Config:
+        orm_mode = True
 
 
 class Batch(BatchBase):

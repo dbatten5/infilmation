@@ -1,3 +1,5 @@
+from typing import List
+
 import uuid
 from enum import Enum
 
@@ -13,6 +15,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import ENUM as pgEnum
+from sqlalchemy.orm import Session
 
 from app.utils import generate_key
 from app.db.base_class import Base

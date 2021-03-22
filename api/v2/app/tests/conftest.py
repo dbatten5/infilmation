@@ -16,6 +16,7 @@ def get_test_db_session() -> Session:
         sqlalchemy_database_url, connect_args={"check_same_thread": False}
     )
     TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+    Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
     return TestingSessionLocal()
 

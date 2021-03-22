@@ -1,7 +1,12 @@
+from typing import Any, Optional, TypeVar, Generic
+
+from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
+from pydantic import BaseModel
 from phylm import Phylm
 
 from app.utils import generate_key
+from app.db.base_class import Base
 from . import models, schemas
 
 
@@ -57,3 +62,45 @@ def create_batch(db: Session, batch: schemas.BatchCreate):
     db.commit()
     db.refresh(db_batch)
     return db_batch
+
+
+
+ModelType = TypeVar("ModelType", bound=Base)
+CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
+
+
+class CRUDSimpleModel(Generic[ModelType, CreateSchemaType]):
+    def __init__(self, model):
+        self.model = model
+
+    def create(self, db: Session, *, obj_in: CreateSchemaType) -> ModelType:
+        obj_in_data = jsonable_encoder(obj_in)
+        db_obj = self.model(**obj_in_data)  # type: ignore
+        db.add(db_obj)
+        db.commit()
+        db.refresh(db_obj)
+        return db_obj
+
+    def get_or_create_by_name(self, db: Session, obj_in: CreateSchemaType) -> Optional[ModelType]:
+        db_record = db.query(self.model).filter(self.model.name == obj_in.name).first()
+        if db_record:
+            return db_record
+        return self.create(db, obj_in=obj_in)
+
+
+class CRUDGenre(CRUDSimpleModel[models.Genre, schemas.SimpleCreate]):
+    pass
+
+genre = CRUDGenre(models.Genre)
+
+
+class CRUDActor(CRUDSimpleModel[models.Actor, schemas.SimpleCreate]):
+    pass
+
+actor = CRUDActor(models.Actor)
+
+
+class CRUDDirector(CRUDSimpleModel[models.Director, schemas.SimpleCreate]):
+    pass
+
+director = CRUDDirector(models.Director)

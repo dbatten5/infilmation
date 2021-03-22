@@ -58,3 +58,11 @@ class Batch(BatchBase):
 
     class Config:
         orm_mode = True
+
+
+class SimpleBase(BaseModel):
+    pass
+
+
+class SimpleCreate(SimpleBase):
+    name: str

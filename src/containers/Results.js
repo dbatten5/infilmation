@@ -39,9 +39,7 @@ const Results = ({ location }) => {
       <Box mb={5}>
         <LinearProgress variant="determinate" value={completion} />
       </Box>
-      {completed(completion) && (
-        <ResultsTable films={films} />
-      )}
+      <DataTable films={films} />
     </>
   );
 };

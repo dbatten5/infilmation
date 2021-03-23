@@ -51,7 +51,7 @@ class Film(Base):
     title = Column(String(255))
     year = Column(Integer)
     runtime = Column(String(255))
-    plot = Column(String(255))
+    plot = Column(Text)
     imdb_title = Column(String(255))
     imdb_year = Column(Integer)
     imdb_score = Column(String(255))

@@ -1,47 +1,59 @@
-import React, { useEffect, useState } from 'react';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import React, { useEffect, useState, useRef } from 'react';
+import axios from 'axios';
 import Box from '@material-ui/core/Box';
 import qs from 'query-string'
-import axios from 'axios';
-import ResultsTable from './ResultsTable';
-import { useInterval } from '../utils';
+import DataTable from '../components/DataTable';
+import LinearProgressWithLabel from '../components/LinearProgressWithLabel';
 
-const completed = (completion) => (
-  parseInt(completion, 10) === 100
-);
 
 const Results = ({ location }) => {
   const { batch } = qs.parse(location.search);
 
   const [films, setFilms] = useState([]);
-  const [completion, setCompletion] = useState(false);
+  const [completion, setCompletion] = useState(0);
+  const [status, setStatus] = useState('started');
+  const [isPaused, setPause] = useState(false)
+
+  const ws = useRef(null);
+
+  useEffect(() => {
+    ws.current = new WebSocket(`ws://localhost:8000/batches/${batch}/ws`);
+    ws.current.onopen = () => console.log("ws opened");
+    ws.current.onclose = () => console.log("ws closed");
+
+    return () => {
+      ws.current.close();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!ws.current) return;
+
+    ws.current.onmessage = e => {
+      if (isPaused) return;
+      const message = JSON.parse(e.data);
+      const { status, completion } = message;
+      setCompletion(completion);
+      setStatus(status);
+    };
+  }, [isPaused]);
 
   useEffect(() => {
     axios.get(`/batches/${batch}`)
       .then(res => {
-        const { data: { films, completion } } = res;
+        const films = res.data.films;
         setFilms(films);
-        setCompletion(completion)
       });
-  }, [batch]);
-
-  useInterval(() => {
-    axios.get(`/batches/${batch}`)
-      .then(res => {
-        const { data: { films, completion } } = res;
-        setFilms(films);
-        setCompletion(completion)
-      });
-  }, 3000);
+  }, [batch, completion]);
 
   return (
     <>
-      <Box mb={5}>
-        <LinearProgress variant="determinate" value={completion} />
-      </Box>
-      {completed(completion) && (
-        <ResultsTable films={films} />
+      {status !== 'finished' && (
+        <Box mb={5}>
+          <LinearProgressWithLabel variant="determinate" value={completion} />
+        </Box>
       )}
+      <DataTable films={films} />
     </>
   );
 };

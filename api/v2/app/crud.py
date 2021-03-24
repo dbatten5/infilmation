@@ -82,8 +82,7 @@ def get_or_create_film(db: Session, film: schemas.FilmCreate):
     return create_film(db, film)
 
 
-def get_batch_by_key(db: Session, key: str):
-    batches = db.query(models.Batch).all()
+def get_batch_by_key(db: Session, key: str) -> schemas.Batch:
     return db.query(models.Batch).filter(models.Batch.key == key).first()
 
 

@@ -30,10 +30,10 @@ class Film(FilmBase):
     id: int
     key: str
     year: Optional[int]
-    genres: Optional[List[Simple]]
+    genres: Optional[List[Simple]] = []
     runtime: Optional[str]
-    cast: Optional[List[Simple]]
-    directors: Optional[List[Simple]]
+    cast: Optional[List[Simple]] = []
+    directors: Optional[List[Simple]] = []
     plot: Optional[str]
     imdb_title: Optional[str]
     imdb_year: Optional[int]

@@ -22,7 +22,7 @@ const makeList = (list, elements = 2) => (
 
 const createRow = ({
   id,
-  imdb_title,
+  title,
   imdb_year,
   genres,
   runtime,
@@ -36,7 +36,7 @@ const createRow = ({
 }) => (
   {
     id,
-    imdb_title,
+    title,
     imdb_year,
     genres: makeList(genres, 2),
     runtime,
@@ -52,7 +52,7 @@ const createRow = ({
 
 const columns = [
   {
-    field: 'imdb_title',
+    field: 'title',
     headerName: 'Title',
     renderCell: renderLargeCell,
     width: 150,

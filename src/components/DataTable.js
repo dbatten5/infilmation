@@ -91,7 +91,7 @@ const columns = [
   { field: 'rt_audience_score', headerName: 'RTA', description: 'Rotten Tomatoes Audience Score', width: 70 },
 ];
 
-const DataTable = ({ films }) => {
+const DataTable = ({ films, loading }) => {
   const filmsList = films.map(film => createRow(film));
 
   return (
@@ -102,6 +102,7 @@ const DataTable = ({ films }) => {
           columns={columns} 
           pageSize={5} 
           checkboxSelection={false} 
+          loading={loading}
           disableColumnMenu
           disableSelectionOnClick
           hideFooter

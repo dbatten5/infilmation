@@ -6,10 +6,15 @@ const useStyles = makeStyles((theme) => ({
   input: {
     height: '100%',
     alignItems: 'flex-start',
+    fontSize: '2rem',
   },
   field: {
     height: '100%',
-  }
+  },
+  textarea: {
+    height: '100% !important',
+    overflowY: 'scroll !important',
+  },
 }));
 
 const FilmInput = ({ films, onChange }) => {
@@ -18,15 +23,18 @@ const FilmInput = ({ films, onChange }) => {
   return (
     <TextField
       id="films-input"
-      label="Films"
-      placeholder="Write your films here (1 per line please)"
       fullWidth
       multiline
       value={films}
       onChange={onChange}
       variant="outlined"
       className={classes.field}
-      InputProps={{ className: classes.input }}
+      InputProps={{
+        className: classes.input,
+        classes: {
+          inputMultiline: classes.textarea,
+        }
+      }}
     />
   );
 };

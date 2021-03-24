@@ -3,8 +3,6 @@ import axios from 'axios';
 import Box from '@material-ui/core/Box';
 import qs from 'query-string'
 import DataTable from '../components/DataTable';
-import LinearProgressWithLabel from '../components/LinearProgressWithLabel';
-
 
 const Results = ({ location }) => {
   const { batch } = qs.parse(location.search);
@@ -12,9 +10,22 @@ const Results = ({ location }) => {
   const [films, setFilms] = useState([]);
   const [completion, setCompletion] = useState(0);
   const [status, setStatus] = useState('started');
-  const [isPaused, setPause] = useState(false)
+  const [isPaused, setPause] = useState(true);
+  const [currentFilm, setCurrentFilm] = useState('');
 
   const ws = useRef(null);
+
+  useEffect(() => {
+    axios.get(`/batches/${batch}`)
+      .then(res => {
+        const { films, status } = res.data;
+        setFilms(films);
+        setStatus(status)
+        if (status !== 'finished') {
+          setPause(false);
+        }
+      });
+  }, [batch, completion]);
 
   useEffect(() => {
     ws.current = new WebSocket(`ws://localhost:8000/batches/${batch}/ws`);
@@ -32,28 +43,18 @@ const Results = ({ location }) => {
     ws.current.onmessage = e => {
       if (isPaused) return;
       const message = JSON.parse(e.data);
-      const { status, completion } = message;
+      const { status, completion, current_film: currentFilm } = message;
       setCompletion(completion);
-      setStatus(status);
+      setStatus(status)
+      setCurrentFilm(currentFilm);
     };
   }, [isPaused]);
 
-  useEffect(() => {
-    axios.get(`/batches/${batch}`)
-      .then(res => {
-        const films = res.data.films;
-        setFilms(films);
-      });
-  }, [batch, completion]);
-
   return (
     <>
-      {status !== 'finished' && (
-        <Box mb={5}>
-          <LinearProgressWithLabel variant="determinate" value={completion} />
-        </Box>
-      )}
-      <DataTable films={films} />
+      <Box mt={5}>
+        <DataTable films={films} loading={status !== 'finished'} />
+      </Box>
     </>
   );
 };

@@ -51,13 +51,40 @@ const createRow = ({
 )
 
 const columns = [
-  { field: 'imdb_title', headerName: 'Title', width: 150 },
+  {
+    field: 'imdb_title',
+    headerName: 'Title',
+    renderCell: renderLargeCell,
+    width: 150,
+  },
   { field: 'imdb_year', headerName: 'Year', width: 70 },
-  { field: 'genres', headerName: 'Genres', renderCell: renderLargeCell },
+  {
+    field: 'genres',
+    headerName: 'Genres',
+    renderCell: renderLargeCell,
+    sortable: false,
+  },
   { field: 'runtime', headerName: 'Runtime', type: 'number', width: 90 },
-  { field: 'cast', headerName: 'Cast', renderCell: renderLargeCell },
-  { field: 'directors', headerName: 'Directors', renderCell: renderLargeCell },
-  { field: 'plot', headerName: 'Plot', width: 300, renderCell: renderLargeCell },
+  {
+    field: 'cast',
+    headerName: 'Cast',
+    renderCell: renderLargeCell,
+    width: 140,
+    sortable: false,
+  },
+  {
+    field: 'directors',
+    headerName: 'Directors',
+    renderCell: renderLargeCell,
+    sortable: false,
+  },
+  {
+    field: 'plot',
+    headerName: 'Plot',
+    width: 300,
+    renderCell: renderLargeCell,
+    sortable: false,
+  },
   { field: 'imdb_score', headerName: 'IMDb', description: 'IMDb Score', width: 70 },
   { field: 'mtc_score', headerName: 'Mtc', description: 'Metacritic Score', width: 70 },
   { field: 'rt_tomato_score', headerName: 'RTT', description: 'Rotten Tomatoes Tomatometer Score', width: 70 },

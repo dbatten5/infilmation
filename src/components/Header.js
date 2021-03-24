@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     fontStyle: 'italic',
     letterSpacing: '0.15rem',
   },
+  link: {
+    textDecoration: 'none',
+  }
 }));
 
 const Header = () => {
@@ -24,9 +28,16 @@ const Header = () => {
   return (
     <div className={classes.root}>
       <Container maxWidth="lg">
-        <Typography variant="h1" className={classes.title} gutterBottom>
-          Infilmation
-        </Typography>
+        <Link to="/" className={classes.link}>
+          <Typography 
+            variant="h1" 
+            className={classes.title} 
+            display="inline" 
+            gutterBottom
+          >
+            Infilmation
+          </Typography>
+        </Link>
       </Container>
     </div>
   );

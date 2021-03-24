@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import axios from 'axios';
 import Box from '@material-ui/core/Box';
 import qs from 'query-string'
 import DataTable from '../components/DataTable';
+import LinearProgressWithLabel from '../components/LinearProgressWithLabel';
 
 
 const Results = ({ location }) => {
@@ -31,15 +32,27 @@ const Results = ({ location }) => {
     ws.current.onmessage = e => {
       if (isPaused) return;
       const message = JSON.parse(e.data);
-      console.log("e", message);
+      const { status, completion } = message;
+      setCompletion(completion);
+      setStatus(status);
     };
   }, [isPaused]);
 
+  useEffect(() => {
+    axios.get(`/batches/${batch}`)
+      .then(res => {
+        const films = res.data.films;
+        setFilms(films);
+      });
+  }, [batch, completion]);
+
   return (
     <>
-      <Box mb={5}>
-        <LinearProgress variant="determinate" value={completion} />
-      </Box>
+      {status !== 'finished' && (
+        <Box mb={5}>
+          <LinearProgressWithLabel variant="determinate" value={completion} />
+        </Box>
+      )}
       <DataTable films={films} />
     </>
   );

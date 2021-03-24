@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import FilmInput from '../components/FilmInput';
 import FilmSubmit from '../components/FilmSubmit';
+import Guide from '../components/Guide';
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -40,12 +41,13 @@ const FilmForm = () => {
         <Grid
           container
           direction="column"
-          justify="flex-end"
+          justify="space-between"
           item
           xs={12}
           md={3}
           className={classes.submit}
         >
+          <Guide />
           <FilmSubmit films={films} />
         </Grid>
       </Grid>

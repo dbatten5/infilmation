@@ -14,6 +14,8 @@ def process_films(db: Session, batch: BatchCreate) -> Batch:
     titles = batch.raw_titles.splitlines()
     delay = 0
     for idx, title in enumerate(titles):
+        batch.current_film = title
+        db.commit()
         if delay:
             time.sleep(delay)
             delay = 0

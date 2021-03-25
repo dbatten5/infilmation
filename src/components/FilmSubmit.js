@@ -18,7 +18,6 @@ const FilmSubmit = ({ films }) => {
   return (
     <Button 
       variant="contained" 
-      color="primary" 
       size="large" 
       onClick={onSubmit}
       disableElevation 

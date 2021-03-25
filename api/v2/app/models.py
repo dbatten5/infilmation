@@ -91,6 +91,7 @@ class Batch(Base):
     completion = Column(Float, default=0.0, nullable=False)
     status = Column(pgEnum(BatchStatus), nullable=False, default='pending')
     films = relationship('Film', secondary=batch_film_table)
+    current_film = Column(Text)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

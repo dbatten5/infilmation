@@ -74,6 +74,7 @@ class Batch(BatchBase):
     films: List[Film] = []
     completion: int
     status: str
+    current_film: Optional[str] = ''
 
     class Config:
         orm_mode = True

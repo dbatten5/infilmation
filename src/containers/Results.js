@@ -3,6 +3,7 @@ import axios from 'axios';
 import Box from '@material-ui/core/Box';
 import qs from 'query-string'
 import DataTable from '../components/DataTable';
+import ResultsToolbar from '../components/ResultsToolbar';
 
 const Results = ({ location }) => {
   const { batch } = qs.parse(location.search);
@@ -53,7 +54,10 @@ const Results = ({ location }) => {
   return (
     <>
       <Box mt={5}>
-        <DataTable films={films} loading={status !== 'finished'} />
+        <ResultsToolbar status={status} currentFilm={currentFilm} />
+      </Box>
+      <Box mt={5}>
+        <DataTable films={films} />
       </Box>
     </>
   );

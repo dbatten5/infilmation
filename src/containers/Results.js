@@ -62,7 +62,7 @@ const Results = ({ location }) => {
       <Grid item>
         <Box pb={10}>
           <Container maxWidth="lg">
-            <Box mt={5}>
+            <Box mt={3}>
               <ResultsToolbar status={status} currentFilm={currentFilm} />
             </Box>
             <Box mt={5}>

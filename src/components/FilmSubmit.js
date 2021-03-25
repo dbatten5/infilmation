@@ -15,13 +15,16 @@ const FilmSubmit = ({ films }) => {
       })
   }
 
+  const disabled = !films.trim();
+
   return (
-    <Button 
+    <Button
       variant="contained" 
       size="large" 
       onClick={onSubmit}
       disableElevation 
       fullWidth
+      disabled={disabled}
     >
       Get Results
     </Button>

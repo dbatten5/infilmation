@@ -4,6 +4,9 @@ import Box from '@material-ui/core/Box';
 import qs from 'query-string'
 import DataTable from '../components/DataTable';
 import ResultsToolbar from '../components/ResultsToolbar';
+import Grid from '@material-ui/core/Grid';
+import Header from '../components/Header';
+import Container from '@material-ui/core/Container';
 
 const Results = ({ location }) => {
   const { batch } = qs.parse(location.search);
@@ -52,14 +55,23 @@ const Results = ({ location }) => {
   }, [isPaused]);
 
   return (
-    <>
-      <Box mt={5}>
-        <ResultsToolbar status={status} currentFilm={currentFilm} />
-      </Box>
-      <Box mt={5}>
-        <DataTable films={films} />
-      </Box>
-    </>
+    <Grid container direction="column">
+      <Grid item>
+        <Header />
+      </Grid>
+      <Grid item>
+        <Box pb={10}>
+          <Container maxWidth="lg">
+            <Box mt={5}>
+              <ResultsToolbar status={status} currentFilm={currentFilm} />
+            </Box>
+            <Box mt={5}>
+              <DataTable films={films} />
+            </Box>
+          </Container>
+        </Box>
+      </Grid>
+    </Grid>
   );
 };
 

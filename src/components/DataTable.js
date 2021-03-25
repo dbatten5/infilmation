@@ -100,7 +100,6 @@ const DataTable = ({ films, loading }) => {
         <DataGrid 
           rows={filmsList} 
           columns={columns} 
-          pageSize={5} 
           checkboxSelection={false} 
           loading={loading}
           disableColumnMenu

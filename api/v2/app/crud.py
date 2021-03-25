@@ -10,12 +10,12 @@ from app.db.base_class import Base
 from . import models, schemas
 
 
-def get_film_by_title(db: Session, title: str):
+def get_film_by_title(db: Session, title: str) -> Optional[models.Film]:
     key = generate_key(title)
     return db.query(models.Film).filter(models.Film.key == key).first()
 
 
-def create_film(db: Session, film: schemas.FilmCreate):
+def create_film(db: Session, film: schemas.FilmCreate) -> models.Film:
     phylm = Phylm(film.title)
     db_film = models.Film(
         title=phylm.title,
@@ -45,7 +45,7 @@ def create_film(db: Session, film: schemas.FilmCreate):
     return db_film
 
 
-def add_film_genres(db: Session, film: schemas.Film, genres: List[str]):
+def add_film_genres(db: Session, film: models.Film, genres: List[str]) -> None:
     for genre_name in genres:
         db_genre = genre.get_or_create_by_name(
             db,
@@ -55,7 +55,7 @@ def add_film_genres(db: Session, film: schemas.Film, genres: List[str]):
     db.commit()
 
 
-def add_film_cast(db: Session, film: schemas.Film, actors: List[str]):
+def add_film_cast(db: Session, film: schemas.Film, actors: List[str]) -> None:
     for actor_name in actors:
         db_actor = actor.get_or_create_by_name(
             db,
@@ -65,7 +65,7 @@ def add_film_cast(db: Session, film: schemas.Film, actors: List[str]):
     db.commit()
 
 
-def add_film_directors(db: Session, film: schemas.Film, directors: List[str]):
+def add_film_directors(db: Session, film: schemas.Film, directors: List[str]) -> None:
     for director_name in directors:
         db_director = director.get_or_create_by_name(
             db,
@@ -75,18 +75,18 @@ def add_film_directors(db: Session, film: schemas.Film, directors: List[str]):
     db.commit()
 
 
-def get_or_create_film(db: Session, film: schemas.FilmCreate):
+def get_or_create_film(db: Session, film: schemas.FilmCreate) -> models.Film:
     db_film = get_film_by_title(db, film.title)
     if db_film:
         return db_film
     return create_film(db, film)
 
 
-def get_batch_by_key(db: Session, key: str) -> schemas.Batch:
+def get_batch_by_key(db: Session, key: str) -> Optional[models.Batch]:
     return db.query(models.Batch).filter(models.Batch.key == key).first()
 
 
-def create_batch(db: Session, batch: schemas.BatchCreate):
+def create_batch(db: Session, batch: schemas.BatchCreate) -> models.Batch:
     db_batch = models.Batch(raw_titles=batch.raw_titles)
     db.add(db_batch)
     db.commit()

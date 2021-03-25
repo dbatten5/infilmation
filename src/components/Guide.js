@@ -7,11 +7,9 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles((theme) => ({
   step: {
-    fontFamily: 'HelveticaNeue-Light',
     color: 'black',
-    fontSize: '1.4rem',
-    fontWeight: '300',
-    fontStyle: 'italic',
+    fontSize: '1rem',
+    fontWeight: '200',
   },
 }));
 

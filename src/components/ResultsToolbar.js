@@ -11,11 +11,16 @@ const ResultsToolbar = ({ status, currentFilm }) => {
       <Grid container direction="row" justify="flex-end">
         <Grid item>
           <Box>
-            {status === "started" && (
+            {status !== "finished" && !currentFilm && (
+              <Typography variant="body1">
+                Waiting
+              </Typography>
+            )}
+            {status !== "finished" && currentFilm && (
               <Grid alignItems="center" container direction="row" spacing={3}>
                 <Grid item>
                   <Typography variant="body1">
-                    Fetching {currentFilm}...
+                    Fetching <b>{currentFilm}</b>
                   </Typography>
                 </Grid>
                 <Grid item>

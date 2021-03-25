@@ -23,7 +23,7 @@ const FilmSubmit = ({ films }) => {
       disableElevation 
       fullWidth
     >
-      Submit
+      Get Results
     </Button>
   );
 };

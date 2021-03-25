@@ -33,7 +33,7 @@ const FilmForm = () => {
   const handleChange = (event) => setFilms(event.target.value);
 
   return (
-    <Box pt={5} pb={5} height="100%">
+    <Box pt={5} height="100%">
       <Grid container spacing={3} direction="row" className={classes.grid}>
         <Grid item xs={12} md={9} className={classes.textField}>
           <FilmInput films={films} onChange={handleChange} />

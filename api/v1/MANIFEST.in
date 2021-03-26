@@ -1,4 +1,0 @@
-include infilmation/schema.sql
-graft infilmation/static
-graft infilmation/templates
-global-exclude *.pyc

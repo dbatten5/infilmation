@@ -28,7 +28,7 @@ from app.config import settings
 # ... etc.
 
 def get_url():
-    return settings.sqlalchemy_database_uri
+    return settings.SQLALCHEMY_DATABASE_URI
 
 def run_migrations_offline():
     """Run migrations in 'offline' mode.

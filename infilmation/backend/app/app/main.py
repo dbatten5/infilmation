@@ -3,8 +3,9 @@ import asyncio
 from fastapi import FastAPI, Depends, BackgroundTasks, WebSocket
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
+import uvicorn
 
-from . import schemas, crud, tasks
+from app import schemas, crud, tasks
 from app.db.session import SessionLocal
 
 app = FastAPI()
@@ -48,3 +49,7 @@ def create_batch(
     db_batch = crud.create_batch(db=db, batch=batch)
     background_tasks.add_task(tasks.process_films, db, db_batch)
     return db_batch
+
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", reload=True, port=8888)

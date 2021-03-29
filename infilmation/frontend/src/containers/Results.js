@@ -32,7 +32,7 @@ const Results = ({ location }) => {
   }, [batch, completion]);
 
   useEffect(() => {
-    ws.current = new WebSocket(`ws://localhost:8000/batches/${batch}/ws`);
+    ws.current = new WebSocket(`${process.env.REACT_APP_WS_URL}/batches/${batch}/ws`);
     ws.current.onopen = () => console.log("ws opened");
     ws.current.onclose = () => console.log("ws closed");
 

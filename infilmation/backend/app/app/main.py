@@ -8,6 +8,7 @@ import uvicorn
 from app import schemas, crud, tasks
 from app.db.session import SessionLocal
 
+
 app = FastAPI()
 
 def get_db():

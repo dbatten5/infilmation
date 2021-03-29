@@ -14,3 +14,5 @@ RUN pip install -r requirements.txt
 
 COPY ./app $WORKDIR
 ENV PYTHONPATH=$WORKDIR
+
+EXPOSE 8888

@@ -8,7 +8,7 @@ const FilmSubmit = ({ films }) => {
   const history = useHistory();
 
   const onSubmit = () => {
-    axios.post(`/batches/`, { raw_titles: films })
+    axios.post(`api/v1/batches/`, { raw_titles: films })
       .then(res => {
         const key = res.data.key;
         history.push(`/results?batch=${key}`);

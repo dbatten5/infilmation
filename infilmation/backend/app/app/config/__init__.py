@@ -2,8 +2,10 @@ from typing import Optional, Dict, Any
 
 from pydantic import BaseSettings, PostgresDsn, validator
 
+
 class Settings(BaseSettings):
     APP_NAME: str = "Infilmation"
+    API_V1_STR: str = "/api/v1"
 
     POSTGRES_SERVER: str
     POSTGRES_USER: str

@@ -20,7 +20,7 @@ const Results = ({ location }) => {
   const ws = useRef(null);
 
   useEffect(() => {
-    axios.get(`/batches/${batch}`)
+    axios.get(`api/v1/batches/${batch}`)
       .then(res => {
         const { films, status } = res.data;
         setFilms(films);
@@ -32,7 +32,7 @@ const Results = ({ location }) => {
   }, [batch, completion]);
 
   useEffect(() => {
-    ws.current = new WebSocket(`${process.env.REACT_APP_WS_URL}/batches/${batch}/ws`);
+    ws.current = new WebSocket(`${process.env.REACT_APP_WS_URL}/api/v1/batches/${batch}/ws`);
     ws.current.onopen = () => console.log("ws opened");
     ws.current.onclose = () => console.log("ws closed");
 

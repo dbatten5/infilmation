@@ -1,15 +1,50 @@
 version: '3.8'
 
 services:
+  proxy:
+    image: traefik:v2.4
+    networks:
+      - web
+      - default
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - '8080:8080'
+      - '80:80'
+      - '443:443'
+    command:
+      - --providers.docker
+      - --api.insecure=true
+      - --providers.docker.exposedbydefault=false
+      - --providers.docker.network=web
+      - --entrypoints.http.address=:80
+      - --entrypoints.https.address=:443
+      # - --accesslog
+      # - --log
+      # - --api
+    labels:
+      - traefik.enable=true
+      # - traefik.docker.network=web
+      # - traefik.http.middlewares.infilmation-redirectscheme.redirectscheme.scheme=https
+      # - traefik.http.middlewares.infilmation-redirectscheme.redirectscheme.permanent=true
+      - traefik.http.routers.infilmation-proxy-http.rule=Host(`${DOMAIN?Variable not set}`)
+      - traefik.http.routers.infilmation-proxy-http.entrypoints=http
+      # - traefik.http.routers.infilmation-proxy-https.rule=Host(`infilmation.local`)
+      # - traefik.http.routers.infilmation-proxy-https.entrypoints=https
+      # - traefik.http.routers.infilmation-proxy-https.tls=true
+      - traefik.http.services.infilmation-proxy.loadbalancer.server.port=80
+
   db:
     image: postgres:12
     restart: always
+    ports:
+      - '5432:5432'
+    networks:
+      - backend
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
     env_file:
       - .env
-    ports:
-      - '5432:5432'
     volumes:
       - app-db-data:/var/lib/postgresql/data/pgdata
 
@@ -19,24 +54,44 @@ services:
       dockerfile: Dockerfile
     command: python app/main.py
     volumes:
-      - ./backend/app:/app:cached
-    ports:
-      - '8888:8888'
+      - ./backend/app:/app
     depends_on:
       - db
     env_file:
       - .env
+    networks:
+      - web
+      - backend
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.infilmation-backend-http.rule=Host(`${DOMAIN?Variable not set}`) && PathPrefix(`/docs`)
+      - traefik.http.routers.infilmation-backend-http.entrypoints=http
+      - traefik.http.services.infilmation-backend.loadbalancer.server.port=8888
 
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
+    depends_on:
+      - backend
     environment:
       - NODE_ENV=development
     volumes:
       - ./frontend:/app:cached
-    ports:
-      - '3000:3000'
+      - /app/node_modules
+    networks:
+      - web
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.infilmation-frontend-http.rule=Host(`${DOMAIN?Variable not set}`) && PathPrefix(`/`)
+      - traefik.http.routers.infilmation-frontend-http.entrypoints=http
+      - traefik.http.services.infilmation-frontend.loadbalancer.server.port=80
 
 volumes:
   app-db-data:
+
+networks:
+  web:
+    external: true
+  backend:
+    external: false

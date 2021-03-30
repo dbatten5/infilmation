@@ -6,7 +6,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 
 WORKDIR $WORKDIR
 
-RUN apk add --update --no-cache g++ gcc libxslt-dev musl-dev postgresql-dev
+RUN apk add --update --no-cache g++ gcc libxslt-dev musl-dev postgresql-dev build-base
 
 RUN pip install --upgrade pip
 COPY ./app/requirements.txt $WORKDIR/requirements.txt

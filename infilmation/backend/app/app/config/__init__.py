@@ -1,11 +1,21 @@
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, List, Union
 
-from pydantic import BaseSettings, PostgresDsn, validator
+from pydantic import BaseSettings, PostgresDsn, AnyHttpUrl, validator
 
 
 class Settings(BaseSettings):
     APP_NAME: str = "Infilmation"
     API_V1_STR: str = "/api/v1"
+
+    BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = []
+
+    @validator("BACKEND_CORS_ORIGINS", pre=True)
+    def assemble_cors_origins(cls, v: Union[str, List[str]]) -> Union[List[str], str]:
+        if isinstance(v, str) and not v.startswith("["):
+            return [i.strip() for i in v.split(",")]
+        elif isinstance(v, (list, str)):
+            return v
+        raise ValueError(v)
 
     POSTGRES_SERVER: str
     POSTGRES_USER: str

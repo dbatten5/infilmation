@@ -7,6 +7,7 @@ import ResultsToolbar from '../components/ResultsToolbar';
 import Grid from '@material-ui/core/Grid';
 import Header from '../components/Header';
 import Container from '@material-ui/core/Container';
+import { apiUrl, wsUrl } from '../env';
 
 const Results = ({ location }) => {
   const { batch } = qs.parse(location.search);
@@ -20,7 +21,7 @@ const Results = ({ location }) => {
   const ws = useRef(null);
 
   useEffect(() => {
-    axios.get(`api/v1/batches/${batch}`)
+    axios.get(`${apiUrl}/batches/${batch}`)
       .then(res => {
         const { films, status } = res.data;
         setFilms(films);
@@ -32,7 +33,7 @@ const Results = ({ location }) => {
   }, [batch, completion]);
 
   useEffect(() => {
-    ws.current = new WebSocket(`${process.env.REACT_APP_WS_URL}/api/v1/batches/${batch}/ws`);
+    ws.current = new WebSocket(`${wsUrl}/batches/${batch}/ws`);
     ws.current.onopen = () => console.log("ws opened");
     ws.current.onclose = () => console.log("ws closed");
 

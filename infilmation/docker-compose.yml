@@ -8,37 +8,51 @@ services:
       - default
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      # Mount the volume to store the certificates
+      - traefik-public-certificates:/certificates
     ports:
-      - '8080:8080'
-      - '80:80'
-      - '443:443'
+      - 80:80
+      - 443:443
     command:
       - --providers.docker
-      - --api.insecure=true
       - --providers.docker.exposedbydefault=false
       - --providers.docker.network=web
       - --entrypoints.http.address=:80
       - --entrypoints.https.address=:443
-      # - --accesslog
-      # - --log
-      # - --api
+      - --certificatesresolvers.le.acme.email=${EMAIL?Variable not set}
+      - --certificatesresolvers.le.acme.storage=/certificates/acme.json
+      - --certificatesresolvers.le.acme.tlschallenge=true
+      - --accesslog
+      - --log
+      - --api
     labels:
       - traefik.enable=true
-      # - traefik.docker.network=web
-      # - traefik.http.middlewares.infilmation-redirectscheme.redirectscheme.scheme=https
-      # - traefik.http.middlewares.infilmation-redirectscheme.redirectscheme.permanent=true
-      - traefik.http.routers.infilmation-proxy-http.rule=Host(`${DOMAIN?Variable not set}`)
+      - traefik.docker.network=web
+      # create admin auth middleware for logging into dashboard
+      - traefik.http.middlewares.admin-auth.basicauth.users=${USERNAME?Variable not set}:${HASHED_PASSWORD?Variable not set}
+      # create https redirection middleware
+      - traefik.http.middlewares.https-redirect.redirectscheme.scheme=https
+      - traefik.http.middlewares.https-redirect.redirectscheme.permanent=true
+      # create the traefik dashboard http router
+      - traefik.http.routers.infilmation-proxy-http.rule=Host(`traefik.${DOMAIN?Variable not set}`)
       - traefik.http.routers.infilmation-proxy-http.entrypoints=http
-      # - traefik.http.routers.infilmation-proxy-https.rule=Host(`infilmation.local`)
-      # - traefik.http.routers.infilmation-proxy-https.entrypoints=https
-      # - traefik.http.routers.infilmation-proxy-https.tls=true
-      - traefik.http.services.infilmation-proxy.loadbalancer.server.port=80
+      - traefik.http.routers.infilmation-proxy-http.middlewares=https-redirect
+      # create the actual https traefik router
+      - traefik.http.routers.infilmation-proxy-https.rule=Host(`traefik.${DOMAIN?Variable not set}`)
+      - traefik.http.routers.infilmation-proxy-https.entrypoints=https
+      - traefik.http.routers.infilmation-proxy-https.tls=true
+      # Use the special Traefik service api@internal with the web UI/Dashboard
+      - traefik.http.routers.infilmation-proxy-https.service=api@internal
+      # Use the "le" (Let's Encrypt) resolver created below
+      - traefik.http.routers.infilmation-proxy-https.tls.certresolver=le
+      # Enable HTTP Basic auth, using the middleware created above
+      - traefik.http.routers.infilmation-proxy-https.middlewares=admin-auth
+      # Define the port inside of the Docker service to use
+      - traefik.http.services.infilmation-proxy.loadbalancer.server.port=8080
 
   db:
     image: postgres:12
     restart: always
-    ports:
-      - '5432:5432'
     networks:
       - backend
     environment:
@@ -64,16 +78,19 @@ services:
       - backend
     labels:
       - traefik.enable=true
-      - traefik.http.routers.infilmation-backend-http.rule=Host(`${DOMAIN?Variable not set}`) && PathPrefix(`/docs`)
-      - traefik.http.routers.infilmation-backend-http.entrypoints=http
       - traefik.http.services.infilmation-backend.loadbalancer.server.port=8888
+      - traefik.http.routers.infilmation-backend-http.rule=Host(`${DOMAIN?Variable not set}`) && PathPrefix(`/api`) || PathPrefix(`/docs`)
+      - traefik.http.routers.infilmation-backend-http.entrypoints=http
+      - traefik.http.routers.infilmation-backend-http.middlewares=https-redirect
+      - traefik.http.routers.infilmation-backend-https.rule=Host(`${DOMAIN?Variable not set}`) && PathPrefix(`/api`) || PathPrefix(`/docs`)
+      - traefik.http.routers.infilmation-backend-https.entrypoints=https
+      - traefik.http.routers.infilmation-backend-https.tls=true
+      - traefik.http.routers.infilmation-backend-https.tls.certresolver=le
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile.prod
-    depends_on:
-      - backend
     environment:
       - NODE_ENV=development
     volumes:
@@ -83,12 +100,21 @@ services:
       - web
     labels:
       - traefik.enable=true
+      # - traefik.http.routers.infilmation-frontend-http.rule=Host(`${DOMAIN?Variable not set}`) && PathPrefix(`/`)
+      # - traefik.http.routers.infilmation-frontend-http.entrypoints=http
+      # - traefik.http.routers.infilmation-frontend-http.middlewares=https-redirect
+      - traefik.http.services.infilmation-frontend.loadbalancer.server.port=80
       - traefik.http.routers.infilmation-frontend-http.rule=Host(`${DOMAIN?Variable not set}`) && PathPrefix(`/`)
       - traefik.http.routers.infilmation-frontend-http.entrypoints=http
-      - traefik.http.services.infilmation-frontend.loadbalancer.server.port=80
+      - traefik.http.routers.infilmation-frontend-http.middlewares=https-redirect
+      - traefik.http.routers.infilmation-frontend-https.rule=Host(`${DOMAIN?Variable not set}`) && PathPrefix(`/`)
+      - traefik.http.routers.infilmation-frontend-https.entrypoints=https
+      - traefik.http.routers.infilmation-frontend-https.tls=true
+      - traefik.http.routers.infilmation-frontend-https.tls.certresolver=le
 
 volumes:
   app-db-data:
+  traefik-public-certificates:
 
 networks:
   web:

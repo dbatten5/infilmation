@@ -5,12 +5,16 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   title: {
-    fontFamily: 'HelveticaNeue-Light',
+    fontFamily: 'HelveticaNeue-Light,HelveticaNeue,Helvetica,Arial,sans-serif',
     color: 'black',
     fontSize: '4rem',
     fontWeight: '100',
     fontStyle: 'italic',
     letterSpacing: '0.15rem',
+    '&:hover': {
+      opacity: 0.5,
+      transition: '0.3s',
+    }
   },
   link: {
     textDecoration: 'none',

@@ -9,17 +9,18 @@ import Guide from '../components/Guide';
 const useStyles = makeStyles((theme) => ({
   grid: {
     height: '100%',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down(960)]: {
       flexDirection: 'column',
+      flexWrap: 'nowrap',
     },
   },
   textField: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down(960)]: {
       flex: 1,
     },
   },
   submit: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down(960)]: {
       flex: 0,
     },
   }

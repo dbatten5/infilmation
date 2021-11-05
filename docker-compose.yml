@@ -9,7 +9,7 @@ services:
     ports:
       - 80:80
     depends_on:
-      # - backend
+      - backend
       - frontend
 
   # queue:
@@ -42,12 +42,9 @@ services:
   #   depends_on:
   #     - queue
 
-  # backend:
-  #   depends_on:
-  #     - db
-  #   environment:
-  #     - SERVER_NAME=${DOMAIN?Variable not set}
-  #     - SERVER_HOST=https://${DOMAIN?Variable not set}
+  backend:
+    # depends_on:
+    #   - db
 
   frontend:
     build:

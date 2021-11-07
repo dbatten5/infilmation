@@ -1,4 +1,5 @@
 """Module to hold config."""
+from functools import lru_cache
 import secrets
 from typing import Any
 from typing import Dict
@@ -35,6 +36,7 @@ class Settings(BaseSettings):
     postgres_user: str
     postgres_password: str
     postgres_db: str
+    postgres_port: Optional[str] = None
     sqlalchemy_database_uri: Optional[PostgresDsn] = None
 
     @validator("sqlalchemy_database_uri", pre=True)
@@ -49,6 +51,7 @@ class Settings(BaseSettings):
             user=values.get("postgres_user"),
             password=values.get("postgres_password"),
             host=str(values.get("postgres_server")),
+            port=values.get("postgres_port"),
             path=f"/{values.get('postgres_db') or ''}",
         )
 
@@ -56,4 +59,10 @@ class Settings(BaseSettings):
     first_superuser_password: str
 
 
-settings = Settings()
+@lru_cache()
+def get_settings() -> Settings:
+    """Return cached settings."""
+    return Settings()
+
+
+settings = get_settings()

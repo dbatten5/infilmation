@@ -10,9 +10,9 @@ services:
   #   ports:
   #     - ${REDIS_PORT:-6379}:6379
 
-  # postgres:
-  #   ports:
-  #     - ${POSTGRES_PORT:-5432}:5432
+  postgres:
+    ports:
+      - 5432:5432
 
   pgadmin:
     ports:
@@ -37,7 +37,7 @@ services:
       - 8888:8000
     command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
     volumes:
-      - ./backend/app:/code/app
+      - ./backend:/code
 
   frontend:
     build:

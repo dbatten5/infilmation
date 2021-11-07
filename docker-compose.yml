@@ -31,6 +31,8 @@ services:
       - postgres
     env_file:
       - .env
+    volumes:
+      - pgadmin:/var/lib/pgadmin
 
   # worker:
   #   command: celery worker -A app.worker -l info -Q main-queue -c 1
@@ -66,3 +68,4 @@ services:
 
 volumes:
   app-db-data:
+  pgadmin:

@@ -1,7 +1,23 @@
 ---
-version: "3.7"
+version: "3.9"
 
 services:
+  nginx:
+    profiles:
+      - proxy
+
+  # redis:
+  #   ports:
+  #     - ${REDIS_PORT:-6379}:6379
+
+  # postgres:
+  #   ports:
+  #     - ${POSTGRES_PORT:-5432}:5432
+
+  pgadmin:
+    ports:
+      - 5050:5050
+
   # worker:
   #   build:
   #     context: ./backend
@@ -17,9 +33,6 @@ services:
   #     - 5555:5555
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
     ports:
       - 8888:8000
     command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
@@ -31,3 +44,5 @@ services:
       context: ./frontend
       args:
         FRONTEND_ENV: dev
+    profiles:
+      - frontend

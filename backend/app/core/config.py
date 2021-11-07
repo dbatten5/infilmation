@@ -30,13 +30,13 @@ class Settings(BaseSettings):
             return value
         raise ValueError(value)
 
-    project_name: str
+    project_name: str = "infilmation"
 
-    postgres_server: str
-    postgres_user: str
-    postgres_password: str
-    postgres_db: str
-    postgres_port: Optional[str] = None
+    postgres_server: str = "localhost"
+    postgres_user: str = "postgres"
+    postgres_password: str = "postgres"
+    postgres_db: str = "infilmation"
+    postgres_port: Optional[str] = "5432"
     sqlalchemy_database_uri: Optional[PostgresDsn] = None
 
     @validator("sqlalchemy_database_uri", pre=True)
@@ -57,6 +57,11 @@ class Settings(BaseSettings):
 
     first_superuser: str
     first_superuser_password: str
+
+    class Config:
+        """Extra config."""
+
+        env_file = ".env"
 
 
 @lru_cache()

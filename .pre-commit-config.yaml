@@ -43,8 +43,8 @@ repos:
 
       - id: reorder-python-imports
         name: Reorder python imports
-        entry: bash -c "cd backend && exec reorder-python-imports"
         language: system
+        entry: reorder-python-imports
         files: backend/
         types: [python]
         args: [--application-directories=backend]

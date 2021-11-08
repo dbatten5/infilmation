@@ -12,6 +12,7 @@ ormar = "^0.10.22"
 psycopg2-binary = "^2.9.1"
 asyncpg = "^0.24.0"
 alembic = "^1.7.4"
+phylm = "^4.0.5"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"

@@ -10,5 +10,7 @@ def test_hello_world(client: TestClient) -> None:
     Then a `"pong"` is returned
     """
     resp = client.get(f"{settings.api_path}/ping")
+
     data = resp.json()
+
     assert data == "pong"

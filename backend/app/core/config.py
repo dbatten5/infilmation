@@ -1,6 +1,6 @@
 """Module to hold config."""
-from functools import lru_cache
 import secrets
+from functools import lru_cache
 from typing import Any
 from typing import Dict
 from typing import List
@@ -19,11 +19,23 @@ class Settings(BaseSettings):
     secret_key: str = secrets.token_urlsafe(32)
     backend_cors_origins: List[AnyHttpUrl] = []
 
+    api_path: str = "/api/v1"
+
     @validator("backend_cors_origins", pre=True)
     def assemble_cors_origins(
         cls, value: Union[str, List[str]]  # noqa: N805,B902
     ) -> Union[List[str], str]:
-        """Validated the `backend_cors_origins` setting."""
+        """Validate the `backend_cors_origins` setting.
+
+        Args:
+            value: the value to be validated
+
+        Returns:
+            a list of strings or a string representing the cors origin(s)
+
+        Raises:
+            ValueError: if the value is not a string or list
+        """
         if isinstance(value, str) and not value.startswith("["):
             return [i.strip() for i in value.split(",")]
         if isinstance(value, (list, str)):
@@ -43,7 +55,15 @@ class Settings(BaseSettings):
     def assemble_db_connection(
         cls, value: Optional[str], values: Dict[str, Any]  # noqa: N805,B902
     ) -> Any:
-        """Assemble the postgres db connection."""
+        """Assemble the postgres db connection.
+
+        Args:
+            value: the value to be validated
+            values: a dict of the other values in this config
+
+        Returns:
+            the postgres uri in either string or `PostgresDsn` format
+        """
         if isinstance(value, str):
             return value
         return PostgresDsn.build(
@@ -66,7 +86,11 @@ class Settings(BaseSettings):
 
 @lru_cache()
 def get_settings() -> Settings:
-    """Return cached settings."""
+    """Return cached settings.
+
+    Returns:
+        a `Settings` object
+    """
     return Settings()
 
 

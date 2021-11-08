@@ -7,3 +7,7 @@ services:
 
   frontend:
     image: "infilmation-frontend:latest"
+
+  pgadmin:
+    profiles:
+      - pgadmin

@@ -35,15 +35,15 @@ repos:
 
       - id: flake8
         name: flake8
-        entry: flake8
         language: system
+        entry: bash -c "cd backend && exec flake8"
         files: backend/
         types: [python]
         require_serial: true
 
       - id: reorder-python-imports
         name: Reorder python imports
-        entry: reorder-python-imports
+        entry: bash -c "cd backend && exec reorder-python-imports"
         language: system
         files: backend/
         types: [python]

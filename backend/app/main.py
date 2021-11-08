@@ -2,10 +2,16 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
+from app.api import api_router
 from app.core.config import settings
 from app.db import database
 
-app = FastAPI(title=settings.project_name)
+app = FastAPI(
+    title=settings.project_name,
+    openapi_url=f"{settings.api_path}/openapi.json",
+    docs_url="/docs/",
+    redoc_url=None,
+)
 
 app.state.database = database
 
@@ -18,6 +24,8 @@ if settings.backend_cors_origins:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+app.include_router(api_router, prefix=settings.api_path)
 
 
 @app.on_event("startup")

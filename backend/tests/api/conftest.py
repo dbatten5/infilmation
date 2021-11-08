@@ -11,7 +11,7 @@ from app.models import metadata
 
 
 @pytest.fixture(autouse=True, scope="module")
-def create_test_database() -> Generator:
+def create_test_database() -> Generator[None, None, None]:
     """Create a test database before tests and tear down afterwards."""
     engine = sqlalchemy.create_engine(settings.sqlalchemy_database_uri)
     metadata.create_all(engine)

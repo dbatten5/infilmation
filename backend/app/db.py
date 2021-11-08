@@ -1,8 +1,7 @@
 """Module to hold database related config."""
 import databases
-import sqlalchemy
-
 import ormar
+import sqlalchemy
 
 from app.core.config import settings
 

@@ -3,14 +3,14 @@ from unittest import mock
 
 from fastapi.testclient import TestClient
 
-from app.api.movies import router
+from app.api.films import router
 from app.core.config import settings
 
 
 class TestSearch:
     """Tests for the `search` route."""
 
-    @mock.patch("app.api.movies.search_movies", autospec=True)
+    @mock.patch("app.api.films.search_movies", autospec=True)
     def test_success(
         self, mock_search_movies: mock.MagicMock, client: TestClient
     ) -> None:
@@ -56,8 +56,8 @@ class TestSearch:
             },
         ]
 
-    @mock.patch("app.api.movies.search_movies", autospec=True)
-    def test_only_movies_are_returned(
+    @mock.patch("app.api.films.search_movies", autospec=True)
+    def test_only_films_are_returned(
         self, mock_search_movies: mock.MagicMock, client: TestClient
     ) -> None:
         """

@@ -4,14 +4,14 @@ from typing import List
 from fastapi import APIRouter
 from phylm.tools import search_movies
 
-from app.schemas.movies import SearchResult
+from app.schemas.films import SearchResult
 
-router = APIRouter(prefix="/movies")
+router = APIRouter(prefix="/films")
 
 
 @router.get("/search", response_model=List[SearchResult])
 def search(query: str) -> List[SearchResult]:
-    """Search for a movie from a given query.
+    """Search for a film from a given query.
 
     Args:
         query: the query string

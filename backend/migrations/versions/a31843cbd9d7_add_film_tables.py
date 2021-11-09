@@ -1,8 +1,8 @@
 """add film tables
 
-Revision ID: 49f0ef5e70c1
+Revision ID: a31843cbd9d7
 Revises: 
-Create Date: 2021-11-08 23:05:57.833190
+Create Date: 2021-11-09 09:02:29.085385
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '49f0ef5e70c1'
+revision = 'a31843cbd9d7'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -32,26 +32,24 @@ def upgrade():
     )
     op.create_table('films',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('key', sa.String(length=50), nullable=False),
     sa.Column('title', sa.String(length=255), nullable=False),
     sa.Column('year', sa.Integer(), nullable=True),
-    sa.Column('runtime', sa.Integer(), nullable=False),
-    sa.Column('plot', sa.Text(), nullable=False),
-    sa.Column('imdb_id', sa.String(length=255), nullable=False),
-    sa.Column('imdb_title', sa.String(length=255), nullable=False),
-    sa.Column('imdb_year', sa.Integer(), nullable=False),
-    sa.Column('imdb_rating', sa.Float(), nullable=False),
+    sa.Column('runtime', sa.Integer(), nullable=True),
+    sa.Column('plot', sa.Text(), nullable=True),
+    sa.Column('imdb_id', sa.String(length=255), nullable=True),
+    sa.Column('imdb_title', sa.String(length=255), nullable=True),
+    sa.Column('imdb_year', sa.Integer(), nullable=True),
+    sa.Column('imdb_rating', sa.Float(), nullable=True),
     sa.Column('imdb_low_confidence', sa.Boolean(), nullable=True),
-    sa.Column('mtc_title', sa.String(length=255), nullable=False),
-    sa.Column('mtc_year', sa.Integer(), nullable=False),
-    sa.Column('mtc_rating', sa.Integer(), nullable=False),
+    sa.Column('mtc_title', sa.String(length=255), nullable=True),
+    sa.Column('mtc_year', sa.Integer(), nullable=True),
+    sa.Column('mtc_rating', sa.Integer(), nullable=True),
     sa.Column('mtc_low_confidence', sa.Boolean(), nullable=True),
-    sa.Column('rt_title', sa.String(length=255), nullable=False),
-    sa.Column('rt_year', sa.Integer(), nullable=False),
-    sa.Column('rt_tomato_rating', sa.Integer(), nullable=False),
+    sa.Column('rt_title', sa.String(length=255), nullable=True),
+    sa.Column('rt_year', sa.Integer(), nullable=True),
+    sa.Column('rt_tomato_rating', sa.Integer(), nullable=True),
     sa.Column('rt_low_confidence', sa.Boolean(), nullable=True),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('key')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('genres',
     sa.Column('id', sa.Integer(), nullable=False),

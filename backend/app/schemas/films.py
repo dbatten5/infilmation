@@ -22,3 +22,6 @@ class SearchResult(BaseModel):
 
 class FilmIn(BaseModel):
     """Schema for create film requests."""
+
+    title: str
+    imdb_id: Optional[str] = None

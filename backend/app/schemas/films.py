@@ -1,4 +1,4 @@
-"""Module to hold movie related schemas."""
+"""Module to hold film related schemas."""
 from enum import Enum
 from typing import Optional
 
@@ -12,9 +12,16 @@ class MovieTypeEnum(str, Enum):
 
 
 class SearchResult(BaseModel):
-    """Schema for a movie search result."""
+    """Schema for a film search result."""
 
     title: str
     kind: MovieTypeEnum
     year: Optional[int] = None
     imdb_id: str
+
+
+class FilmIn(BaseModel):
+    """Schema for create film requests."""
+
+    title: str
+    imdb_id: Optional[str] = None

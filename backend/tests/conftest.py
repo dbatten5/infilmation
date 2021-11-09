@@ -1,9 +1,12 @@
 """Module to hold test fixtures etc."""
+from typing import AsyncGenerator
 from typing import Generator
 
-from fastapi.testclient import TestClient
 import pytest
 import sqlalchemy
+from asgi_lifespan import LifespanManager
+from fastapi.testclient import TestClient
+from httpx import AsyncClient
 
 from app.core.config import settings
 from app.main import app
@@ -19,8 +22,8 @@ def create_test_database() -> Generator[None, None, None]:
     metadata.drop_all(engine)
 
 
-@pytest.fixture(scope="module")
-def client() -> Generator[TestClient, None, None]:
+@pytest.fixture(scope="module", name="client")
+def client_fixture() -> Generator[TestClient, None, None]:
     """Initialize a `TestClient` to be used in tests.
 
     Yields:
@@ -28,3 +31,15 @@ def client() -> Generator[TestClient, None, None]:
     """
     with TestClient(app) as test_client:
         yield test_client
+
+
+@pytest.fixture(name="async_client", scope="package")
+async def async_client_fixture() -> AsyncGenerator[AsyncClient, None]:
+    """Initialize an `AsyncClient` to be used in tests.
+
+    Yields:
+        the async test client
+    """
+    async with LifespanManager(app):
+        async with AsyncClient(app=app, base_url="http://test") as test_client:
+            yield test_client

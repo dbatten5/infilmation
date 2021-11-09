@@ -29,6 +29,7 @@ jobs:
           cache-to: type=gha,mode=max
           context: backend
           load: true
+          target: development
 
       - name: Build frontend
         id: docker_build_frontend

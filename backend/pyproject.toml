@@ -52,6 +52,9 @@ plugins = "sqlmypy"
 profile = "open_stack"
 
 [tool.pytest.ini_options]
+markers = [
+  "integration: marks tests as integration tests"
+]
 env_override_existing_values = true
 env_files = [".env",".env.test"]
 

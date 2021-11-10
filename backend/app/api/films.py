@@ -14,7 +14,7 @@ router = APIRouter(prefix="/films")
 
 
 @router.get("/search", response_model=List[SearchResult])
-def search(query: str) -> List[SearchResult]:
+def search_films(query: str) -> List[SearchResult]:
     """Search for a film from a given query.
 
     Args:

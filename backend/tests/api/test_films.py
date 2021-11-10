@@ -12,8 +12,8 @@ from app.models.film import Film
 database = Film.Meta.database
 
 
-class TestSearch:
-    """Tests for the `search` route."""
+class TestSearchFilms:
+    """Tests for the `search_films` route."""
 
     @mock.patch("app.api.films.search_movies", autospec=True)
     def test_success(
@@ -21,7 +21,7 @@ class TestSearch:
     ) -> None:
         """
         Given a search query,
-        When the `search` endpoint is hit with the query,
+        When the `search_films` endpoint is hit with the query,
         Then a list of search results are returned
         """
         query = "the matrix"
@@ -42,7 +42,7 @@ class TestSearch:
                 "imdb_id": "0234215",
             },
         ]
-        url = router.url_path_for("search")
+        url = router.url_path_for("search_films")
 
         resp = client.get(f"{settings.api_path}{url}?query={query}")
 
@@ -67,7 +67,7 @@ class TestSearch:
     ) -> None:
         """
         Given a search query,
-        When the `search` endpoint is hit with the query,
+        When the `search_films` endpoint is hit with the query,
         Then only a list of movie search results are returned
         """
         query = "the matrix"
@@ -88,7 +88,7 @@ class TestSearch:
                 "imdb_id": "0234215",
             },
         ]
-        url = router.url_path_for("search")
+        url = router.url_path_for("search_films")
 
         resp = client.get(f"{settings.api_path}{url}?query={query}")
 
@@ -102,7 +102,7 @@ class TestSearch:
         ]
 
 
-class TestCreate:
+class TestCreateFilm:
     """Tests for the `create_film` function."""
 
     @mock.patch("app.api.films.get_or_create_film", autospec=True)

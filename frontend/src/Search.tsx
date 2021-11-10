@@ -4,7 +4,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import debounce from 'lodash.debounce';
 import axios from 'axios';
-import { SearchResult } from './generated/models';
+import { SearchResult, Film } from './generated/models';
 
 const renderOptionLabel = (option: string | SearchResult) =>
   typeof option === 'string' ? option : `${option.title} (${option.year})`;
@@ -21,6 +21,15 @@ const Search = () => {
     try {
       const response = await axios.get<SearchResult[]>(url);
       setOptions(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const postFilm = async (film: SearchResult) => {
+    const url = 'http://localhost:8000/api/v1/films/';
+    try {
+      await axios.post<Film>(url, film);
     } catch (error) {
       console.error(error);
     }
@@ -58,6 +67,7 @@ const Search = () => {
         onChange={(event: any, newValue: SearchResult | null) => {
           if (newValue) {
             setSelectedFilms([...selectedFilms, newValue]);
+            postFilm(newValue);
           }
         }}
         renderInput={(params) => (

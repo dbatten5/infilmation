@@ -5,31 +5,35 @@ import TextField from '@mui/material/TextField';
 import debounce from 'lodash.debounce';
 import { SearchResult } from './generated/models';
 import { filmsApi } from './providers/env';
-import useFilmList from './filmList';
+import { useStateContext } from './state';
 
 const renderOptionLabel = (option: string | SearchResult) =>
   typeof option === 'string' ? option : `${option.title} (${option.year})`;
 
 const Search = () => {
-  const [, addFilm] = useFilmList();
+  const { dispatch } = useStateContext();
   const [value, setValue] = React.useState<SearchResult | null>(null);
   const [inputValue, setInputValue] = React.useState('');
   const [options, setOptions] = React.useState<SearchResult[]>([]);
 
   const fetchOptions = async (query: string) => {
-    try {
-      const response = await filmsApi.searchFilms({ query });
-      setOptions(response.data);
-    } catch (error) {
-      console.error(error);
+    if (query) {
+      try {
+        const response = await filmsApi.searchFilms({ query });
+        setOptions(response.data);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
   const postFilm = async (film: SearchResult) => {
     try {
-      const newFilm = await filmsApi.createFilm({ filmIn: film });
-      // @ts-ignore
-      addFilm(newFilm);
+      const createFilmResponse = await filmsApi.createFilm({ filmIn: film });
+      dispatch({
+        type: 'ADD_FILM',
+        payload: createFilmResponse.data,
+      });
     } catch (error) {
       console.error(error);
     }

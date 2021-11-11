@@ -1,10 +1,6 @@
-import { Configuration, FilmsApi } from '../generated';
+import { FilmsApi } from '../generated';
 
 // prettier-ignore
-export const basePath = process.env.REACT_APP_API_BASE || "http://localhost:8000";
+export const basePath = ""
 
-const apiConfig: Configuration = new Configuration({
-  basePath,
-});
-
-export const filmsApi: FilmsApi = new FilmsApi(apiConfig);
+export const filmsApi: FilmsApi = new FilmsApi();

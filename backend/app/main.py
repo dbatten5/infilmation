@@ -1,5 +1,6 @@
 """Main app initialization."""
 from fastapi import FastAPI
+from fastapi.routing import APIRoute
 from starlette.middleware.cors import CORSMiddleware
 
 from app.api import api_router
@@ -27,6 +28,11 @@ if settings.backend_cors_origins:
     )
 
 app.include_router(api_router, prefix=settings.api_path)
+
+# simplify operation IDs so that generated API clients have simpler function names
+for route in app.routes:
+    if isinstance(route, APIRoute):
+        route.operation_id = route.name
 
 
 @app.on_event("startup")

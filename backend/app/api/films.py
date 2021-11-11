@@ -14,9 +14,9 @@ router = APIRouter(prefix="/films")
 
 
 @router.get("/search", response_model=List[SearchResult])
-def search(query: str) -> List[SearchResult]:
+def search_films(query: str) -> List[SearchResult]:
     """Search for a film from a given query.
-
+    \f
     Args:
         query: the query string
 
@@ -32,7 +32,7 @@ def search(query: str) -> List[SearchResult]:
 @router.post("/", response_model=Film)
 async def create_film(film_request: FilmIn) -> Film:
     """Create a new film.
-
+    \f
     Args:
         film_request: a `FilmIn` instance
 
@@ -47,7 +47,7 @@ async def create_film(film_request: FilmIn) -> Film:
 @router.get("/", response_model=List[Film])
 async def get_films(imdb_ids: List[str] = Query([])) -> List[Film]:
     """Filter films by multiple `imdb_id`.
-
+    \f
     Args:
         imdb_ids: a list of `imdb_id` queries
 

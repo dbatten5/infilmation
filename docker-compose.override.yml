@@ -15,6 +15,14 @@ services:
       - 5050:5050
 
   backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: development
+    ports:
+      - 8000:8000
+    volumes:
+      - ./backend:/infilmation:cached
     profiles:
       - backend
 

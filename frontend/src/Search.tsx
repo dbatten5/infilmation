@@ -5,12 +5,13 @@ import TextField from '@mui/material/TextField';
 import debounce from 'lodash.debounce';
 import { SearchResult } from './generated/models';
 import { filmsApi } from './providers/env';
+import useFilmList from './filmList';
 
 const renderOptionLabel = (option: string | SearchResult) =>
   typeof option === 'string' ? option : `${option.title} (${option.year})`;
 
 const Search = () => {
-  const [selectedFilms, setSelectedFilms] = React.useState<SearchResult[]>([]);
+  const [, addFilm] = useFilmList();
   const [value, setValue] = React.useState<SearchResult | null>(null);
   const [inputValue, setInputValue] = React.useState('');
   const [options, setOptions] = React.useState<SearchResult[]>([]);
@@ -26,7 +27,9 @@ const Search = () => {
 
   const postFilm = async (film: SearchResult) => {
     try {
-      await filmsApi.createFilm({ filmIn: film });
+      const newFilm = await filmsApi.createFilm({ filmIn: film });
+      // @ts-ignore
+      addFilm(newFilm);
     } catch (error) {
       console.error(error);
     }
@@ -63,7 +66,6 @@ const Search = () => {
         }}
         onChange={(event: any, newValue: SearchResult | null) => {
           if (newValue) {
-            setSelectedFilms([...selectedFilms, newValue]);
             postFilm(newValue);
           }
         }}

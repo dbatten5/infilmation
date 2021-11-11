@@ -3,8 +3,8 @@ import Box from '@mui/material/Box';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import debounce from 'lodash.debounce';
-import axios from 'axios';
-import { SearchResult, Film } from './generated/models';
+import { SearchResult } from './generated/models';
+import { filmsApi } from './providers/env';
 
 const renderOptionLabel = (option: string | SearchResult) =>
   typeof option === 'string' ? option : `${option.title} (${option.year})`;
@@ -16,10 +16,8 @@ const Search = () => {
   const [options, setOptions] = React.useState<SearchResult[]>([]);
 
   const fetchOptions = async (query: string) => {
-    const encodedQuery = encodeURI(query);
-    const url = `http://localhost:8000/api/v1/films/search?query=${encodedQuery}`;
     try {
-      const response = await axios.get<SearchResult[]>(url);
+      const response = await filmsApi.searchFilms({ query });
       setOptions(response.data);
     } catch (error) {
       console.error(error);
@@ -27,9 +25,8 @@ const Search = () => {
   };
 
   const postFilm = async (film: SearchResult) => {
-    const url = 'http://localhost:8000/api/v1/films/';
     try {
-      await axios.post<Film>(url, film);
+      await filmsApi.createFilm({ filmIn: film });
     } catch (error) {
       console.error(error);
     }
@@ -42,7 +39,7 @@ const Search = () => {
 
   React.useEffect(() => {
     debouncedFetchOptions(inputValue);
-  }, [inputValue]);
+  }, [inputValue, debouncedFetchOptions]);
 
   return (
     <Box>

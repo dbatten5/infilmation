@@ -35,15 +35,15 @@ import { SearchResult } from '../models';
 export const FilmsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Create a new film.  Args:     film_request: a `FilmIn` instance  Returns:     a `Film` object
+         * Create a new film. 
          * @summary Create Film
          * @param {FilmIn} filmIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createFilmApiV1FilmsPost: async (filmIn: FilmIn, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createFilm: async (filmIn: FilmIn, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'filmIn' is not null or undefined
-            assertParamExists('createFilmApiV1FilmsPost', 'filmIn', filmIn)
+            assertParamExists('createFilm', 'filmIn', filmIn)
             const localVarPath = `/api/v1/films/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -71,13 +71,13 @@ export const FilmsApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Filter films by multiple `imdb_id`.  Args:     imdb_ids: a list of `imdb_id` queries  Returns:     a list of filtered `Film` objects
+         * Filter films by multiple `imdb_id`. 
          * @summary Get Films
          * @param {Array<string>} [imdbIds] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFilmsApiV1FilmsGet: async (imdbIds?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFilms: async (imdbIds?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/films/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -106,15 +106,15 @@ export const FilmsApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Search for a film from a given query.  Args:     query: the query string  Returns:     a list of search results
-         * @summary Search
+         * Search for a film from a given query. 
+         * @summary Search Films
          * @param {string} query 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchApiV1FilmsSearchGet: async (query: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        searchFilms: async (query: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'query' is not null or undefined
-            assertParamExists('searchApiV1FilmsSearchGet', 'query', query)
+            assertParamExists('searchFilms', 'query', query)
             const localVarPath = `/api/v1/films/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -153,36 +153,36 @@ export const FilmsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = FilmsApiAxiosParamCreator(configuration)
     return {
         /**
-         * Create a new film.  Args:     film_request: a `FilmIn` instance  Returns:     a `Film` object
+         * Create a new film. 
          * @summary Create Film
          * @param {FilmIn} filmIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createFilmApiV1FilmsPost(filmIn: FilmIn, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Film>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createFilmApiV1FilmsPost(filmIn, options);
+        async createFilm(filmIn: FilmIn, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Film>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createFilm(filmIn, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Filter films by multiple `imdb_id`.  Args:     imdb_ids: a list of `imdb_id` queries  Returns:     a list of filtered `Film` objects
+         * Filter films by multiple `imdb_id`. 
          * @summary Get Films
          * @param {Array<string>} [imdbIds] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFilmsApiV1FilmsGet(imdbIds?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Film>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getFilmsApiV1FilmsGet(imdbIds, options);
+        async getFilms(imdbIds?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Film>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFilms(imdbIds, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Search for a film from a given query.  Args:     query: the query string  Returns:     a list of search results
-         * @summary Search
+         * Search for a film from a given query. 
+         * @summary Search Films
          * @param {string} query 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async searchApiV1FilmsSearchGet(query: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SearchResult>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.searchApiV1FilmsSearchGet(query, options);
+        async searchFilms(query: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SearchResult>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.searchFilms(query, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -196,76 +196,76 @@ export const FilmsApiFactory = function (configuration?: Configuration, basePath
     const localVarFp = FilmsApiFp(configuration)
     return {
         /**
-         * Create a new film.  Args:     film_request: a `FilmIn` instance  Returns:     a `Film` object
+         * Create a new film. 
          * @summary Create Film
          * @param {FilmIn} filmIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createFilmApiV1FilmsPost(filmIn: FilmIn, options?: any): AxiosPromise<Film> {
-            return localVarFp.createFilmApiV1FilmsPost(filmIn, options).then((request) => request(axios, basePath));
+        createFilm(filmIn: FilmIn, options?: any): AxiosPromise<Film> {
+            return localVarFp.createFilm(filmIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Filter films by multiple `imdb_id`.  Args:     imdb_ids: a list of `imdb_id` queries  Returns:     a list of filtered `Film` objects
+         * Filter films by multiple `imdb_id`. 
          * @summary Get Films
          * @param {Array<string>} [imdbIds] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFilmsApiV1FilmsGet(imdbIds?: Array<string>, options?: any): AxiosPromise<Array<Film>> {
-            return localVarFp.getFilmsApiV1FilmsGet(imdbIds, options).then((request) => request(axios, basePath));
+        getFilms(imdbIds?: Array<string>, options?: any): AxiosPromise<Array<Film>> {
+            return localVarFp.getFilms(imdbIds, options).then((request) => request(axios, basePath));
         },
         /**
-         * Search for a film from a given query.  Args:     query: the query string  Returns:     a list of search results
-         * @summary Search
+         * Search for a film from a given query. 
+         * @summary Search Films
          * @param {string} query 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchApiV1FilmsSearchGet(query: string, options?: any): AxiosPromise<Array<SearchResult>> {
-            return localVarFp.searchApiV1FilmsSearchGet(query, options).then((request) => request(axios, basePath));
+        searchFilms(query: string, options?: any): AxiosPromise<Array<SearchResult>> {
+            return localVarFp.searchFilms(query, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for createFilmApiV1FilmsPost operation in FilmsApi.
+ * Request parameters for createFilm operation in FilmsApi.
  * @export
- * @interface FilmsApiCreateFilmApiV1FilmsPostRequest
+ * @interface FilmsApiCreateFilmRequest
  */
-export interface FilmsApiCreateFilmApiV1FilmsPostRequest {
+export interface FilmsApiCreateFilmRequest {
     /**
      * 
      * @type {FilmIn}
-     * @memberof FilmsApiCreateFilmApiV1FilmsPost
+     * @memberof FilmsApiCreateFilm
      */
     readonly filmIn: FilmIn
 }
 
 /**
- * Request parameters for getFilmsApiV1FilmsGet operation in FilmsApi.
+ * Request parameters for getFilms operation in FilmsApi.
  * @export
- * @interface FilmsApiGetFilmsApiV1FilmsGetRequest
+ * @interface FilmsApiGetFilmsRequest
  */
-export interface FilmsApiGetFilmsApiV1FilmsGetRequest {
+export interface FilmsApiGetFilmsRequest {
     /**
      * 
      * @type {Array<string>}
-     * @memberof FilmsApiGetFilmsApiV1FilmsGet
+     * @memberof FilmsApiGetFilms
      */
     readonly imdbIds?: Array<string>
 }
 
 /**
- * Request parameters for searchApiV1FilmsSearchGet operation in FilmsApi.
+ * Request parameters for searchFilms operation in FilmsApi.
  * @export
- * @interface FilmsApiSearchApiV1FilmsSearchGetRequest
+ * @interface FilmsApiSearchFilmsRequest
  */
-export interface FilmsApiSearchApiV1FilmsSearchGetRequest {
+export interface FilmsApiSearchFilmsRequest {
     /**
      * 
      * @type {string}
-     * @memberof FilmsApiSearchApiV1FilmsSearchGet
+     * @memberof FilmsApiSearchFilms
      */
     readonly query: string
 }
@@ -278,38 +278,38 @@ export interface FilmsApiSearchApiV1FilmsSearchGetRequest {
  */
 export class FilmsApi extends BaseAPI {
     /**
-     * Create a new film.  Args:     film_request: a `FilmIn` instance  Returns:     a `Film` object
+     * Create a new film. 
      * @summary Create Film
-     * @param {FilmsApiCreateFilmApiV1FilmsPostRequest} requestParameters Request parameters.
+     * @param {FilmsApiCreateFilmRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FilmsApi
      */
-    public createFilmApiV1FilmsPost(requestParameters: FilmsApiCreateFilmApiV1FilmsPostRequest, options?: AxiosRequestConfig) {
-        return FilmsApiFp(this.configuration).createFilmApiV1FilmsPost(requestParameters.filmIn, options).then((request) => request(this.axios, this.basePath));
+    public createFilm(requestParameters: FilmsApiCreateFilmRequest, options?: AxiosRequestConfig) {
+        return FilmsApiFp(this.configuration).createFilm(requestParameters.filmIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Filter films by multiple `imdb_id`.  Args:     imdb_ids: a list of `imdb_id` queries  Returns:     a list of filtered `Film` objects
+     * Filter films by multiple `imdb_id`. 
      * @summary Get Films
-     * @param {FilmsApiGetFilmsApiV1FilmsGetRequest} requestParameters Request parameters.
+     * @param {FilmsApiGetFilmsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FilmsApi
      */
-    public getFilmsApiV1FilmsGet(requestParameters: FilmsApiGetFilmsApiV1FilmsGetRequest = {}, options?: AxiosRequestConfig) {
-        return FilmsApiFp(this.configuration).getFilmsApiV1FilmsGet(requestParameters.imdbIds, options).then((request) => request(this.axios, this.basePath));
+    public getFilms(requestParameters: FilmsApiGetFilmsRequest = {}, options?: AxiosRequestConfig) {
+        return FilmsApiFp(this.configuration).getFilms(requestParameters.imdbIds, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Search for a film from a given query.  Args:     query: the query string  Returns:     a list of search results
-     * @summary Search
-     * @param {FilmsApiSearchApiV1FilmsSearchGetRequest} requestParameters Request parameters.
+     * Search for a film from a given query. 
+     * @summary Search Films
+     * @param {FilmsApiSearchFilmsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FilmsApi
      */
-    public searchApiV1FilmsSearchGet(requestParameters: FilmsApiSearchApiV1FilmsSearchGetRequest, options?: AxiosRequestConfig) {
-        return FilmsApiFp(this.configuration).searchApiV1FilmsSearchGet(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
+    public searchFilms(requestParameters: FilmsApiSearchFilmsRequest, options?: AxiosRequestConfig) {
+        return FilmsApiFp(this.configuration).searchFilms(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
     }
 }

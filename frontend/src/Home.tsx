@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Page from './Page';
 import Search from './Search';
+import FilmList from './FilmList';
 
 const Home = () => (
   <Page>
@@ -12,7 +13,7 @@ const Home = () => (
           <Search />
         </Grid>
         <Grid item xs={4}>
-          <p>second</p>
+          <FilmList />
         </Grid>
         <Grid item xs={4}>
           <p>third</p>

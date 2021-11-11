@@ -1,6 +1,8 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
 import Page from './Page';
 import Search from './Search';
 import FilmList from './FilmList';
@@ -16,7 +18,9 @@ const Home = () => (
           <FilmList />
         </Grid>
         <Grid item xs={4}>
-          <p>third</p>
+          <Link to="/results">
+            <Button variant="outlined">Submit</Button>
+          </Link>
         </Grid>
       </Grid>
     </Box>

@@ -1,4 +1,4 @@
-let rules = {
+const rules = {
   'max-len': ['error', 80, 2, { ignoreUrls: true }],
   'no-console': [0],
   'no-restricted-syntax': 'off',
@@ -12,6 +12,7 @@ let rules = {
   'jsx-a11y/click-events-have-key-events': 'off',
   'jsx-a11y/no-static-element-interactions': 'off',
   'react/jsx-one-expression-per-line': 'off',
+  camelcase: 'off',
   'react/jsx-filename-extension': [2, { extensions: ['.ts', '.tsx'] }],
   'lines-between-class-members': [
     'error',
@@ -49,4 +50,3 @@ module.exports = {
     },
   },
 };
-

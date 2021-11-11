@@ -1,8 +1,8 @@
 import { Dispatch } from 'react';
-import { SearchResult } from './generated/models';
+import { Film } from './generated/models';
 
 export interface StateContext {
-  filmList: SearchResult[];
+  filmList: Film[];
 }
 
 export type ActionType = {

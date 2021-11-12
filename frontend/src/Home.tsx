@@ -1,30 +1,32 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import { Link } from 'react-router-dom';
-import Button from '@mui/material/Button';
 import Page from './Page';
 import Search from './Search';
-import FilmList from './FilmList';
+import FilmTable from './FilmTable';
+import { FilmListItem } from './types';
 
-const Home = () => (
-  <Page>
-    <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={2}>
-        <Grid item xs={4}>
-          <Search />
+const Home = () => {
+  const [filmList, setFilmList] = React.useState<FilmListItem[]>([]);
+
+  const addFilm = (option: FilmListItem) => {
+    setFilmList([...filmList, option]);
+  };
+
+  return (
+    <Page>
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
+            <Search addFilm={addFilm} />
+          </Grid>
+          <Grid item xs={8}>
+            <FilmTable films={filmList} />
+          </Grid>
         </Grid>
-        <Grid item xs={4}>
-          <FilmList />
-        </Grid>
-        <Grid item xs={4}>
-          <Link to="/results">
-            <Button variant="outlined">Submit</Button>
-          </Link>
-        </Grid>
-      </Grid>
-    </Box>
-  </Page>
-);
+      </Box>
+    </Page>
+  );
+};
 
 export default Home;

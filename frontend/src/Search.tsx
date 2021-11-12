@@ -40,6 +40,7 @@ const Search = ({ addFilm }: Props) => {
   };
 
   const handleSelect = (option: SearchResult) => {
+    setInputValue('');
     addFilm({ ...option, loading: true });
     postFilm(option);
     setOptions([]);
@@ -61,13 +62,9 @@ const Search = ({ addFilm }: Props) => {
         getOptionLabel={renderOptionLabel}
         filterOptions={(x) => x}
         options={options}
+        open={!!inputValue && options.length > 0}
         includeInputInList
-        sx={{
-          width: '100%',
-          '& .MuiAutocomplete-noOptions': {
-            color: 'blue',
-          },
-        }}
+        selectOnFocus
         popupIcon={false}
         value={value}
         onInputChange={(event, newInputValue) => {
@@ -84,7 +81,7 @@ const Search = ({ addFilm }: Props) => {
         }}
         renderInput={(params) => (
           /* eslint-disable react/jsx-props-no-spreading */
-          <TextField {...params} label="Start typing..." fullWidth />
+          <TextField {...params} placeholder="Start typing..." fullWidth />
         )}
       />
     </Box>

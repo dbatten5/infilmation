@@ -17,7 +17,7 @@ export interface Store {
 
 export interface FilmListItem {
   title: string;
-  imdb_id: string;
+  imdb_id?: string;
   id?: number;
   year?: number;
   runtime?: number;

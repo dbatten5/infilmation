@@ -9,7 +9,12 @@ import Paper from '@mui/material/Paper';
 import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import SvgIcon from '@mui/material/SvgIcon';
+import Stack from '@mui/material/Stack';
 import { FilmListItem } from './types';
+import Imdb from './icons/IMDb';
+import Mtc from './icons/mtc';
+import Rt from './icons/rt';
 
 const createRow = ({
   id,
@@ -58,9 +63,42 @@ const FilmTable = ({ films }: Props) => {
             <TableCell>Title</TableCell>
             <TableCell align="right">Year</TableCell>
             <TableCell align="right">Runtime</TableCell>
-            <TableCell align="right">IMDb</TableCell>
-            <TableCell align="right">Metacritic</TableCell>
-            <TableCell align="right">Rotten Tomatoes</TableCell>
+            <TableCell>
+              <Stack justifyContent="center" alignItems="flex-end">
+                <SvgIcon
+                  component={Imdb}
+                  sx={{
+                    width: '40px',
+                    height: '25px',
+                  }}
+                  viewBox="0 0 64 32"
+                />
+              </Stack>
+            </TableCell>
+            <TableCell align="right">
+              <Stack justifyContent="center" alignItems="flex-end">
+                <SvgIcon
+                  component={Mtc}
+                  sx={{
+                    width: '25px',
+                    height: '25px',
+                  }}
+                  viewBox="0 0 29.4 29.7"
+                />
+              </Stack>
+            </TableCell>
+            <TableCell align="right">
+              <Stack justifyContent="center" alignItems="flex-end">
+                <SvgIcon
+                  component={Rt}
+                  sx={{
+                    width: '25px',
+                    height: '25px',
+                  }}
+                  viewBox="0 0 80 80"
+                />
+              </Stack>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

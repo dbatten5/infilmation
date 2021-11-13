@@ -16,11 +16,11 @@ const Home = () => {
   return (
     <Page>
       <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={4}>
+        <Grid container spacing={2} sx={{ width: '100%' }}>
+          <Grid item xs={12} md={4}>
             <Search addFilm={addFilm} />
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={12} md={8}>
             <FilmTable films={filmList} />
           </Grid>
         </Grid>

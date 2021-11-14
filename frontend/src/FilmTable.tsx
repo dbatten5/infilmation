@@ -43,16 +43,6 @@ type Props = {
 };
 
 const FilmTable = ({ films }: Props) => {
-  if (!films.length) {
-    return (
-      <Box sx={{ width: '100%' }}>
-        <Typography variant="h6">
-          Start typing the name of a film in the search bar
-        </Typography>
-      </Box>
-    );
-  }
-
   const rows = films.map((film) => createRow(film));
 
   return (
@@ -143,6 +133,13 @@ const FilmTable = ({ films }: Props) => {
           ))}
         </TableBody>
       </Table>
+      {rows.length === 0 && (
+        <Box sx={{ width: '100%', p: '3rem' }}>
+          <Stack justifyContent="center" direction="row" sx={{ width: '100%' }}>
+            <Typography variant="subtitle1">inspiring quote</Typography>
+          </Stack>
+        </Box>
+      )}
     </TableContainer>
   );
 };

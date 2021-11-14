@@ -81,7 +81,7 @@ const Search = ({ addFilm }: Props) => {
         }}
         renderInput={(params) => (
           /* eslint-disable react/jsx-props-no-spreading */
-          <TextField {...params} placeholder="Start typing..." fullWidth />
+          <TextField {...params} placeholder="Type a film name..." fullWidth />
         )}
       />
     </Box>

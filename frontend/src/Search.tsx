@@ -2,6 +2,9 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
+import CircularProgress from '@mui/material/CircularProgress';
 import debounce from 'lodash.debounce';
 import { SearchResult } from './generated/models';
 import { filmsApi } from './providers/env';
@@ -14,10 +17,18 @@ type Props = {
   addFilm: (option: FilmListItem) => void;
 };
 
+const SearchingText = () => (
+  <Stack direction="row" alignItems="center">
+    <Typography variant="body1">Searching...</Typography>
+    <CircularProgress size="1rem" sx={{ ml: '1rem' }} />
+  </Stack>
+);
+
 const Search = ({ addFilm }: Props) => {
   const [value, setValue] = React.useState<SearchResult | null>(null);
   const [inputValue, setInputValue] = React.useState('');
   const [options, setOptions] = React.useState<SearchResult[]>([]);
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   const fetchOptions = async (query: string) => {
     if (query) {
@@ -26,6 +37,8 @@ const Search = ({ addFilm }: Props) => {
         setOptions(response.data);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -47,7 +60,7 @@ const Search = ({ addFilm }: Props) => {
   };
 
   const debouncedFetchOptions = React.useMemo(
-    () => debounce(fetchOptions, 1000),
+    () => debounce(fetchOptions, 500),
     []
   );
 
@@ -62,12 +75,15 @@ const Search = ({ addFilm }: Props) => {
         getOptionLabel={renderOptionLabel}
         filterOptions={(x) => x}
         options={options}
-        open={!!inputValue && options.length > 0}
+        open={!!inputValue}
         includeInputInList
+        loading={loading}
+        loadingText={<SearchingText />}
         selectOnFocus
         popupIcon={false}
         value={value}
         onInputChange={(event, newInputValue) => {
+          setLoading(true);
           setInputValue(newInputValue);
         }}
         onClose={() => {

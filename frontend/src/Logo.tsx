@@ -6,7 +6,7 @@ const Logo = () => (
   <Box>
     <Typography
       variant="h1"
-      sx={{ fontSize: { xs: '3rem', sm: '4rem', md: '5rem', lg: '6rem' } }}
+      sx={{ fontSize: { xs: '2rem', sm: '3rem', md: '4rem', lg: '5rem' } }}
     >
       Infilmation
     </Typography>

@@ -76,10 +76,10 @@ const Search = ({ addFilm }: Props) => {
         filterOptions={(x) => x}
         options={options}
         open={!!inputValue}
-        includeInputInList
         loading={loading}
         loadingText={<SearchingText />}
         selectOnFocus
+        autoHighlight
         popupIcon={false}
         value={value}
         onInputChange={(event, newInputValue) => {

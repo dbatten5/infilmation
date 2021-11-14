@@ -5,13 +5,16 @@ import TextField from '@mui/material/TextField';
 import debounce from 'lodash.debounce';
 import { SearchResult } from './generated/models';
 import { filmsApi } from './providers/env';
-import { useStateContext } from './state';
+import { FilmListItem } from './types';
 
 const renderOptionLabel = (option: string | SearchResult) =>
   typeof option === 'string' ? option : `${option.title} (${option.year})`;
 
-const Search = () => {
-  const { dispatch } = useStateContext();
+type Props = {
+  addFilm: (option: FilmListItem) => void;
+};
+
+const Search = ({ addFilm }: Props) => {
   const [value, setValue] = React.useState<SearchResult | null>(null);
   const [inputValue, setInputValue] = React.useState('');
   const [options, setOptions] = React.useState<SearchResult[]>([]);
@@ -29,14 +32,18 @@ const Search = () => {
 
   const postFilm = async (film: SearchResult) => {
     try {
-      const createFilmResponse = await filmsApi.createFilm({ filmIn: film });
-      dispatch({
-        type: 'ADD_FILM',
-        payload: createFilmResponse.data,
-      });
+      const newFilmResponse = await filmsApi.createFilm({ filmIn: film });
+      addFilm({ ...newFilmResponse.data, loading: false });
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleSelect = (option: SearchResult) => {
+    setInputValue('');
+    addFilm({ ...option, loading: true });
+    postFilm(option);
+    setOptions([]);
   };
 
   const debouncedFetchOptions = React.useMemo(
@@ -52,15 +59,14 @@ const Search = () => {
     <Box>
       <Autocomplete
         id="film-search-bar"
-        sx={{ width: '100%' }}
         getOptionLabel={renderOptionLabel}
         filterOptions={(x) => x}
         options={options}
+        open={!!inputValue && options.length > 0}
         includeInputInList
-        clearOnEscape
+        selectOnFocus
         popupIcon={false}
         value={value}
-        blurOnSelect
         onInputChange={(event, newInputValue) => {
           setInputValue(newInputValue);
         }}
@@ -70,12 +76,12 @@ const Search = () => {
         }}
         onChange={(event: any, newValue: SearchResult | null) => {
           if (newValue) {
-            postFilm(newValue);
+            handleSelect(newValue);
           }
         }}
         renderInput={(params) => (
           /* eslint-disable react/jsx-props-no-spreading */
-          <TextField {...params} label="Start typing..." fullWidth />
+          <TextField {...params} placeholder="Type a film name..." fullWidth />
         )}
       />
     </Box>

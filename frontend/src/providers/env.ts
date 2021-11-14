@@ -1,6 +1,10 @@
-import { FilmsApi } from '../generated';
+import { Configuration, FilmsApi } from '../generated';
 
 // prettier-ignore
-export const basePath = ""
+export const basePath = " ";
 
-export const filmsApi: FilmsApi = new FilmsApi();
+const apiConfig: Configuration = new Configuration({
+  basePath,
+});
+
+export const filmsApi: FilmsApi = new FilmsApi(apiConfig);

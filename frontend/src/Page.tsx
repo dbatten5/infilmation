@@ -7,7 +7,11 @@ type Props = {
 };
 
 const Page = ({ children }: Props) => (
-  <Container maxWidth="lg">
+  <Container
+    maxWidth="lg"
+    sx={{ px: { xs: '2rem', sm: '3rem' } }}
+    disableGutters
+  >
     <NavBar />
     {children}
   </Container>

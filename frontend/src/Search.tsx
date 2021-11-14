@@ -80,6 +80,11 @@ const Search = ({ addFilm }: Props) => {
         loadingText={<SearchingText />}
         selectOnFocus
         autoHighlight
+        sx={{
+          root: {
+            bgcolor: 'white',
+          },
+        }}
         popupIcon={false}
         value={value}
         onInputChange={(event, newInputValue) => {

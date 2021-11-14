@@ -11,10 +11,12 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import SvgIcon from '@mui/material/SvgIcon';
 import Stack from '@mui/material/Stack';
+import Link from '@mui/material/Link';
 import { FilmListItem } from './types';
 import Imdb from './icons/IMDb';
 import Mtc from './icons/mtc';
 import Rt from './icons/rt';
+import Play from './icons/play';
 
 const createRow = ({
   id,
@@ -98,7 +100,25 @@ const FilmTable = ({ films }: Props) => {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.title}
+                <Link
+                  href={`https://www.youtube.com/results?search_query=${row.title}+${row.year}+trailer`}
+                  color="inherit"
+                  target="_blank"
+                  underline="none"
+                >
+                  <Stack direction="row" alignItems="center">
+                    <Box sx={{ mr: '0.35rem' }}>{row.title}</Box>
+                    <SvgIcon
+                      component={Play}
+                      sx={{
+                        width: '20px',
+                        height: '20px',
+                        '&:hover': { opacity: 0.6, transition: '0.3s' },
+                      }}
+                      viewBox="-1 -1 24 24"
+                    />
+                  </Stack>
+                </Link>
               </TableCell>
               <TableCell align="right">{row.year}</TableCell>
               <TableCell align="right">

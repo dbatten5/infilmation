@@ -13,28 +13,30 @@ const BackgroundCanvas = ({ width, height }: Props) => {
       const canvas = canvasRef.current;
       const context = canvas.getContext('2d');
       if (context == null) throw new Error('Could not get context');
+
+      const scale = Math.min(width / 1100, 0.7);
+
       const img1 = new Image();
-      img1.src = 'pink-semicircle.png';
-      console.log(width);
+      img1.src = 'turq-hex.png';
       img1.onload = () => {
         context.drawImage(
           img1,
-          -50,
-          -50,
-          img1.height * (90 / width),
-          img1.width * (90 / width)
+          -100,
+          height - 100 - 350 * scale,
+          (img1.width * scale) / 1.8,
+          (img1.height * scale) / 1.8
         );
       };
 
       const img2 = new Image();
-      img2.src = 'turq-hex.png';
+      img2.src = 'orange-circle.png';
       img2.onload = () => {
         context.drawImage(
           img2,
-          width - 200,
-          height - 200,
-          250,
-          (250 * img2.height) / img2.width
+          width - 350 * scale,
+          -100 + 80 * scale,
+          (img2.width * scale) / 1.2,
+          (img2.height * scale) / 1.2
         );
       };
     }

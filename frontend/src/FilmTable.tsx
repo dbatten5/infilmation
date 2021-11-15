@@ -17,6 +17,7 @@ import Imdb from './icons/IMDb';
 import Mtc from './icons/mtc';
 import Rt from './icons/rt';
 import Play from './icons/play';
+import FingerPoint from './icons/finger-point';
 
 const createRow = ({
   id,
@@ -161,14 +162,15 @@ const FilmTable = ({ films }: Props) => {
             direction="column"
             sx={{ width: '100%' }}
           >
-            <img
-              src="./watching.png"
-              alt="A couple watching a tv"
-              style={{ width: '100px' }}
+            <SvgIcon
+              component={FingerPoint}
+              sx={{
+                width: '5rem',
+                height: '5rem',
+              }}
+              viewBox="40 0 150 150"
             />
-            <Typography variant="subtitle1" sx={{ pt: '1rem' }}>
-              No films yet!
-            </Typography>
+            <Typography variant="subtitle1">No films yet!</Typography>
           </Stack>
         </Box>
       )}

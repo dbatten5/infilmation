@@ -17,7 +17,14 @@ class Settings(BaseSettings):
     """App settings, mapped from environment variables."""
 
     secret_key: str = secrets.token_urlsafe(32)
-    backend_cors_origins: List[AnyHttpUrl] = []
+    backend_cors_origins: List[Union[AnyHttpUrl, str]] = [
+        "http://localhost",
+        "http://localhost:3000",
+        "https://localhost",
+        "https://localhost:3000",
+        "http://infilmation.co",
+        "https://infilmation.co",
+    ]
 
     api_path: str = "/api/v1"
 
@@ -48,8 +55,8 @@ class Settings(BaseSettings):
     postgres_user: str = "postgres"
     postgres_password: str = "postgres"
     postgres_db: str = "infilmation"
-    postgres_port: Optional[str] = "5432"
-    sqlalchemy_database_uri: Optional[PostgresDsn] = None
+    postgres_port: Optional[str] = None
+    sqlalchemy_database_uri: Optional[Union[PostgresDsn, str]] = None
 
     @validator("sqlalchemy_database_uri", pre=True)
     def assemble_db_connection(
@@ -74,14 +81,6 @@ class Settings(BaseSettings):
             port=values.get("postgres_port"),
             path=f"/{values.get('postgres_db') or ''}",
         )
-
-    first_superuser: str
-    first_superuser_password: str
-
-    class Config:
-        """Extra config."""
-
-        env_file = ".env"
 
 
 @lru_cache()

@@ -154,9 +154,21 @@ const FilmTable = ({ films }: Props) => {
         </TableBody>
       </Table>
       {rows.length === 0 && (
-        <Box sx={{ width: '100%', p: '3rem' }}>
-          <Stack justifyContent="center" direction="row" sx={{ width: '100%' }}>
-            <Typography variant="subtitle1">inspiring quote</Typography>
+        <Box sx={{ width: '100%', p: '2rem' }}>
+          <Stack
+            alignItems="center"
+            justifyContent="center"
+            direction="column"
+            sx={{ width: '100%' }}
+          >
+            <img
+              src="./watching.png"
+              alt="A couple watching a tv"
+              style={{ width: '100px' }}
+            />
+            <Typography variant="subtitle1" sx={{ pt: '1rem' }}>
+              No films yet!
+            </Typography>
           </Stack>
         </Box>
       )}

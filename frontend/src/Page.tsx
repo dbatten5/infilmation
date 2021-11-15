@@ -1,7 +1,6 @@
 import React from 'react';
 import Container from '@mui/material/Container';
 import NavBar from './NavBar';
-// import Background from './Background';
 import BackgroundCanvas from './BackgroundCanvas';
 
 type Props = {

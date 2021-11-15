@@ -81,7 +81,7 @@ const Search = ({ addFilm }: Props) => {
         selectOnFocus
         autoHighlight
         sx={{
-          root: {
+          '& .MuiAutocomplete-inputRoot': {
             bgcolor: 'white',
           },
         }}

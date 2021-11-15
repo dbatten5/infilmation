@@ -1,6 +1,6 @@
 # infilmation
 
-infilmation.co
+[infilmation.co](https://infilmation.co)
 
 A React + FastAPI web app to aggregate data from various sources for a given
 film.

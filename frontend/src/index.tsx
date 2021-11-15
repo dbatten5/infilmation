@@ -8,6 +8,11 @@ import reportWebVitals from './reportWebVitals';
 import '@fontsource/eb-garamond';
 
 const theme = createTheme({
+  palette: {
+    background: {
+      default: '#faf9f6',
+    },
+  },
   typography: {
     fontFamily: ['EB Garamond', 'serif'].join(','),
   },

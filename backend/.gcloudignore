@@ -10,3 +10,6 @@ __pycache__
 .flake8
 .python-version
 poetry.toml
+env
+env.test
+tests

@@ -104,5 +104,4 @@ COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
 # Copy project source into the working directory
 COPY . .
 
-# Webserver will be running on this port
-EXPOSE 8000
+CMD exec gunicorn --bind :$PORT --workers 1 --worker-class uvicorn.workers.UvicornWorker  --threads 4 app.main:app

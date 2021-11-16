@@ -121,19 +121,19 @@ const FilmTable = ({ films }: Props) => {
                   </Stack>
                 </Link>
               </TableCell>
-              <TableCell align="right">{row.year}</TableCell>
+              <TableCell align="right">{row.year || '?'}</TableCell>
               <TableCell align="right">
                 {row.loading ? (
                   <Skeleton animation="wave" variant="text" />
                 ) : (
-                  row.runtime
+                  row.runtime || '?'
                 )}
               </TableCell>
               <TableCell align="right">
                 {row.loading ? (
                   <Skeleton animation="wave" variant="text" />
                 ) : (
-                  row.imdb_rating
+                  row.imdb_rating || '?'
                 )}
               </TableCell>
               <TableCell align="right">
@@ -147,7 +147,7 @@ const FilmTable = ({ films }: Props) => {
                 {row.loading ? (
                   <Skeleton animation="wave" variant="text" />
                 ) : (
-                  row.rt_tomato_rating
+                  row.rt_tomato_rating || '?'
                 )}
               </TableCell>
             </TableRow>

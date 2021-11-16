@@ -18,6 +18,7 @@ class SearchResult(BaseModel):
     kind: MovieTypeEnum
     year: Optional[int] = None
     imdb_id: str
+    cover_photo: Optional[str] = None
 
 
 class FilmIn(BaseModel):
@@ -25,3 +26,4 @@ class FilmIn(BaseModel):
 
     title: str
     imdb_id: Optional[str] = None
+    year: Optional[int] = None

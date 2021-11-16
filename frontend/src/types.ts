@@ -23,8 +23,8 @@ export interface FilmListItem {
   runtime?: number;
   plot?: string;
   imdb_rating?: number;
-  mtc_rating?: number;
-  rt_tomato_rating?: number;
+  mtc_rating?: string;
+  rt_tomato_rating?: string;
   cast?: number | Actor | Array<Actor>;
   directors?: number | Director | Array<Director>;
   genres?: number | Genre | Array<Genre>;

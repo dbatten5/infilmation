@@ -1,0 +1,35 @@
+---
+steps:
+  - id: "build and push image"
+    name: 'gcr.io/kaniko-project/executor:latest'
+    args:
+      - --destination=gcr.io/$PROJECT_ID/${_SERVICE_NAME}
+      - --cache=true
+      - --cache-ttl=48h
+
+  - id: "apply migrations"
+    name: "gcr.io/google-appengine/exec-wrapper"
+    args:
+      [
+        "-i", "gcr.io/$PROJECT_ID/${_SERVICE_NAME}",
+        "-e", "SQLALCHEMY_DATABASE_URI=${_SQLALCHEMY_DATABASE_URI}",
+        "--",
+        "alembic", "upgrade", "head",
+      ]
+
+  - id: "deploy"
+    name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: gcloud
+    args: [
+      'run', 'deploy',
+      '${_SERVICE_NAME}',
+      '--image',
+      'gcr.io/$PROJECT_ID/${_SERVICE_NAME}',
+      '--region',
+      '${_REGION}',
+    ]
+
+substitutions:
+  _SERVICE_NAME: backend
+  _REGION: europe-north1
+  _SQLALCHEMY_DATABASE_URI:

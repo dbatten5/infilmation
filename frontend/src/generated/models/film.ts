@@ -97,10 +97,10 @@ export interface Film {
     'mtc_year'?: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof Film
      */
-    'mtc_rating'?: number;
+    'mtc_rating'?: string;
     /**
      * 
      * @type {boolean}
@@ -121,10 +121,10 @@ export interface Film {
     'rt_year'?: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof Film
      */
-    'rt_tomato_rating'?: number;
+    'rt_tomato_rating'?: string;
     /**
      * 
      * @type {boolean}

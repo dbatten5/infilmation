@@ -46,17 +46,24 @@ async def add_film_directors(film: Film, directors: List[str]) -> None:
         await film.directors.add(db_director)
 
 
-async def create_film(title: str, imdb_id: Optional[str] = None) -> Film:
+async def create_film(
+    title: str,
+    year: Optional[int] = None,
+    imdb_id: Optional[str] = None,
+) -> Film:
     """Create a new film in the database.
 
     Args:
         title: the title of the film
+        year: the year of the film
         imdb_id: the imdb id of the film
 
     Returns:
         a `Film` object
     """
-    phylm = Phylm(title=title, imdb_id=imdb_id).load_sources(["imdb", "mtc", "rt"])
+    phylm = Phylm(title=title, imdb_id=imdb_id, year=year).load_sources(
+        ["imdb", "mtc", "rt"]
+    )
     film = await Film.objects.create(
         title=title,
         year=phylm.imdb.year,
@@ -82,11 +89,16 @@ async def create_film(title: str, imdb_id: Optional[str] = None) -> Film:
     return film
 
 
-async def get_or_create_film(title: str, imdb_id: Optional[str] = None) -> Film:
+async def get_or_create_film(
+    title: str,
+    year: Optional[int] = None,
+    imdb_id: Optional[str] = None,
+) -> Film:
     """Return a film from the database or a create a new one.
 
     Args:
         title: the title of the film
+        year: the year of the film
         imdb_id: the imdb id of the film
 
     Returns:
@@ -98,4 +110,4 @@ async def get_or_create_film(title: str, imdb_id: Optional[str] = None) -> Film:
         if film:
             return film
 
-    return await create_film(title=title, imdb_id=imdb_id)
+    return await create_film(title=title, year=year, imdb_id=imdb_id)

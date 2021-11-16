@@ -40,7 +40,7 @@ async def create_film(film_request: FilmIn) -> Film:
         a `Film` object
     """
     return await get_or_create_film(
-        title=film_request.title, imdb_id=film_request.imdb_id
+        title=film_request.title, imdb_id=film_request.imdb_id, year=film_request.year
     )
 
 

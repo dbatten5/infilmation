@@ -32,5 +32,11 @@ export interface FilmIn {
      * @memberof FilmIn
      */
     'imdb_id'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof FilmIn
+     */
+    'year'?: number;
 }
 

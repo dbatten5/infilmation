@@ -5,10 +5,21 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import CircularProgress from '@mui/material/CircularProgress';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import debounce from 'lodash.debounce';
 import { SearchResult } from './generated/models';
 import { filmsApi } from './providers/env';
 import { FilmListItem } from './types';
+
+/* eslint-disable prefer-arrow-callback */
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  /* eslint-disable react/jsx-props-no-spreading */
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const renderOptionLabel = (option: string | SearchResult) =>
   typeof option === 'string' ? option : `${option.title} (${option.year})`;
@@ -29,6 +40,15 @@ const Search = ({ addFilm }: Props) => {
   const [inputValue, setInputValue] = React.useState('');
   const [options, setOptions] = React.useState<SearchResult[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [alertOpen, setAlertOpen] = React.useState<boolean>(false);
+
+  const handleAlertClose = (event?: React.SyntheticEvent, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setAlertOpen(false);
+  };
 
   const fetchOptions = async (query: string) => {
     if (query) {
@@ -48,7 +68,8 @@ const Search = ({ addFilm }: Props) => {
       const newFilmResponse = await filmsApi.createFilm({ filmIn: film });
       addFilm({ ...newFilmResponse.data, loading: false });
     } catch (error) {
-      console.error(error);
+      addFilm({ ...film, loading: false });
+      setAlertOpen(true);
     }
   };
 
@@ -105,6 +126,20 @@ const Search = ({ addFilm }: Props) => {
           <TextField {...params} placeholder="Type a film name..." fullWidth />
         )}
       />
+      <Snackbar
+        open={alertOpen}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        autoHideDuration={6000}
+        onClose={handleAlertClose}
+      >
+        <Alert
+          onClose={handleAlertClose}
+          severity="error"
+          sx={{ width: '100%' }}
+        >
+          Whoops! Something went wrong
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

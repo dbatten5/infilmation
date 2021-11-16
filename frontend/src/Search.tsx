@@ -83,6 +83,7 @@ const Search = ({ addFilm }: Props) => {
         sx={{
           '& .MuiAutocomplete-inputRoot': {
             bgcolor: 'white',
+            boxShadow: 1,
           },
         }}
         popupIcon={false}
@@ -102,7 +103,11 @@ const Search = ({ addFilm }: Props) => {
         }}
         renderInput={(params) => (
           /* eslint-disable react/jsx-props-no-spreading */
-          <TextField {...params} placeholder="Type a film name..." fullWidth />
+          <TextField
+            {...params}
+            placeholder="Start typing a film name..."
+            fullWidth
+          />
         )}
       />
     </Box>

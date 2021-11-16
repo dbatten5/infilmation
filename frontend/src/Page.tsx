@@ -2,6 +2,7 @@ import React from 'react';
 import Container from '@mui/material/Container';
 import NavBar from './NavBar';
 import BackgroundCanvas from './BackgroundCanvas';
+import Vanity from './Vanity';
 
 type Props = {
   children: React.ReactNode;
@@ -18,6 +19,7 @@ const Page = ({ children }: Props) => (
       <NavBar />
       {children}
     </Container>
+    <Vanity />
   </>
 );
 

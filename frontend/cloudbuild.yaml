@@ -1,0 +1,24 @@
+---
+steps:
+  - id: "build and push image"
+    name: 'gcr.io/kaniko-project/executor:latest'
+    args:
+      - --destination=gcr.io/$PROJECT_ID/${_SERVICE_NAME}
+      - --cache=true
+      - --cache-ttl=48h
+
+  - id: "deploy"
+    name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: gcloud
+    args: [
+      'run', 'deploy',
+      '${_SERVICE_NAME}',
+      '--image',
+      'gcr.io/$PROJECT_ID/${_SERVICE_NAME}',
+      '--region',
+      '${_REGION}',
+    ]
+
+substitutions:
+  _SERVICE_NAME: frontend
+  _REGION: europe-north1

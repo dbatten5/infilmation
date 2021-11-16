@@ -186,7 +186,9 @@ class TestGetOrCreateFilm:
 
             assert film == mock_create_film.return_value
 
-        mock_create_film.assert_called_once_with(title="The Matrix", imdb_id="0133093")
+        mock_create_film.assert_called_once_with(
+            title="The Matrix", imdb_id="0133093", year=None
+        )
 
     @mock.patch("app.crud.create_film", autospec=True)
     async def test_only_title_provided(self, mock_create_film: mock.MagicMock) -> None:
@@ -198,8 +200,10 @@ class TestGetOrCreateFilm:
         mock_create_film.return_value = mock.Mock()
 
         async with database, database.transaction(force_rollback=True):
-            film = await crud.get_or_create_film(title="The Matrix")
+            film = await crud.get_or_create_film(title="The Matrix", year=1999)
 
             assert film == mock_create_film.return_value
 
-        mock_create_film.assert_called_once_with(title="The Matrix", imdb_id=None)
+        mock_create_film.assert_called_once_with(
+            title="The Matrix", imdb_id=None, year=1999
+        )

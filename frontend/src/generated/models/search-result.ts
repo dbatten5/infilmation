@@ -45,5 +45,11 @@ export interface SearchResult {
      * @memberof SearchResult
      */
     'imdb_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SearchResult
+     */
+    'cover_photo'?: string;
 }
 

@@ -1,5 +1,9 @@
 """Module to hold `Film` model definitions."""
+from datetime import timedelta
+from typing import Optional
+
 import ormar
+from ormar import property_field
 
 from app.db import MainMeta
 
@@ -61,3 +65,15 @@ class Film(ormar.Model):
     cast = ormar.ManyToMany(to=Actor, skip_reverse=True)
     directors = ormar.ManyToMany(to=Director, skip_reverse=True)
     genres = ormar.ManyToMany(to=Genre, skip_reverse=True)
+
+    @property_field
+    def human_readable_runtime(self) -> Optional[str]:
+        """Runtime the runtime in human readable form.
+
+        Returns:
+            Optional[str]: the runtime
+        """
+        if self.runtime:
+            return str(timedelta(minutes=self.runtime))[:-3]
+
+        return None

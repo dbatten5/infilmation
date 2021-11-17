@@ -24,7 +24,7 @@ const createRow = ({
   title,
   imdb_id,
   year,
-  runtime,
+  human_readable_runtime,
   imdb_rating,
   mtc_rating,
   rt_tomato_rating,
@@ -34,7 +34,7 @@ const createRow = ({
   title,
   imdb_id,
   year,
-  runtime,
+  human_readable_runtime,
   imdb_rating,
   mtc_rating,
   rt_tomato_rating,
@@ -126,7 +126,7 @@ const FilmTable = ({ films }: Props) => {
                 {row.loading ? (
                   <Skeleton animation="wave" variant="text" />
                 ) : (
-                  row.runtime || '?'
+                  row.human_readable_runtime || '?'
                 )}
               </TableCell>
               <TableCell align="right">

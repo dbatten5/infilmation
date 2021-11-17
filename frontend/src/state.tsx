@@ -4,8 +4,7 @@ import { StateContext, Store } from './types';
 
 const defaultState: StateContext = { filmList: [] };
 
-// @ts-ignore
-const infilmationContext = React.createContext<Store>({});
+const infilmationContext = React.createContext<Store>({} as Store);
 
 export const useStateContext = () => useContext(infilmationContext);
 

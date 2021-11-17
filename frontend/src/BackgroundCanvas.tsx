@@ -1,11 +1,14 @@
 import React, { useRef, useEffect } from 'react';
 
 interface Props {
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
 }
 
-const BackgroundCanvas = ({ width, height }: Props) => {
+const BackgroundCanvas = ({
+  width = window.innerWidth,
+  height = window.innerHeight,
+}: Props) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {

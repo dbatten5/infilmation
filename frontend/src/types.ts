@@ -29,4 +29,5 @@ export interface FilmListItem {
   directors?: number | Director | Array<Director>;
   genres?: number | Genre | Array<Genre>;
   loading: boolean;
+  human_readable_runtime?: string;
 }

@@ -8,14 +8,14 @@ import Link from '@mui/material/Link';
 
 const Vanity = () => {
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up('lg'));
+  const matches = useMediaQuery(theme.breakpoints.up('xl'));
 
   return (
     <Box
       sx={{
-        position: 'absolute',
-        right: { xs: '1rem', lg: '2rem' },
-        bottom: { xs: '1rem', lg: '2rem' },
+        position: 'fixed',
+        right: { xs: '0.5rem', sm: '1rem', xl: '2rem' },
+        bottom: { xs: '0.5rem', sm: '1rem', xl: '2rem' },
       }}
     >
       <Stack
@@ -32,8 +32,8 @@ const Vanity = () => {
             alt="GitHub Logo"
             src="./github-64.png"
             sx={{
-              width: { xs: '0.8rem', sm: '1rem', md: '1.2rem' },
-              height: { xs: '0.8rem', sm: '1rem', md: '1.2rem' },
+              width: { xs: '1rem', md: '1.2rem' },
+              height: { xs: '1rem', md: '1.2rem' },
             }}
           />
         </Link>
@@ -46,8 +46,8 @@ const Vanity = () => {
             alt="LinkedIn Logo"
             src="./linkedin-64.png"
             sx={{
-              width: { xs: '0.8rem', sm: '1rem', md: '1.2rem' },
-              height: { xs: '0.8rem', sm: '1rem', md: '1.2rem' },
+              width: { xs: '1rem', md: '1.2rem' },
+              height: { xs: '1rem', md: '1.2rem' },
             }}
           />
         </Link>

@@ -12,6 +12,8 @@ import Box from '@mui/material/Box';
 import SvgIcon from '@mui/material/SvgIcon';
 import Stack from '@mui/material/Stack';
 import Link from '@mui/material/Link';
+import Collapse from '@mui/material/Collapse';
+import Grid from '@mui/material/Grid';
 import { FilmListItem } from './types';
 import Imdb from './icons/IMDb';
 import Mtc from './icons/mtc';
@@ -19,7 +21,7 @@ import Rt from './icons/rt';
 import Play from './icons/play';
 import FingerPoint from './icons/finger-point';
 
-const createRow = ({
+const createData = ({
   id,
   title,
   imdb_id,
@@ -29,6 +31,7 @@ const createRow = ({
   mtc_rating,
   rt_tomato_rating,
   loading,
+  plot,
 }: FilmListItem) => ({
   id,
   title,
@@ -39,17 +42,108 @@ const createRow = ({
   mtc_rating,
   rt_tomato_rating,
   loading,
+  plot,
 });
 
 type Props = {
   films: FilmListItem[];
 };
 
-const FilmTable = ({ films }: Props) => {
-  const rows = films.map((film) => createRow(film));
+const Row = (props: { row: ReturnType<typeof createData> }) => {
+  const { row } = props;
+  const [open, setOpen] = React.useState(false);
+
+  const toggleOpen = () => {
+    setOpen(!open);
+  };
 
   return (
-    <TableContainer component={Paper}>
+    <>
+      <TableRow
+        key={row.imdb_id}
+        sx={{
+          '&:last-child td, &:last-child th': { border: 0 },
+          cursor: 'pointer',
+          '&:hover': { bgcolor: '#EEEDE7' },
+        }}
+        onClick={toggleOpen}
+      >
+        <TableCell component="th" scope="row">
+          {row.title}
+        </TableCell>
+        <TableCell align="right">{row.year || '?'}</TableCell>
+        <TableCell align="right">
+          {row.loading ? (
+            <Skeleton animation="wave" variant="text" />
+          ) : (
+            row.human_readable_runtime || '?'
+          )}
+        </TableCell>
+        <TableCell align="right">
+          {row.loading ? (
+            <Skeleton animation="wave" variant="text" />
+          ) : (
+            row.imdb_rating || '?'
+          )}
+        </TableCell>
+        <TableCell align="right">
+          {row.loading ? (
+            <Skeleton animation="wave" variant="text" />
+          ) : (
+            row.mtc_rating
+          )}
+        </TableCell>
+        <TableCell align="right">
+          {row.loading ? (
+            <Skeleton animation="wave" variant="text" />
+          ) : (
+            row.rt_tomato_rating || '?'
+          )}
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box sx={{ py: 2 }}>
+              <Grid container spacing={1}>
+                <Grid item xs={12}>
+                  {row.plot}
+                </Grid>
+                <Grid item xs={4}>
+                  <Link
+                    href={`https://www.youtube.com/results?search_query=${row.title}+${row.year}+trailer`}
+                    color="inherit"
+                    target="_blank"
+                    underline="none"
+                  >
+                    <Stack direction="row" alignItems="center">
+                      <Box sx={{ mr: '0.35rem' }}>Trailer</Box>
+                      <SvgIcon
+                        component={Play}
+                        sx={{
+                          width: '20px',
+                          height: '20px',
+                          '&:hover': { opacity: 0.6, transition: '0.3s' },
+                        }}
+                        viewBox="-1 -1 24 24"
+                      />
+                    </Stack>
+                  </Link>
+                </Grid>
+              </Grid>
+            </Box>
+          </Collapse>
+        </TableCell>
+      </TableRow>
+    </>
+  );
+};
+
+const FilmTable = ({ films }: Props) => {
+  const rows = films.map((film) => createData(film));
+
+  return (
+    <TableContainer component={Paper} sx={{ mb: '1rem' }}>
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -96,61 +190,7 @@ const FilmTable = ({ films }: Props) => {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow
-              key={row.imdb_id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                <Link
-                  href={`https://www.youtube.com/results?search_query=${row.title}+${row.year}+trailer`}
-                  color="inherit"
-                  target="_blank"
-                  underline="none"
-                >
-                  <Stack direction="row" alignItems="center">
-                    <Box sx={{ mr: '0.35rem' }}>{row.title}</Box>
-                    <SvgIcon
-                      component={Play}
-                      sx={{
-                        width: '20px',
-                        height: '20px',
-                        '&:hover': { opacity: 0.6, transition: '0.3s' },
-                      }}
-                      viewBox="-1 -1 24 24"
-                    />
-                  </Stack>
-                </Link>
-              </TableCell>
-              <TableCell align="right">{row.year || '?'}</TableCell>
-              <TableCell align="right">
-                {row.loading ? (
-                  <Skeleton animation="wave" variant="text" />
-                ) : (
-                  row.human_readable_runtime || '?'
-                )}
-              </TableCell>
-              <TableCell align="right">
-                {row.loading ? (
-                  <Skeleton animation="wave" variant="text" />
-                ) : (
-                  row.imdb_rating || '?'
-                )}
-              </TableCell>
-              <TableCell align="right">
-                {row.loading ? (
-                  <Skeleton animation="wave" variant="text" />
-                ) : (
-                  row.mtc_rating
-                )}
-              </TableCell>
-              <TableCell align="right">
-                {row.loading ? (
-                  <Skeleton animation="wave" variant="text" />
-                ) : (
-                  row.rt_tomato_rating || '?'
-                )}
-              </TableCell>
-            </TableRow>
+            <Row key={row.imdb_id} row={row} />
           ))}
         </TableBody>
       </Table>

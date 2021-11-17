@@ -19,7 +19,7 @@ const Home = () => {
   return (
     <Page>
       <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2} sx={{ width: '100%' }}>
+        <Grid container spacing={2}>
           <Grid item xs={12} md={4}>
             <Search addFilm={addFilm} />
           </Grid>

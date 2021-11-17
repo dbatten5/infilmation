@@ -12,6 +12,8 @@ const rules = {
   'jsx-a11y/click-events-have-key-events': 'off',
   'jsx-a11y/no-static-element-interactions': 'off',
   'react/jsx-one-expression-per-line': 'off',
+  'no-use-before-define': 'off',
+  '@typescript-eslint/no-use-before-define': ['error'],
   camelcase: 'off',
   'react/jsx-filename-extension': [2, { extensions: ['.ts', '.tsx'] }],
   'lines-between-class-members': [
@@ -22,8 +24,16 @@ const rules = {
 };
 
 module.exports = {
-  extends: ['airbnb', 'prettier'],
-  parser: 'babel-eslint',
+  extends: [
+    'airbnb',
+    'prettier',
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:import/errors',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended',
+  ],
+  parser: '@typescript-eslint/parser',
   rules,
   env: {
     browser: true,
@@ -33,6 +43,9 @@ module.exports = {
     es6: true,
   },
   plugins: ['react', 'react-hooks', 'jsx-a11y'],
+  ecmaFeatures: {
+    jsx: true,
+  },
   settings: {
     ecmascript: 6,
     jsx: true,

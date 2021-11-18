@@ -2,6 +2,7 @@ export * from './actor';
 export * from './director';
 export * from './film';
 export * from './film-in';
+export * from './film-out';
 export * from './genre';
 export * from './httpvalidation-error';
 export * from './movie-type-enum';

@@ -25,6 +25,8 @@ import { Film } from '../models';
 // @ts-ignore
 import { FilmIn } from '../models';
 // @ts-ignore
+import { FilmOut } from '../models';
+// @ts-ignore
 import { HTTPValidationError } from '../models';
 // @ts-ignore
 import { SearchResult } from '../models';
@@ -159,7 +161,7 @@ export const FilmsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createFilm(filmIn: FilmIn, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Film>> {
+        async createFilm(filmIn: FilmIn, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FilmOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createFilm(filmIn, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -202,7 +204,7 @@ export const FilmsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createFilm(filmIn: FilmIn, options?: any): AxiosPromise<Film> {
+        createFilm(filmIn: FilmIn, options?: any): AxiosPromise<FilmOut> {
             return localVarFp.createFilm(filmIn, options).then((request) => request(axios, basePath));
         },
         /**

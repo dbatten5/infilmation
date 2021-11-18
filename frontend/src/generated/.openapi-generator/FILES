@@ -11,6 +11,7 @@ index.ts
 models/actor.ts
 models/director.ts
 models/film-in.ts
+models/film-out.ts
 models/film.ts
 models/genre.ts
 models/httpvalidation-error.ts

@@ -8,6 +8,7 @@ from app.crud import get_or_create_film
 from app.crud import get_search_results
 from app.models.film import Film
 from app.schemas.films import FilmIn
+from app.schemas.films import FilmOut
 from app.schemas.films import SearchResult
 
 router = APIRouter(prefix="/films")
@@ -27,7 +28,7 @@ def search_films(query: str) -> List[SearchResult]:
     return [SearchResult(**result, tmdb_id=result["id"]) for result in results]
 
 
-@router.post("/", response_model=Film)
+@router.post("/", response_model=FilmOut)
 async def create_film(film_request: FilmIn) -> Film:
     """Create a new film.
     \f
@@ -37,12 +38,13 @@ async def create_film(film_request: FilmIn) -> Film:
     Returns:
         a `Film` object
     """
-    return await get_or_create_film(
+    film = await get_or_create_film(
         title=film_request.title,
         imdb_id=film_request.imdb_id,
         year=film_request.year,
         tmdb_id=film_request.tmdb_id,
     )
+    return await film.load_all()
 
 
 @router.get("/", response_model=List[Film])

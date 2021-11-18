@@ -36,6 +36,7 @@ const createData = ({
   rt_tomato_rating,
   loading,
   plot,
+  genres,
 }: FilmListItem) => ({
   id,
   title,
@@ -48,6 +49,7 @@ const createData = ({
   rt_tomato_rating,
   loading,
   plot,
+  genres,
 });
 
 type Props = {
@@ -122,7 +124,7 @@ const Row = (props: { row: ReturnType<typeof createData> }) => {
                 <Grid item xs={12}>
                   {row.plot}
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={3}>
                   <Link
                     href={`https://www.youtube.com/results?search_query=${row.title}+${row.year}+trailer`}
                     color="inherit"
@@ -142,6 +144,9 @@ const Row = (props: { row: ReturnType<typeof createData> }) => {
                       />
                     </Stack>
                   </Link>
+                </Grid>
+                <Grid item xs={4}>
+                  {row.genres && row.genres.find(Boolean)}
                 </Grid>
               </Grid>
             </Box>

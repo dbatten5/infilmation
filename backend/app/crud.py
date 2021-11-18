@@ -75,7 +75,7 @@ async def create_film(
         year=phylm.imdb.year,
         runtime=phylm.imdb.runtime,
         plot=phylm.imdb.plot,
-        imdb_id=imdb_id,
+        imdb_id=phylm.imdb.id,
         imdb_title=phylm.imdb.title,
         imdb_year=phylm.imdb.year,
         imdb_rating=phylm.imdb.rating,

@@ -11,7 +11,7 @@ const Home = () => {
   const [filmList, setFilmList] = React.useState<FilmListItem[]>([]);
 
   const addFilm = (option: FilmListItem) => {
-    const index = filmList.findIndex((f) => f.imdb_id === option.imdb_id);
+    const index = filmList.findIndex((f) => f.tmdb_id === option.tmdb_id);
     if (index === -1) {
       setFilmList([...filmList, option]);
     }

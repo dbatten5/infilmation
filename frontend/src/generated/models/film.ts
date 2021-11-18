@@ -149,5 +149,11 @@ export interface Film {
      * @memberof Film
      */
     'genres'?: number | Genre | Array<Genre>;
+    /**
+     * 
+     * @type {string}
+     * @memberof Film
+     */
+    'tmdb_id'?: string;
 }
 

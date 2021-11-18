@@ -25,6 +25,7 @@ const createData = ({
   id,
   title,
   imdb_id,
+  tmdb_id,
   year,
   human_readable_runtime,
   imdb_rating,
@@ -36,6 +37,7 @@ const createData = ({
   id,
   title,
   imdb_id,
+  tmdb_id,
   year,
   human_readable_runtime,
   imdb_rating,
@@ -60,7 +62,6 @@ const Row = (props: { row: ReturnType<typeof createData> }) => {
   return (
     <>
       <TableRow
-        key={row.imdb_id}
         sx={{
           '&:last-child td, &:last-child th': { border: 0 },
           cursor: 'pointer',
@@ -90,7 +91,7 @@ const Row = (props: { row: ReturnType<typeof createData> }) => {
           {row.loading ? (
             <Skeleton animation="wave" variant="text" />
           ) : (
-            row.mtc_rating
+            row.mtc_rating || '?'
           )}
         </TableCell>
         <TableCell align="right">
@@ -190,7 +191,7 @@ const FilmTable = ({ films }: Props) => {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <Row key={row.imdb_id} row={row} />
+            <Row key={row.tmdb_id} row={row} />
           ))}
         </TableBody>
       </Table>

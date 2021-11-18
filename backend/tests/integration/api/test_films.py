@@ -28,18 +28,14 @@ class TestSearchFilms:
 
         mock_get_search_results.return_value = [
             {
+                "id": "123",
                 "title": "The Matrix",
-                "kind": "movie",
-                "year": 1999,
-                "cover_photo": "https://some-url.com",
-                "imdb_id": "0133093",
+                "release_date": "1999-01-01",
             },
             {
+                "id": "456",
                 "title": "The Matrix Reloaded",
-                "kind": "movie",
-                "year": 2003,
-                "cover_photo": "https://some-url.com",
-                "imdb_id": "0234215",
+                "release_date": "2003-01-01",
             },
         ]
         url = router.url_path_for("search_films")
@@ -48,59 +44,22 @@ class TestSearchFilms:
 
         assert resp.json() == [
             {
+                "tmdb_id": "123",
                 "title": "The Matrix",
-                "kind": "movie",
+                "release_date": "1999-01-01",
                 "year": 1999,
-                "imdb_id": "0133093",
-                "cover_photo": "https://some-url.com",
+                "cover_photo": None,
+                "kind": None,
+                "imdb_id": None,
             },
             {
+                "tmdb_id": "456",
                 "title": "The Matrix Reloaded",
-                "kind": "movie",
+                "release_date": "2003-01-01",
                 "year": 2003,
-                "imdb_id": "0234215",
-                "cover_photo": "https://some-url.com",
-            },
-        ]
-
-    @mock.patch("app.api.films.get_search_results", autospec=True)
-    def test_only_films_are_returned(
-        self, mock_get_search_results: mock.MagicMock, client: TestClient
-    ) -> None:
-        """
-        Given a search query,
-        When the `search_films` endpoint is hit with the query,
-        Then only a list of movie search results are returned
-        """
-        query = "the matrix"
-
-        mock_get_search_results.return_value = [
-            {
-                "title": "The Matrix",
-                "kind": "movie",
-                "year": 1999,
-                "cover_photo": "https://some-url.com",
-                "imdb_id": "0133093",
-            },
-            {
-                "title": "The Matrix Tv Show",
-                "kind": "episode",
-                "year": 2003,
-                "cover_photo": "https://some-url.com",
-                "imdb_id": "0234215",
-            },
-        ]
-        url = router.url_path_for("search_films")
-
-        resp = client.get(f"{settings.api_path}{url}?query={query}")
-
-        assert resp.json() == [
-            {
-                "title": "The Matrix",
-                "kind": "movie",
-                "year": 1999,
-                "cover_photo": "https://some-url.com",
-                "imdb_id": "0133093",
+                "cover_photo": None,
+                "kind": None,
+                "imdb_id": None,
             },
         ]
 

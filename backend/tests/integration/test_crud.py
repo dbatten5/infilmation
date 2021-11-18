@@ -257,14 +257,16 @@ class TestGetSearchResults:
         Then the `search_movies` function is called with the query and results without a
             release_date are filtered out
         """
-        query = "the film"
+        query = "film 1"
         mock_search_tmdb_movies.return_value = [
-            {"title": "film 1", "release_date": "2020-01-01"},
-            {"title": "film 2", "release_date": ""},
-            {"title": "film 3"},
+            {"id": "123", "title": "film 1", "release_date": "2020-01-01"},
+            {"id": "123", "title": "film 2", "release_date": ""},
+            {"id": "123", "title": "film 3"},
         ]
 
         result = crud.get_search_results(query)
 
-        assert result == [{"title": "film 1", "release_date": "2020-01-01"}]
+        assert result == [
+            {"id": "123", "title": "film 1", "release_date": "2020-01-01"}
+        ]
         mock_search_tmdb_movies.assert_called_once_with(query=query)

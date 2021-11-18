@@ -24,6 +24,7 @@ class SearchResult(BaseModel):
     cover_photo: Optional[str] = None
     release_date: Optional[date] = None
     year: Optional[int] = None
+    id: Optional[int] = None
 
     @validator("year", pre=True, always=True)
     def assemble_year(
@@ -44,13 +45,13 @@ class SearchResult(BaseModel):
         Returns:
             the year
         """
-        if not value and not values["release_date"]:
-            raise AssertionError(
-                "At least one of `year` and `release_date` must be given"
-            )
+        if value:
+            return value
 
-        if not value and values["release_date"]:
+        if not value and "release_date" in values and values["release_date"]:
             return values["release_date"].year
+
+        raise AssertionError("At least one of `year` and `release_date` must be given")
 
 
 class FilmIn(BaseModel):

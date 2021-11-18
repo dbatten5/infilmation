@@ -6,7 +6,7 @@ from typing import Optional
 from typing import Union
 
 from phylm.phylm import Phylm
-from phylm.tools import search_movies
+from phylm.tools import search_tmdb_movies
 
 from app.models.film import Actor
 from app.models.film import Director
@@ -127,4 +127,8 @@ def get_search_results(query: str) -> List[Dict[str, Union[str, int]]]:
     Returns:
         a list of search results as dicts
     """
-    return search_movies(query=query)
+    return [
+        result
+        for result in search_tmdb_movies(query=query)[:10]
+        if "release_date" in result and result["release_date"]
+    ]

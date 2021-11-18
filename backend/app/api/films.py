@@ -1,5 +1,7 @@
 """Module to hold the `movies` router."""
+from typing import Dict
 from typing import List
+from typing import Union
 
 from fastapi import APIRouter
 from fastapi import Query
@@ -14,7 +16,7 @@ router = APIRouter(prefix="/films")
 
 
 @router.get("/search", response_model=List[SearchResult])
-def search_films(query: str) -> List[SearchResult]:
+def search_films(query: str) -> List[Dict[str, Union[str, int]]]:
     """Search for a film from a given query.
     \f
     Args:
@@ -23,10 +25,7 @@ def search_films(query: str) -> List[SearchResult]:
     Returns:
         a list of search results
     """
-    search_results = get_search_results(query=query)
-    return [
-        SearchResult(**result) for result in search_results if result["kind"] == "movie"
-    ]
+    return get_search_results(query=query)
 
 
 @router.post("/", response_model=Film)

@@ -23,10 +23,8 @@ def search_films(query: str) -> List[SearchResult]:
     Returns:
         a list of search results
     """
-    search_results = get_search_results(query=query)
-    return [
-        SearchResult(**result) for result in search_results if result["kind"] == "movie"
-    ]
+    results = get_search_results(query=query)
+    return [SearchResult(**result, tmdb_id=result["id"]) for result in results]
 
 
 @router.post("/", response_model=Film)
@@ -40,7 +38,10 @@ async def create_film(film_request: FilmIn) -> Film:
         a `Film` object
     """
     return await get_or_create_film(
-        title=film_request.title, imdb_id=film_request.imdb_id, year=film_request.year
+        title=film_request.title,
+        imdb_id=film_request.imdb_id,
+        year=film_request.year,
+        tmdb_id=film_request.tmdb_id,
     )
 
 

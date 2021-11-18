@@ -6,7 +6,7 @@ from typing import Optional
 from typing import Union
 
 from phylm.phylm import Phylm
-from phylm.tools import search_movies
+from phylm.tools import search_tmdb_movies
 
 from app.models.film import Actor
 from app.models.film import Director
@@ -54,6 +54,7 @@ async def create_film(
     title: str,
     year: Optional[int] = None,
     imdb_id: Optional[str] = None,
+    tmdb_id: Optional[str] = None,
 ) -> Film:
     """Create a new film in the database.
 
@@ -61,6 +62,7 @@ async def create_film(
         title: the title of the film
         year: the year of the film
         imdb_id: the imdb id of the film
+        tmdb_id: the tmdb id of the film
 
     Returns:
         a `Film` object
@@ -73,7 +75,7 @@ async def create_film(
         year=phylm.imdb.year,
         runtime=phylm.imdb.runtime,
         plot=phylm.imdb.plot,
-        imdb_id=imdb_id,
+        imdb_id=phylm.imdb.id,
         imdb_title=phylm.imdb.title,
         imdb_year=phylm.imdb.year,
         imdb_rating=phylm.imdb.rating,
@@ -86,6 +88,7 @@ async def create_film(
         rt_year=phylm.rt.year,
         rt_tomato_rating=phylm.rt.tomato_score,
         rt_low_confidence=phylm.rt.low_confidence,
+        tmdb_id=tmdb_id,
     )
     await add_film_directors(film=film, directors=phylm.imdb.directors())
     await add_film_actors(film=film, actors=phylm.imdb.cast())
@@ -97,6 +100,7 @@ async def get_or_create_film(
     title: str,
     year: Optional[int] = None,
     imdb_id: Optional[str] = None,
+    tmdb_id: Optional[str] = None,
 ) -> Film:
     """Return a film from the database or a create a new one.
 
@@ -104,6 +108,7 @@ async def get_or_create_film(
         title: the title of the film
         year: the year of the film
         imdb_id: the imdb id of the film
+        tmdb_id: the tmdb id of the film
 
     Returns:
         a `Film` object
@@ -114,7 +119,13 @@ async def get_or_create_film(
         if film:
             return film
 
-    return await create_film(title=title, year=year, imdb_id=imdb_id)
+    if tmdb_id:
+        film = await Film.objects.get_or_none(tmdb_id=tmdb_id)
+
+        if film:
+            return film
+
+    return await create_film(title=title, year=year, imdb_id=imdb_id, tmdb_id=tmdb_id)
 
 
 @lru_cache(maxsize=500)
@@ -127,4 +138,8 @@ def get_search_results(query: str) -> List[Dict[str, Union[str, int]]]:
     Returns:
         a list of search results as dicts
     """
-    return search_movies(query=query)
+    return [
+        result
+        for result in search_tmdb_movies(query=query)
+        if "release_date" in result and result["release_date"]
+    ][:10]

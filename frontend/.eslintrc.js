@@ -43,9 +43,6 @@ module.exports = {
     es6: true,
   },
   plugins: ['react', 'react-hooks', 'jsx-a11y'],
-  ecmaFeatures: {
-    jsx: true,
-  },
   settings: {
     ecmascript: 6,
     jsx: true,

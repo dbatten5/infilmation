@@ -65,6 +65,7 @@ class Film(ormar.Model):
     cast = ormar.ManyToMany(to=Actor, skip_reverse=True)
     directors = ormar.ManyToMany(to=Director, skip_reverse=True)
     genres = ormar.ManyToMany(to=Genre, skip_reverse=True)
+    tmdb_id = ormar.String(max_length=255, nullable=True)
 
     @property_field
     def human_readable_runtime(self) -> Optional[str]:

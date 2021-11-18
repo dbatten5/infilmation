@@ -32,7 +32,25 @@ export interface SearchResult {
      * @type {MovieTypeEnum}
      * @memberof SearchResult
      */
-    'kind': MovieTypeEnum;
+    'kind'?: MovieTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof SearchResult
+     */
+    'imdb_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SearchResult
+     */
+    'cover_photo'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SearchResult
+     */
+    'release_date'?: string;
     /**
      * 
      * @type {number}
@@ -44,12 +62,6 @@ export interface SearchResult {
      * @type {string}
      * @memberof SearchResult
      */
-    'imdb_id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SearchResult
-     */
-    'cover_photo'?: string;
+    'tmdb_id'?: string;
 }
 

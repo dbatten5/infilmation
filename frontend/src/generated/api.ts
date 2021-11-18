@@ -15,4 +15,5 @@
 
 
 export * from './api/films-api';
+export * from './api/utils-api';
 

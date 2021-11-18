@@ -1,8 +1,12 @@
 """Module to define crud actions."""
+from functools import lru_cache
+from typing import Dict
 from typing import List
 from typing import Optional
+from typing import Union
 
-from phylm import Phylm
+from phylm.phylm import Phylm
+from phylm.tools import search_movies
 
 from app.models.film import Actor
 from app.models.film import Director
@@ -111,3 +115,16 @@ async def get_or_create_film(
             return film
 
     return await create_film(title=title, year=year, imdb_id=imdb_id)
+
+
+@lru_cache(maxsize=500)
+def get_search_results(query: str) -> List[Dict[str, Union[str, int]]]:
+    """Search for a film from a given query with caching.
+
+    Args:
+        query: the query string
+
+    Returns:
+        a list of search results as dicts
+    """
+    return search_movies(query=query)

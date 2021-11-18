@@ -15,9 +15,9 @@ database = Film.Meta.database
 class TestSearchFilms:
     """Tests for the `search_films` route."""
 
-    @mock.patch("app.api.films.search_movies", autospec=True)
+    @mock.patch("app.api.films.get_search_results", autospec=True)
     def test_success(
-        self, mock_search_movies: mock.MagicMock, client: TestClient
+        self, mock_get_search_results: mock.MagicMock, client: TestClient
     ) -> None:
         """
         Given a search query,
@@ -26,7 +26,7 @@ class TestSearchFilms:
         """
         query = "the matrix"
 
-        mock_search_movies.return_value = [
+        mock_get_search_results.return_value = [
             {
                 "title": "The Matrix",
                 "kind": "movie",
@@ -63,9 +63,9 @@ class TestSearchFilms:
             },
         ]
 
-    @mock.patch("app.api.films.search_movies", autospec=True)
+    @mock.patch("app.api.films.get_search_results", autospec=True)
     def test_only_films_are_returned(
-        self, mock_search_movies: mock.MagicMock, client: TestClient
+        self, mock_get_search_results: mock.MagicMock, client: TestClient
     ) -> None:
         """
         Given a search query,
@@ -74,7 +74,7 @@ class TestSearchFilms:
         """
         query = "the matrix"
 
-        mock_search_movies.return_value = [
+        mock_get_search_results.return_value = [
             {
                 "title": "The Matrix",
                 "kind": "movie",

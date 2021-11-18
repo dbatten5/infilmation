@@ -172,6 +172,21 @@ class TestGetOrCreateFilm:
 
         assert film == existing_film
 
+    async def test_film_already_exists_with_tmdb_id(self) -> None:
+        """
+        Given a film already existent in the database,
+        When the `get_or_create_film` function is invoked with a tmdb_id,
+        Then the existent film is returned
+        """
+        async with database, database.transaction(force_rollback=True):
+            existing_film = await Film.objects.create(
+                title="The Matrix", tmdb_id="0133093"
+            )
+
+            film = await crud.get_or_create_film(title="The Matrix", tmdb_id="0133093")
+
+        assert film == existing_film
+
     @mock.patch("app.crud.create_film", autospec=True)
     async def test_film_doesnt_already_exist(
         self, mock_create_film: mock.MagicMock
@@ -189,7 +204,7 @@ class TestGetOrCreateFilm:
             assert film == mock_create_film.return_value
 
         mock_create_film.assert_called_once_with(
-            title="The Matrix", imdb_id="0133093", year=None
+            title="The Matrix", imdb_id="0133093", year=None, tmdb_id=None
         )
 
     @mock.patch("app.crud.create_film", autospec=True)
@@ -207,24 +222,49 @@ class TestGetOrCreateFilm:
             assert film == mock_create_film.return_value
 
         mock_create_film.assert_called_once_with(
-            title="The Matrix", imdb_id=None, year=1999
+            title="The Matrix", imdb_id=None, year=1999, tmdb_id=None
         )
 
 
 class TestGetSearchResults:
     """Tests for the `get_search_results` function."""
 
-    @mock.patch(f"{MODULE_PATH}.search_movies", autospec=True)
-    def test_success(self, mock_search_movies: mock.MagicMock) -> None:
+    @mock.patch(f"{MODULE_PATH}.search_tmdb_movies", autospec=True)
+    def test_success(self, mock_search_tmdb_movies: mock.MagicMock) -> None:
         """
         Given a query,
         When the `get_search_results` function is invoked with the query,
         Then the `search_movies` function is called with the query
         """
         query = "the film"
-        mock_search_movies.return_value = [{"title": "the film"}]
+        mock_search_tmdb_movies.return_value = [
+            {
+                "title": "the film",
+                "release_date": "2020-01-01",
+            }
+        ]
 
         result = crud.get_search_results(query)
 
-        assert result == mock_search_movies.return_value
-        mock_search_movies.assert_called_once_with(query=query)
+        assert result == mock_search_tmdb_movies.return_value
+        mock_search_tmdb_movies.assert_called_once_with(query=query)
+
+    @mock.patch(f"{MODULE_PATH}.search_tmdb_movies", autospec=True)
+    def test_no_release_date(self, mock_search_tmdb_movies: mock.MagicMock) -> None:
+        """
+        Given a query,
+        When the `get_search_results` function is invoked with the query,
+        Then the `search_movies` function is called with the query and results without a
+            release_date are filtered out
+        """
+        query = "the film"
+        mock_search_tmdb_movies.return_value = [
+            {"title": "film 1", "release_date": "2020-01-01"},
+            {"title": "film 2", "release_date": ""},
+            {"title": "film 3"},
+        ]
+
+        result = crud.get_search_results(query)
+
+        assert result == [{"title": "film 1", "release_date": "2020-01-01"}]
+        mock_search_tmdb_movies.assert_called_once_with(query=query)

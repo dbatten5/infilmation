@@ -120,16 +120,17 @@ class TestCreateFilm:
         """
         title = "The Matrix"
         imdb_id = "0133093"
+        tmdb_id = "0123213"
         year = 1999
 
         mock_get_or_create_film.return_value = Film(
-            title=title, imdb_id=imdb_id, year=year
+            title=title, imdb_id=imdb_id, year=year, tmdb_id=tmdb_id
         )
 
         url = router.url_path_for("create_film")
         response = client.post(
             f"{settings.api_path}{url}",
-            json={"title": title, "imdb_id": imdb_id, "year": year},
+            json={"title": title, "imdb_id": imdb_id, "year": year, "tmdb_id": tmdb_id},
         )
 
         assert response.status_code == 200
@@ -137,9 +138,10 @@ class TestCreateFilm:
         assert response.json()["title"] == title
         assert response.json()["year"] == year
         assert response.json()["imdb_id"] == imdb_id
+        assert response.json()["tmdb_id"] == tmdb_id
 
         mock_get_or_create_film.assert_awaited_once_with(
-            title=title, imdb_id=imdb_id, year=year
+            title=title, imdb_id=imdb_id, year=year, tmdb_id=tmdb_id
         )
 
 

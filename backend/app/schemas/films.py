@@ -24,7 +24,7 @@ class SearchResult(BaseModel):
     cover_photo: Optional[str] = None
     release_date: Optional[date] = None
     year: Optional[int] = None
-    id: Optional[int] = None
+    tmdb_id: Optional[str] = None
 
     @validator("year", pre=True, always=True)
     def assemble_year(
@@ -60,3 +60,4 @@ class FilmIn(BaseModel):
     title: str
     imdb_id: Optional[str] = None
     year: Optional[int] = None
+    tmdb_id: Optional[str] = None

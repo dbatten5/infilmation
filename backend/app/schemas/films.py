@@ -3,10 +3,15 @@ from datetime import date
 from enum import Enum
 from typing import Any
 from typing import Dict
+from typing import List
 from typing import Optional
 
 from pydantic import BaseModel
 from pydantic import validator
+
+from app.models.film import Actor
+from app.models.film import Director
+from app.models.film import Genre
 
 
 class MovieTypeEnum(str, Enum):
@@ -61,3 +66,31 @@ class FilmIn(BaseModel):
     imdb_id: Optional[str] = None
     year: Optional[int] = None
     tmdb_id: Optional[str] = None
+
+
+class FilmOut(BaseModel):
+    """Schema for create film request responses."""
+
+    id: int
+    title: str
+    year: Optional[int] = None
+    runtime: Optional[int] = None
+    plot: Optional[str] = None
+    imdb_id: Optional[str] = None
+    imdb_title: Optional[str] = None
+    imdb_year: Optional[int] = None
+    imdb_rating: Optional[float] = None
+    imdb_low_confidence: bool = False
+    mtc_title: Optional[str] = None
+    mtc_year: Optional[int] = None
+    mtc_rating: Optional[str] = None
+    mtc_low_confidence: bool = False
+    rt_title: Optional[str] = None
+    rt_year: Optional[int] = None
+    rt_tomato_rating: Optional[str] = None
+    rt_low_confidence: bool = False
+    cast: List[Actor]
+    directors: List[Director]
+    genres: List[Genre]
+    tmdb_id: Optional[str] = None
+    human_readable_runtime: Optional[str] = None

@@ -18,148 +18,136 @@ import { Director } from './director';
 import { Genre } from './genre';
 
 /**
- * Schema for the `Film` model.
+ * Schema for create film requests.
  * @export
- * @interface Film
+ * @interface FilmOut
  */
-export interface Film {
+export interface FilmOut {
     /**
      * 
      * @type {number}
-     * @memberof Film
+     * @memberof FilmOut
      */
-    'id'?: number;
+    'id': number;
     /**
      * 
      * @type {string}
-     * @memberof Film
+     * @memberof FilmOut
      */
     'title': string;
     /**
      * 
      * @type {number}
-     * @memberof Film
+     * @memberof FilmOut
      */
     'year'?: number;
     /**
      * 
      * @type {number}
-     * @memberof Film
+     * @memberof FilmOut
      */
     'runtime'?: number;
     /**
      * 
      * @type {string}
-     * @memberof Film
+     * @memberof FilmOut
      */
     'plot'?: string;
     /**
      * 
      * @type {string}
-     * @memberof Film
+     * @memberof FilmOut
      */
     'imdb_id'?: string;
     /**
      * 
      * @type {string}
-     * @memberof Film
+     * @memberof FilmOut
      */
-    'imdb_title'?: string;
+    'imdb'?: string;
     /**
      * 
      * @type {number}
-     * @memberof Film
+     * @memberof FilmOut
      */
     'imdb_year'?: number;
     /**
      * 
      * @type {number}
-     * @memberof Film
+     * @memberof FilmOut
      */
     'imdb_rating'?: number;
     /**
      * 
      * @type {boolean}
-     * @memberof Film
+     * @memberof FilmOut
      */
     'imdb_low_confidence'?: boolean;
     /**
      * 
      * @type {string}
-     * @memberof Film
+     * @memberof FilmOut
      */
     'mtc_title'?: string;
     /**
      * 
      * @type {number}
-     * @memberof Film
+     * @memberof FilmOut
      */
     'mtc_year'?: number;
     /**
      * 
      * @type {string}
-     * @memberof Film
+     * @memberof FilmOut
      */
     'mtc_rating'?: string;
     /**
      * 
      * @type {boolean}
-     * @memberof Film
+     * @memberof FilmOut
      */
     'mtc_low_confidence'?: boolean;
     /**
      * 
      * @type {string}
-     * @memberof Film
+     * @memberof FilmOut
      */
     'rt_title'?: string;
     /**
      * 
      * @type {number}
-     * @memberof Film
+     * @memberof FilmOut
      */
     'rt_year'?: number;
     /**
      * 
      * @type {string}
-     * @memberof Film
+     * @memberof FilmOut
      */
     'rt_tomato_rating'?: string;
     /**
      * 
      * @type {boolean}
-     * @memberof Film
+     * @memberof FilmOut
      */
     'rt_low_confidence'?: boolean;
     /**
      * 
-     * @type {number | Actor | Array<Actor>}
-     * @memberof Film
+     * @type {Array<Actor>}
+     * @memberof FilmOut
      */
-    'cast'?: number | Actor | Array<Actor>;
+    'cast': Array<Actor>;
     /**
      * 
-     * @type {number | Director | Array<Director>}
-     * @memberof Film
+     * @type {Array<Director>}
+     * @memberof FilmOut
      */
-    'directors'?: number | Director | Array<Director>;
+    'directors': Array<Director>;
     /**
      * 
-     * @type {number | Genre | Array<Genre>}
-     * @memberof Film
+     * @type {Array<Genre>}
+     * @memberof FilmOut
      */
-    'genres'?: number | Genre | Array<Genre>;
-    /**
-     * 
-     * @type {string}
-     * @memberof Film
-     */
-    'tmdb_id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Film
-     */
-    'human_readable_runtime'?: string;
+    'genres': Array<Genre>;
 }
 

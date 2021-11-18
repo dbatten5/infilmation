@@ -14,6 +14,9 @@ import Stack from '@mui/material/Stack';
 import Link from '@mui/material/Link';
 import Collapse from '@mui/material/Collapse';
 import Grid from '@mui/material/Grid';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import IconButton from '@mui/material/IconButton';
 import { FilmListItem } from './types';
 import Imdb from './icons/IMDb';
 import Mtc from './icons/mtc';
@@ -33,6 +36,8 @@ const createData = ({
   rt_tomato_rating,
   loading,
   plot,
+  genres,
+  cast,
 }: FilmListItem) => ({
   id,
   title,
@@ -45,6 +50,8 @@ const createData = ({
   rt_tomato_rating,
   loading,
   plot,
+  genres,
+  cast,
 });
 
 type Props = {
@@ -64,11 +71,20 @@ const Row = (props: { row: ReturnType<typeof createData> }) => {
       <TableRow
         sx={{
           '&:last-child td, &:last-child th': { border: 0 },
-          cursor: 'pointer',
-          '&:hover': { bgcolor: '#EEEDE7' },
         }}
-        onClick={toggleOpen}
       >
+        <TableCell sx={{ width: '0.5rem', pr: '0' }}>
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            disableRipple
+            disableFocusRipple
+            onClick={toggleOpen}
+            sx={{ width: '0.5rem', height: '0.5rem' }}
+          >
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
         <TableCell component="th" scope="row">
           {row.title}
         </TableCell>
@@ -103,14 +119,14 @@ const Row = (props: { row: ReturnType<typeof createData> }) => {
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ py: 2 }}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
                   {row.plot}
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={2}>
                   <Link
                     href={`https://www.youtube.com/results?search_query=${row.title}+${row.year}+trailer`}
                     color="inherit"
@@ -131,6 +147,20 @@ const Row = (props: { row: ReturnType<typeof createData> }) => {
                     </Stack>
                   </Link>
                 </Grid>
+                <Grid item xs={8}>
+                  <Box sx={{ textAlign: 'center' }}>
+                    {row.cast &&
+                      row.cast
+                        .slice(0, 1)
+                        .map((a) => a.name)
+                        .join(', ')}
+                  </Box>
+                </Grid>
+                <Grid item xs={2}>
+                  <Box sx={{ textAlign: 'right' }}>
+                    {row.genres && row.genres.slice(0, 1).map((g) => g.name)}
+                  </Box>
+                </Grid>
               </Grid>
             </Box>
           </Collapse>
@@ -148,6 +178,7 @@ const FilmTable = ({ films }: Props) => {
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
+            <TableCell sx={{ width: '1rem' }} />
             <TableCell>Title</TableCell>
             <TableCell align="right">Year</TableCell>
             <TableCell align="right">Runtime</TableCell>

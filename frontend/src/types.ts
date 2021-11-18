@@ -26,9 +26,9 @@ export interface FilmListItem {
   imdb_rating?: number;
   mtc_rating?: string;
   rt_tomato_rating?: string;
-  cast?: number | Actor | Array<Actor>;
-  directors?: number | Director | Array<Director>;
-  genres?: number | Genre | Array<Genre>;
+  cast?: Array<Actor>;
+  directors?: Array<Director>;
+  genres?: Array<Genre>;
   loading: boolean;
   human_readable_runtime?: string;
 }

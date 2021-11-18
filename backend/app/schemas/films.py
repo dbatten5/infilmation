@@ -1,6 +1,5 @@
 """Module to hold film related schemas."""
 from datetime import date
-from datetime import timedelta
 from enum import Enum
 from typing import Any
 from typing import Dict
@@ -70,7 +69,7 @@ class FilmIn(BaseModel):
 
 
 class FilmOut(BaseModel):
-    """Schema for create film requests."""
+    """Schema for create film request responses."""
 
     id: int
     title: str
@@ -78,7 +77,7 @@ class FilmOut(BaseModel):
     runtime: Optional[int] = None
     plot: Optional[str] = None
     imdb_id: Optional[str] = None
-    imdb: Optional[str] = None
+    imdb_title: Optional[str] = None
     imdb_year: Optional[int] = None
     imdb_rating: Optional[float] = None
     imdb_low_confidence: bool = False
@@ -93,15 +92,5 @@ class FilmOut(BaseModel):
     cast: List[Actor]
     directors: List[Director]
     genres: List[Genre]
-
-    @property
-    def human_readable_runtime(self) -> Optional[str]:
-        """Runtime the runtime in human readable form.
-
-        Returns:
-            Optional[str]: the runtime
-        """
-        if self.runtime:
-            return str(timedelta(minutes=self.runtime))[:-3]
-
-        return None
+    tmdb_id: Optional[str] = None
+    human_readable_runtime: Optional[str] = None

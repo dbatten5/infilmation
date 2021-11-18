@@ -149,21 +149,17 @@ export interface Film {
      * @memberof Film
      */
     'genres'?: number | Genre | Array<Genre>;
-<<<<<<< HEAD
     /**
      * 
      * @type {string}
      * @memberof Film
      */
     'tmdb_id'?: string;
-||||||| parent of d44975d... wip
     /**
      * 
      * @type {string}
      * @memberof Film
      */
     'human_readable_runtime'?: string;
-=======
->>>>>>> d44975d... wip
 }
 

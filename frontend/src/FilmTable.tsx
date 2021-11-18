@@ -37,6 +37,7 @@ const createData = ({
   loading,
   plot,
   genres,
+  cast,
 }: FilmListItem) => ({
   id,
   title,
@@ -50,6 +51,7 @@ const createData = ({
   loading,
   plot,
   genres,
+  cast,
 });
 
 type Props = {
@@ -117,14 +119,14 @@ const Row = (props: { row: ReturnType<typeof createData> }) => {
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ py: 2 }}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
                   {row.plot}
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={2}>
                   <Link
                     href={`https://www.youtube.com/results?search_query=${row.title}+${row.year}+trailer`}
                     color="inherit"
@@ -145,8 +147,19 @@ const Row = (props: { row: ReturnType<typeof createData> }) => {
                     </Stack>
                   </Link>
                 </Grid>
-                <Grid item xs={4}>
-                  {row.genres && row.genres.find(Boolean)}
+                <Grid item xs={8}>
+                  <Box sx={{ textAlign: 'center' }}>
+                    {row.cast &&
+                      row.cast
+                        .slice(0, 1)
+                        .map((a) => a.name)
+                        .join(', ')}
+                  </Box>
+                </Grid>
+                <Grid item xs={2}>
+                  <Box sx={{ textAlign: 'right' }}>
+                    {row.genres && row.genres.slice(0, 1).map((g) => g.name)}
+                  </Box>
                 </Grid>
               </Grid>
             </Box>

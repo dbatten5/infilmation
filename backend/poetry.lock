@@ -839,7 +839,7 @@ ptyprocess = ">=0.5"
 
 [[package]]
 name = "phylm"
-version = "4.2.1"
+version = "4.2.2"
 description = "Phylm"
 category = "main"
 optional = false
@@ -2026,8 +2026,8 @@ pexpect = [
     {file = "pexpect-4.8.0.tar.gz", hash = "sha256:fc65a43959d153d0114afe13997d439c22823a27cefceb5ff35c2178c6784c0c"},
 ]
 phylm = [
-    {file = "phylm-4.2.1-py3-none-any.whl", hash = "sha256:5b662502f9c25e1d535f2558e05c782b81ad9255052b6b632e42c64e816225a8"},
-    {file = "phylm-4.2.1.tar.gz", hash = "sha256:cbde9284d655120b714e2ad0aee10038ed221f7250aa130792af425ca75e02ba"},
+    {file = "phylm-4.2.2-py3-none-any.whl", hash = "sha256:52f4f132115f6bd670968ce959fdea57781ce5ac687c5c47cea6270e6724e638"},
+    {file = "phylm-4.2.2.tar.gz", hash = "sha256:449097ff907aa18cb044dac4f7db7faeac74b9db080f75af328b8c9ac06e570d"},
 ]
 pickleshare = [
     {file = "pickleshare-0.7.5-py2.py3-none-any.whl", hash = "sha256:9649af414d74d4df115d5d718f82acb59c9d418196b7b4290ed47a12ce62df56"},

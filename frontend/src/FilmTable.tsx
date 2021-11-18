@@ -14,6 +14,9 @@ import Stack from '@mui/material/Stack';
 import Link from '@mui/material/Link';
 import Collapse from '@mui/material/Collapse';
 import Grid from '@mui/material/Grid';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import IconButton from '@mui/material/IconButton';
 import { FilmListItem } from './types';
 import Imdb from './icons/IMDb';
 import Mtc from './icons/mtc';
@@ -64,11 +67,20 @@ const Row = (props: { row: ReturnType<typeof createData> }) => {
       <TableRow
         sx={{
           '&:last-child td, &:last-child th': { border: 0 },
-          cursor: 'pointer',
-          '&:hover': { bgcolor: '#EEEDE7' },
         }}
-        onClick={toggleOpen}
       >
+        <TableCell sx={{ width: '0.5rem', pr: '0' }}>
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            disableRipple
+            disableFocusRipple
+            onClick={toggleOpen}
+            sx={{ width: '0.5rem', height: '0.5rem' }}
+          >
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
         <TableCell component="th" scope="row">
           {row.title}
         </TableCell>
@@ -148,6 +160,7 @@ const FilmTable = ({ films }: Props) => {
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
+            <TableCell sx={{ width: '1rem' }} />
             <TableCell>Title</TableCell>
             <TableCell align="right">Year</TableCell>
             <TableCell align="right">Runtime</TableCell>

@@ -149,11 +149,5 @@ export interface Film {
      * @memberof Film
      */
     'genres'?: number | Genre | Array<Genre>;
-    /**
-     * 
-     * @type {string}
-     * @memberof Film
-     */
-    'human_readable_runtime'?: string;
 }
 

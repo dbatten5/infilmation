@@ -5,6 +5,7 @@ import Page from './Page';
 import Search from './Search';
 import FilmTable from './FilmTable';
 import { FilmListItem } from './types';
+import { utilsApi } from './providers/env';
 
 const Home = () => {
   const [filmList, setFilmList] = React.useState<FilmListItem[]>([]);
@@ -15,6 +16,14 @@ const Home = () => {
       setFilmList([...filmList, option]);
     }
   };
+
+  React.useEffect(() => {
+    const ping = async () => {
+      await utilsApi.ping();
+    };
+
+    ping();
+  }, []);
 
   return (
     <Page>

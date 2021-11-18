@@ -3,9 +3,9 @@ from typing import List
 
 from fastapi import APIRouter
 from fastapi import Query
-from phylm.tools import search_movies
 
 from app.crud import get_or_create_film
+from app.crud import get_search_results
 from app.models.film import Film
 from app.schemas.films import FilmIn
 from app.schemas.films import SearchResult
@@ -23,7 +23,7 @@ def search_films(query: str) -> List[SearchResult]:
     Returns:
         a list of search results
     """
-    search_results = search_movies(query=query)
+    search_results = get_search_results(query=query)
     return [
         SearchResult(**result) for result in search_results if result["kind"] == "movie"
     ]

@@ -7,7 +7,6 @@ router = APIRouter()
 @router.get(
     "/ping",
     status_code=200,
-    include_in_schema=False,
 )
 def ping() -> str:
     """Return a `pong` message.

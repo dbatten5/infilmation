@@ -2,6 +2,7 @@
 .npmignore
 api.ts
 api/films-api.ts
+api/utils-api.ts
 base.ts
 common.ts
 configuration.ts

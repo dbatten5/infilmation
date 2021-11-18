@@ -13,6 +13,8 @@ database = Film.Meta.database
 
 pytestmark = [pytest.mark.asyncio]
 
+MODULE_PATH = "app.crud"
+
 
 class TestAddFilmGenres:
     """Tests for the `add_film_genres` function."""
@@ -207,3 +209,22 @@ class TestGetOrCreateFilm:
         mock_create_film.assert_called_once_with(
             title="The Matrix", imdb_id=None, year=1999
         )
+
+
+class TestGetSearchResults:
+    """Tests for the `get_search_results` function."""
+
+    @mock.patch(f"{MODULE_PATH}.search_movies", autospec=True)
+    def test_success(self, mock_search_movies: mock.MagicMock) -> None:
+        """
+        Given a query,
+        When the `get_search_results` function is invoked with the query,
+        Then the `search_movies` function is called with the query
+        """
+        query = "the film"
+        mock_search_movies.return_value = [{"title": "the film"}]
+
+        result = crud.get_search_results(query)
+
+        assert result == mock_search_movies.return_value
+        mock_search_movies.assert_called_once_with(query=query)

@@ -67,6 +67,7 @@ class TestSearchFilms:
 class TestCreateFilm:
     """Tests for the `create_film` function."""
 
+    @pytest.mark.skip
     @mock.patch("app.api.films.get_or_create_film", autospec=True)
     @pytest.mark.asyncio
     async def test_success(

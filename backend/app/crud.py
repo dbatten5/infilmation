@@ -6,6 +6,7 @@ from typing import Optional
 from typing import Union
 
 from phylm.phylm import Phylm
+from phylm.tools import get_streaming_providers
 from phylm.tools import search_tmdb_movies
 
 from app.models.film import Actor
@@ -143,3 +144,27 @@ def get_search_results(query: str) -> List[Dict[str, Union[str, int]]]:
         for result in search_tmdb_movies(query=query)
         if "release_date" in result and result["release_date"]
     ][:10]
+
+
+def get_film_streaming_providers(tmdb_id: str, region: str = "gb") -> Dict[str, bool]:
+    """Get the streaming providers for a given `tmdb_id`.
+
+    Args:
+        tmdb_id: the tmdb id of the movie
+        region: a region to refine the provider search
+
+    Returns:
+        a dict keyed by streaming provider name
+    """
+    providers = get_streaming_providers(tmdb_movie_id=tmdb_id, regions=[region])[region]
+    flatrates = [
+        provider["provider_name"].lower() for provider in providers.get("flatrate", [])
+    ]
+    rentals = [
+        provider["provider_name"].lower() for provider in providers.get("rent", [])
+    ]
+    return {
+        "netflix": "netflix" in flatrates,
+        "amazon_prime": "amazon prime video" in flatrates,
+        "amazon_video": "amazon video" in rentals,
+    }

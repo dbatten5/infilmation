@@ -18,7 +18,7 @@ import { Director } from './director';
 import { Genre } from './genre';
 
 /**
- * Schema for create film requests.
+ * Schema for create film request responses.
  * @export
  * @interface FilmOut
  */
@@ -64,7 +64,7 @@ export interface FilmOut {
      * @type {string}
      * @memberof FilmOut
      */
-    'imdb'?: string;
+    'imdb_title'?: string;
     /**
      * 
      * @type {number}
@@ -149,5 +149,17 @@ export interface FilmOut {
      * @memberof FilmOut
      */
     'genres': Array<Genre>;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilmOut
+     */
+    'tmdb_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilmOut
+     */
+    'human_readable_runtime'?: string;
 }
 

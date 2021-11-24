@@ -18,4 +18,5 @@ models/httpvalidation-error.ts
 models/index.ts
 models/movie-type-enum.ts
 models/search-result.ts
+models/streaming-providers.ts
 models/validation-error.ts

@@ -7,4 +7,5 @@ export * from './genre';
 export * from './httpvalidation-error';
 export * from './movie-type-enum';
 export * from './search-result';
+export * from './streaming-providers';
 export * from './validation-error';

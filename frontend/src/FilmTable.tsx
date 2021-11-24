@@ -89,7 +89,9 @@ const Row = (props: { row: ReturnType<typeof createData> }) => {
       <TableRow
         sx={{
           '&:last-child td, &:last-child th': { border: 0 },
+          cursor: 'pointer',
         }}
+        onClick={toggleOpen}
       >
         <TableCell sx={{ width: '0.5rem', pr: '0' }}>
           <IconButton
@@ -97,7 +99,6 @@ const Row = (props: { row: ReturnType<typeof createData> }) => {
             size="small"
             disableRipple
             disableFocusRipple
-            onClick={toggleOpen}
             sx={{ width: '0.5rem', height: '0.5rem' }}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}

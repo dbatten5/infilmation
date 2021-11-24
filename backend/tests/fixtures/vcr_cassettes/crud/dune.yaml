@@ -1,0 +1,92 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.26.0
+    method: GET
+    uri: https://api.themoviedb.org/3/movie/438631/watch/providers
+  response:
+    body:
+      string: !!binary |
+        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
+        rF676n19ff0HpuhjSlJfAAA=
+    headers:
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      Cache-Control:
+      - public, max-age=28800
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Tue, 23 Nov 2021 14:36:47 GMT
+      ETag:
+      - W/"c049dc07cbb688cb431a2427aa090f2f"
+      Server:
+      - openresty
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      Via:
+      - 1.1 0bd4d5448b19873aafd864e434b36f0f.cloudfront.net (CloudFront)
+      X-Amz-Cf-Id:
+      - AJckn79QGEoQu_V3MxXu8RaXs02edeyq1Z6UIFEXyAjMfPiFEq3gZg==
+      X-Amz-Cf-Pop:
+      - LHR61-P1
+      X-Cache:
+      - Miss from cloudfront
+      X-Memc:
+      - HIT
+      X-Memc-Age:
+      - '11465'
+      X-Memc-Expires:
+      - '4435'
+      X-Memc-Key:
+      - 6d464965ae4c1941cf165edb1db4128b00c85d63
+    status:
+      code: 200
+      message: OK
+version: 1

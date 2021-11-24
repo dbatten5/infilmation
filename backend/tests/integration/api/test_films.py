@@ -132,3 +132,37 @@ class TestGetFilms:
         assert len(data) == 2
         assert data[0]["id"] == film_1.id
         assert data[1]["id"] == film_2.id
+
+
+class TestGetStreamingProviders:
+    """Tests for the `get_streaming_providers` endpoint."""
+
+    @mock.patch("app.api.films.get_film_streaming_providers", autospec=True)
+    def test_the_appropriate_crud_function_is_called(
+        self,
+        mock_get_film_streaming_providers: mock.MagicMock,
+        client: TestClient,
+    ) -> None:
+        """
+        Given a `tmdb_id`
+        When the `get_streaming_providers` endpoint is hit,
+        Then the `tmdb_id` is passed to the appropraite crud function and the results
+            are returned
+        """
+        tmdb_id = "abc"
+        mock_get_film_streaming_providers.return_value = {
+            "netflix": True,
+            "amazon_prime": True,
+            "amazon_video": False,
+        }
+
+        url = router.url_path_for("get_streaming_providers", tmdb_id=tmdb_id)
+
+        response = client.get(f"{settings.api_path}{url}")
+
+        assert response.status_code == 200
+        assert response.json() == {
+            "netflix": True,
+            "amazon_prime": True,
+            "amazon_video": False,
+        }

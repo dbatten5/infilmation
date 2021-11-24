@@ -1,15 +1,18 @@
 """Module to hold the `movies` router."""
+from typing import Dict
 from typing import List
 
 from fastapi import APIRouter
 from fastapi import Query
 
+from app.crud import get_film_streaming_providers
 from app.crud import get_or_create_film
 from app.crud import get_search_results
 from app.models.film import Film
 from app.schemas.films import FilmIn
 from app.schemas.films import FilmOut
 from app.schemas.films import SearchResult
+from app.schemas.films import StreamingProviders
 
 router = APIRouter(prefix="/films")
 
@@ -58,3 +61,16 @@ async def get_films(imdb_ids: List[str] = Query([])) -> List[Film]:
         a list of filtered `Film` objects
     """
     return await Film.objects.filter(imdb_id__in=imdb_ids).all()
+
+
+@router.get("/{tmdb_id}/streaming_providers", response_model=StreamingProviders)
+def get_streaming_providers(tmdb_id: str) -> Dict[str, bool]:
+    """Get the streaming providers for a given `tmdb_id`.
+    \f
+    Args:
+        tmdb_id: the tmdb id of the movie
+
+    Returns:
+        a dict keyed by streaming provider name
+    """
+    return get_film_streaming_providers(tmdb_id=tmdb_id)

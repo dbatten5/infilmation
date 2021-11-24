@@ -94,3 +94,11 @@ class FilmOut(BaseModel):
     genres: List[Genre]
     tmdb_id: Optional[str] = None
     human_readable_runtime: Optional[str] = None
+
+
+class StreamingProviders(BaseModel):
+    """Schema for get streaming providers responses."""
+
+    netflix: bool
+    amazon_prime: bool
+    amazon_video: bool

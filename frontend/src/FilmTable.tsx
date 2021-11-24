@@ -17,12 +17,16 @@ import Grid from '@mui/material/Grid';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import IconButton from '@mui/material/IconButton';
+import Avatar from '@mui/material/Avatar';
+import { StreamingProviders } from './generated/models';
 import { FilmListItem } from './types';
 import Imdb from './icons/IMDb';
+import AmazonPrime from './icons/amazon-prime';
 import Mtc from './icons/mtc';
 import Rt from './icons/rt';
 import Play from './icons/play';
 import FingerPoint from './icons/finger-point';
+import { filmsApi } from './providers/env';
 
 const createData = ({
   id,
@@ -61,9 +65,23 @@ type Props = {
 const Row = (props: { row: ReturnType<typeof createData> }) => {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
+  const [streamingProviders, setStreamingProviders] =
+    React.useState<StreamingProviders | null>(null);
 
-  const toggleOpen = () => {
+  const toggleOpen = async () => {
     setOpen(!open);
+    if (!streamingProviders && row.tmdb_id) {
+      try {
+        const streamingProvidersResponse = await filmsApi.getStreamingProviders(
+          {
+            tmdbId: row.tmdb_id,
+          }
+        );
+        setStreamingProviders(streamingProvidersResponse.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
 
   return (
@@ -148,13 +166,37 @@ const Row = (props: { row: ReturnType<typeof createData> }) => {
                   </Link>
                 </Grid>
                 <Grid item xs={8}>
-                  <Box sx={{ textAlign: 'center' }}>
-                    {row.cast &&
-                      row.cast
-                        .slice(0, 1)
-                        .map((a) => a.name)
-                        .join(', ')}
-                  </Box>
+                  {streamingProviders && (
+                    <Stack
+                      direction="row"
+                      alignItems="center"
+                      justifyContent="center"
+                      sx={{ height: '100%' }}
+                      spacing={3}
+                    >
+                      <Avatar
+                        alt="Neflix logo"
+                        src="./netflix.png"
+                        variant="square"
+                        sx={{
+                          width: '1rem',
+                          height: '1rem',
+                          ...(!streamingProviders.netflix && { opacity: 0.3 }),
+                        }}
+                      />
+                      <SvgIcon
+                        component={AmazonPrime}
+                        sx={{
+                          width: '3rem',
+                          height: '1rem',
+                          ...(!streamingProviders.amazon_prime && {
+                            opacity: 0.3,
+                          }),
+                        }}
+                        viewBox="0 0 800.3 246.3"
+                      />
+                    </Stack>
+                  )}
                 </Grid>
                 <Grid item xs={2}>
                   <Box sx={{ textAlign: 'right' }}>

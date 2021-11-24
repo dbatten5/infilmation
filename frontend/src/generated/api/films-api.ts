@@ -30,6 +30,8 @@ import { FilmOut } from '../models';
 import { HTTPValidationError } from '../models';
 // @ts-ignore
 import { SearchResult } from '../models';
+// @ts-ignore
+import { StreamingProviders } from '../models';
 /**
  * FilmsApi - axios parameter creator
  * @export
@@ -95,6 +97,40 @@ export const FilmsApiAxiosParamCreator = function (configuration?: Configuration
             if (imdbIds) {
                 localVarQueryParameter['imdb_ids'] = imdbIds;
             }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get the streaming providers for a given `tmdb_id`. 
+         * @summary Get Streaming Providers
+         * @param {string} tmdbId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getStreamingProviders: async (tmdbId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'tmdbId' is not null or undefined
+            assertParamExists('getStreamingProviders', 'tmdbId', tmdbId)
+            const localVarPath = `/api/v1/films/{tmdb_id}/streaming_providers`
+                .replace(`{${"tmdb_id"}}`, encodeURIComponent(String(tmdbId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
 
 
     
@@ -177,6 +213,17 @@ export const FilmsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Get the streaming providers for a given `tmdb_id`. 
+         * @summary Get Streaming Providers
+         * @param {string} tmdbId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getStreamingProviders(tmdbId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StreamingProviders>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getStreamingProviders(tmdbId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Search for a film from a given query. 
          * @summary Search Films
          * @param {string} query 
@@ -218,6 +265,16 @@ export const FilmsApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getFilms(imdbIds, options).then((request) => request(axios, basePath));
         },
         /**
+         * Get the streaming providers for a given `tmdb_id`. 
+         * @summary Get Streaming Providers
+         * @param {string} tmdbId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getStreamingProviders(tmdbId: string, options?: any): AxiosPromise<StreamingProviders> {
+            return localVarFp.getStreamingProviders(tmdbId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Search for a film from a given query. 
          * @summary Search Films
          * @param {string} query 
@@ -256,6 +313,20 @@ export interface FilmsApiGetFilmsRequest {
      * @memberof FilmsApiGetFilms
      */
     readonly imdbIds?: Array<string>
+}
+
+/**
+ * Request parameters for getStreamingProviders operation in FilmsApi.
+ * @export
+ * @interface FilmsApiGetStreamingProvidersRequest
+ */
+export interface FilmsApiGetStreamingProvidersRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof FilmsApiGetStreamingProviders
+     */
+    readonly tmdbId: string
 }
 
 /**
@@ -301,6 +372,18 @@ export class FilmsApi extends BaseAPI {
      */
     public getFilms(requestParameters: FilmsApiGetFilmsRequest = {}, options?: AxiosRequestConfig) {
         return FilmsApiFp(this.configuration).getFilms(requestParameters.imdbIds, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get the streaming providers for a given `tmdb_id`. 
+     * @summary Get Streaming Providers
+     * @param {FilmsApiGetStreamingProvidersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FilmsApi
+     */
+    public getStreamingProviders(requestParameters: FilmsApiGetStreamingProvidersRequest, options?: AxiosRequestConfig) {
+        return FilmsApiFp(this.configuration).getStreamingProviders(requestParameters.tmdbId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -43,6 +43,7 @@ pytest-asyncio = "^0.16.0"
 IPython = "^7.29.0"
 httpx = "^0.20.0"
 asgi-lifespan = "^1.0.1"
+vcrpy = "^4.1.1"
 
 [tool.mypy]
 strict = true
@@ -51,6 +52,11 @@ show_column_numbers = true
 show_error_codes = true
 show_error_context = true
 plugins = "sqlmypy"
+disallow_untyped_decorators = false
+
+[[tool.mypy.overrides]]
+module = ["vcr"]
+ignore_missing_imports = true
 
 [tool.isort]
 profile = "open_stack"

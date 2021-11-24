@@ -155,11 +155,5 @@ export interface Film {
      * @memberof Film
      */
     'tmdb_id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Film
-     */
-    'human_readable_runtime'?: string;
 }
 

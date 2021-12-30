@@ -1,4 +1,5 @@
 """Module to define crud actions."""
+import asyncio
 from functools import lru_cache
 from typing import Dict
 from typing import List
@@ -68,7 +69,7 @@ async def create_film(
     Returns:
         a `Film` object
     """
-    phylm = Phylm(title=title, imdb_id=imdb_id, year=year).load_sources(
+    phylm = await Phylm(title=title, imdb_id=imdb_id, year=year).load_sources(
         ["imdb", "mtc", "rt"]
     )
     film = await Film.objects.create(
@@ -91,9 +92,11 @@ async def create_film(
         rt_low_confidence=phylm.rt.low_confidence,
         tmdb_id=tmdb_id,
     )
-    await add_film_directors(film=film, directors=phylm.imdb.directors())
-    await add_film_actors(film=film, actors=phylm.imdb.cast())
-    await add_film_genres(film=film, genres=phylm.imdb.genres())
+    await asyncio.gather(
+        add_film_directors(film=film, directors=phylm.imdb.directors()),
+        add_film_actors(film=film, actors=phylm.imdb.cast()),
+        add_film_genres(film=film, genres=phylm.imdb.genres()),
+    )
     return film
 
 

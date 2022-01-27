@@ -1350,10 +1350,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fontsource/eb-garamond@^4.5.0":
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/@fontsource/eb-garamond/-/eb-garamond-4.5.0.tgz#01669e9ff98493b7fc4c149befb9254fb89ffc79"
-  integrity sha512-mTECLbyBCVpdozxhEBLukDfij5aQE/6zE5yqms4kvO1I2DL7xiSGNiokFbFFYjPcAAVYqnhRWko2EEY5XI2RPg==
+"@fontsource/eb-garamond@^4.5.2":
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/@fontsource/eb-garamond/-/eb-garamond-4.5.2.tgz#7ae4afbc571f6fcab590e31dba5d8b4cf910da0e"
+  integrity sha512-95WLl7X6n6asw5F+HCO8H0jJGILpR3vyYovE+P4ydwfM6HuN8V31jans/ae0u3mDi8Bf5UbLmWVTgdLzw2aPrg==
 
 "@gar/promisify@^1.0.1":
   version "1.1.2"

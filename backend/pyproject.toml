@@ -11,7 +11,7 @@ uvicorn = {extras = ["standard"], version = "^0.15.0"}
 ormar = "^0.10.22"
 psycopg2-binary = "^2.9.1"
 asyncpg = "^0.24.0"
-alembic = "^1.7.4"
+alembic = "^1.7.6"
 phylm = "^5.0.0"
 gunicorn = "^20.1.0"
 

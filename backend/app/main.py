@@ -39,19 +39,21 @@ for route in app.routes:
 async def startup() -> None:
     """Run actions on app startup.
 
-    Ensure database is connected
+    Ensure database is connected if `persist_film_data` is `True`
     """
-    database_ = app.state.database
-    if not database_.is_connected:
-        await database_.connect()
+    if settings.persist_film_data:
+        database_ = app.state.database
+        if not database_.is_connected:
+            await database_.connect()
 
 
 @app.on_event("shutdown")
 async def shutdown() -> None:
     """Run actions on app shutdown.
 
-    Ensure database is disconnected
+    Ensure database is disconnected if `persist_film_data` is `True`
     """
-    database_ = app.state.database
-    if database_.is_connected:
-        await database_.disconnect()
+    if settings.persist_film_data:
+        database_ = app.state.database
+        if database_.is_connected:
+            await database_.disconnect()

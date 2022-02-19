@@ -71,7 +71,7 @@ class FilmIn(BaseModel):
 class FilmOut(BaseModel):
     """Schema for create film request responses."""
 
-    id: int
+    id: Optional[int] = None
     title: str
     year: Optional[int] = None
     runtime: Optional[int] = None

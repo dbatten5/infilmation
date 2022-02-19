@@ -69,7 +69,7 @@ class Film(ormar.Model):
 
     @property_field
     def human_readable_runtime(self) -> Optional[str]:
-        """Runtime the runtime in human readable form.
+        """Return the runtime in human readable form.
 
         Returns:
             Optional[str]: the runtime

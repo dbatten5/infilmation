@@ -58,6 +58,8 @@ class Settings(BaseSettings):
     postgres_port: Optional[str] = None
     sqlalchemy_database_uri: Optional[Union[PostgresDsn, str]] = None
 
+    persist_film_data: bool = False
+
     @validator("sqlalchemy_database_uri", pre=True)
     def assemble_db_connection(
         cls, value: Optional[str], values: Dict[str, Any]  # noqa: N805,B902

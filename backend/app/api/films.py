@@ -1,10 +1,14 @@
 """Module to hold the `movies` router."""
+from typing import Any
 from typing import Dict
 from typing import List
+from typing import Union
 
 from fastapi import APIRouter
 from fastapi import Query
 
+from app.core.config import settings
+from app.crud import fetch_film
 from app.crud import get_film_streaming_providers
 from app.crud import get_or_create_film
 from app.crud import get_search_results
@@ -32,7 +36,7 @@ def search_films(query: str) -> List[SearchResult]:
 
 
 @router.post("/", response_model=FilmOut)
-async def create_film(film_request: FilmIn) -> Film:
+async def create_film(film_request: FilmIn) -> Union[Film, Dict[str, Any]]:
     """Create a new film.
     \f
     Args:
@@ -41,6 +45,14 @@ async def create_film(film_request: FilmIn) -> Film:
     Returns:
         a `Film` object
     """
+    if not settings.persist_film_data:
+        return await fetch_film(
+            title=film_request.title,
+            imdb_id=film_request.imdb_id,
+            year=film_request.year,
+            tmdb_id=film_request.tmdb_id,
+        )
+
     film = await get_or_create_film(
         title=film_request.title,
         imdb_id=film_request.imdb_id,

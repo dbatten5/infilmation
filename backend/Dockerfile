@@ -1,5 +1,5 @@
 ARG APP_DIRECTORY=/infilmation
-ARG ARG_POETRY_VERSION=1.1.11
+ARG ARG_POETRY_VERSION=1.3.1
 ARG PYTHON_VERSION=3.9.7
 
 FROM python:${PYTHON_VERSION}-slim as python-base
@@ -54,7 +54,7 @@ RUN apt-get update \
     build-essential
 
 # install poetry - respects $POETRY_VERSION & $POETRY_HOME
-RUN curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+RUN curl -sSL https://install.python-poetry.org | python -
 
 # copy project requirement files here to build env without depending on app code
 WORKDIR $PYSETUP_PATH

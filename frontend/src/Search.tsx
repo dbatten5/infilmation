@@ -42,7 +42,10 @@ const Search = ({ addFilm }: Props) => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [alertOpen, setAlertOpen] = React.useState<boolean>(false);
 
-  const handleAlertClose = (event?: React.SyntheticEvent, reason?: string) => {
+  const handleAlertClose = (
+    event: React.SyntheticEvent | Event,
+    reason?: string,
+  ) => {
     if (reason === 'clickaway') {
       return;
     }

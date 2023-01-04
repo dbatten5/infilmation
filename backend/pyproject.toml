@@ -12,7 +12,7 @@ ormar = "^0.10.22"
 psycopg2-binary = "^2.9.1"
 asyncpg = "^0.24.0"
 alembic = "^1.7.4"
-phylm = "^6.0.0"
+phylm = "^6.0.2"
 gunicorn = "^20.1.0"
 
 [tool.poetry.dev-dependencies]
@@ -24,7 +24,7 @@ typeguard = "^2.12.1"
 xdoctest = {extras = ["colors"], version = "^0.15.5"}
 pre-commit = "^2.13.0"
 flake8 = "^4.0.1"
-black = "^21.10b0"
+black = "*"
 flake8-bandit = "^2.1.2"
 flake8-bugbear = "^21.4.3"
 flake8-docstrings = "^1.6.0"

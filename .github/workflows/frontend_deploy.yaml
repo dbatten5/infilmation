@@ -2,10 +2,11 @@ name: Build and deploy frontend
 
 on:
   push:
-    paths:
-      - 'frontend/**'
-    # branches:
-    #   - 'main'
+    # paths:
+    #   - 'frontend/**'
+    branches:
+      - "*"
+      # - 'main'
 
 jobs:
   docker:
@@ -38,6 +39,7 @@ jobs:
   ssh:
     name: SSH deploy
     runs-on: ubuntu-latest
+    needs: docker
     steps:
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@v0.1.6
@@ -45,4 +47,8 @@ jobs:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_KEY }}
-        script: dc down && dc pull && dc up -d
+        script: |
+          cd infilmation
+          docker compose down
+          docker compose pull
+          docker compose up -d

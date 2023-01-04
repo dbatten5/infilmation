@@ -37,20 +37,20 @@ const Vanity = () => {
             }}
           />
         </Link>
-        <Link
-          href="https://www.linkedin.com/in/dominic-batten-669996a0/"
-          target="_blank"
-          sx={{ '&:hover': { opacity: 0.6, transition: '0.3s' } }}
-        >
-          <Avatar
-            alt="LinkedIn Logo"
-            src="./linkedin-64.png"
-            sx={{
-              width: { xs: '1rem', md: '1.2rem' },
-              height: { xs: '1rem', md: '1.2rem' },
-            }}
-          />
-        </Link>
+        {/* <Link */}
+        {/*   href="https://www.linkedin.com/in/dominic-batten-669996a0/" */}
+        {/*   target="_blank" */}
+        {/*   sx={{ '&:hover': { opacity: 0.6, transition: '0.3s' } }} */}
+        {/* > */}
+        {/*   <Avatar */}
+        {/*     alt="LinkedIn Logo" */}
+        {/*     src="./linkedin-64.png" */}
+        {/*     sx={{ */}
+        {/*       width: { xs: '1rem', md: '1.2rem' }, */}
+        {/*       height: { xs: '1rem', md: '1.2rem' }, */}
+        {/*     }} */}
+        {/*   /> */}
+        {/* </Link> */}
       </Stack>
     </Box>
   );

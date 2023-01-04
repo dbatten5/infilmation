@@ -4,8 +4,8 @@ on:
   push:
     paths:
       - 'frontend/**'
-    branches:
-      - 'main'
+    # branches:
+    #   - 'main'
 
 jobs:
   docker:

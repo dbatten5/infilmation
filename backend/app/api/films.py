@@ -1,4 +1,5 @@
 """Module to hold the `movies` router."""
+import datetime
 from typing import Any
 from typing import Dict
 from typing import List
@@ -22,7 +23,7 @@ router = APIRouter(prefix="/films")
 
 
 @router.get("/search", response_model=List[SearchResult])
-def search_films(query: str) -> List[SearchResult]:
+async def search_films(query: str) -> List[SearchResult]:
     """Search for a film from a given query.
     \f
     Args:
@@ -35,6 +36,13 @@ def search_films(query: str) -> List[SearchResult]:
     return [SearchResult(**result, tmdb_id=result["id"]) for result in results]
 
 
+def _is_date_less_than(date_str: str, days: int = 90) -> bool:
+    """Check if a date string is less than given days ago."""
+    date = datetime.datetime.strptime(date_str, "%Y-%m-%d")
+    limit = datetime.datetime.now() - datetime.timedelta(days=days)
+    return date > limit
+
+
 @router.post("/", response_model=FilmOut)
 async def create_film(film_request: FilmIn) -> Union[Film, Dict[str, Any]]:
     """Create a new film.
@@ -45,7 +53,10 @@ async def create_film(film_request: FilmIn) -> Union[Film, Dict[str, Any]]:
     Returns:
         a `Film` object
     """
-    if not settings.persist_film_data:
+    if film_request.release_date and _is_date_less_than(
+        film_request.release_date,
+        days=settings.persist_day_limit,
+    ):
         return await fetch_film(
             title=film_request.title,
             imdb_id=film_request.imdb_id,
@@ -76,7 +87,7 @@ async def get_films(imdb_ids: List[str] = Query([])) -> List[Film]:
 
 
 @router.get("/{tmdb_id}/streaming_providers", response_model=StreamingProviders)
-def get_streaming_providers(tmdb_id: str) -> Dict[str, bool]:
+async def get_streaming_providers(tmdb_id: str) -> Dict[str, bool]:
     """Get the streaming providers for a given `tmdb_id`.
     \f
     Args:

@@ -7,7 +7,6 @@ from app.api import api_router
 from app.core.config import settings
 from app.db import database
 
-
 app = FastAPI(
     title=settings.project_name,
     openapi_url=f"{settings.api_path}/openapi.json",

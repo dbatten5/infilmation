@@ -41,7 +41,6 @@ const createData = ({
   loading,
   plot,
   genres,
-  cast,
 }: FilmListItem) => ({
   id,
   title,
@@ -55,7 +54,6 @@ const createData = ({
   loading,
   plot,
   genres,
-  cast,
 });
 
 type Props = {

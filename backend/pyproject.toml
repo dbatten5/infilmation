@@ -12,8 +12,10 @@ ormar = "^0.10.22"
 psycopg2-binary = "^2.9.1"
 asyncpg = "^0.24.0"
 alembic = "^1.7.4"
-phylm = "^6.0.2"
+phylm = "^6.1.1"
 gunicorn = "^20.1.0"
+cachetools = "^5.3.0"
+asyncache = "^0.3.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"
@@ -55,7 +57,11 @@ plugins = "sqlmypy"
 disallow_untyped_decorators = false
 
 [[tool.mypy.overrides]]
-module = ["vcr"]
+module = [
+  "vcr.*",
+  "cachetools.*",
+  "asyncache.*"
+]
 ignore_missing_imports = true
 
 [tool.isort]

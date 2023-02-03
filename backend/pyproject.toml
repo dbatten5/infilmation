@@ -12,7 +12,7 @@ ormar = "^0.10.22"
 psycopg2-binary = "^2.9.1"
 asyncpg = "^0.24.0"
 alembic = "^1.7.4"
-phylm = "^6.0.2"
+phylm = "^6.1.0"
 gunicorn = "^20.1.0"
 fastapi-cache2 = {extras = ["redis"], version = "^0.2.0"}
 

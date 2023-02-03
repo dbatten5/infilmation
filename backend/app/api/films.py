@@ -22,7 +22,7 @@ router = APIRouter(prefix="/films")
 
 
 @router.get("/search", response_model=List[SearchResult])
-def search_films(query: str) -> List[SearchResult]:
+async def search_films(query: str) -> List[SearchResult]:
     """Search for a film from a given query.
     \f
     Args:
@@ -76,7 +76,7 @@ async def get_films(imdb_ids: List[str] = Query([])) -> List[Film]:
 
 
 @router.get("/{tmdb_id}/streaming_providers", response_model=StreamingProviders)
-def get_streaming_providers(tmdb_id: str) -> Dict[str, bool]:
+async def get_streaming_providers(tmdb_id: str) -> Dict[str, bool]:
     """Get the streaming providers for a given `tmdb_id`.
     \f
     Args:

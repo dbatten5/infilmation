@@ -66,6 +66,7 @@ class FilmIn(BaseModel):
     imdb_id: Optional[str] = None
     year: Optional[int] = None
     tmdb_id: Optional[str] = None
+    release_date: Optional[str] = None
 
 
 class FilmOut(BaseModel):

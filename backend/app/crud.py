@@ -8,10 +8,13 @@ from typing import List
 from typing import Optional
 from typing import Union
 
+from asyncache import cached
+from cachetools import TTLCache
 from phylm.phylm import Phylm
 from phylm.tools import get_streaming_providers
 from phylm.tools import search_tmdb_movies
 
+from app.core.config import settings
 from app.models.film import Actor
 from app.models.film import Director
 from app.models.film import Film
@@ -72,13 +75,13 @@ async def create_film(
         a `Film` object
     """
     phylm = await Phylm(title=title, imdb_id=imdb_id, year=year).load_sources(
-        ["imdb", "mtc", "rt"]
+        ["imdb", "mtc", "rt", "tmdb"]
     )
     film = await Film.objects.create(
         title=title,
-        year=phylm.imdb.year,
-        runtime=phylm.imdb.runtime,
-        plot=phylm.imdb.plot,
+        year=phylm.tmdb.year,
+        runtime=phylm.tmdb.runtime,
+        plot=phylm.tmdb.plot,
         imdb_id=phylm.imdb.id,
         imdb_title=phylm.imdb.title,
         imdb_year=phylm.imdb.year,
@@ -175,6 +178,10 @@ def get_film_streaming_providers(tmdb_id: str, region: str = "gb") -> Dict[str, 
     }
 
 
+cache = TTLCache(maxsize=1000, ttl=settings.cache_duration)
+
+
+@cached(cache=cache)
 async def fetch_film(
     title: str,
     year: Optional[int] = None,

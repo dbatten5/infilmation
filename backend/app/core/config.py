@@ -58,7 +58,7 @@ class Settings(BaseSettings):
     postgres_port: Optional[str] = None
     sqlalchemy_database_uri: Optional[Union[PostgresDsn, str]] = None
 
-    persist_film_data: bool = False
+    persist_film_data: bool = True
 
     @validator("sqlalchemy_database_uri", pre=True)
     def assemble_db_connection(
@@ -83,6 +83,9 @@ class Settings(BaseSettings):
             port=values.get("postgres_port"),
             path=f"/{values.get('postgres_db') or ''}",
         )
+
+    cache_duration: int = 60 * 60 * 24 * 7 * 3  # 3 weeks
+    persist_day_limit: int = 30 * 6  # 6 months
 
 
 @lru_cache()

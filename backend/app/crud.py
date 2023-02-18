@@ -1,7 +1,6 @@
 """Module to define crud actions."""
 import asyncio
 from datetime import timedelta
-from functools import lru_cache
 from typing import Any
 from typing import Dict
 from typing import List
@@ -137,7 +136,10 @@ async def get_or_create_film(
     return await create_film(title=title, year=year, imdb_id=imdb_id, tmdb_id=tmdb_id)
 
 
-@lru_cache(maxsize=500)
+search_cache = TTLCache(maxsize=1000, ttl=settings.search_cache_duration)
+
+
+@cached(cache=search_cache)
 def get_search_results(query: str) -> List[Dict[str, Union[str, int]]]:
     """Search for a film from a given query with caching.
 
@@ -151,7 +153,7 @@ def get_search_results(query: str) -> List[Dict[str, Union[str, int]]]:
         result
         for result in search_tmdb_movies(query=query)
         if "release_date" in result and result["release_date"]
-    ][:10]
+    ][:20]
 
 
 def get_film_streaming_providers(tmdb_id: str, region: str = "gb") -> Dict[str, bool]:
@@ -178,10 +180,10 @@ def get_film_streaming_providers(tmdb_id: str, region: str = "gb") -> Dict[str, 
     }
 
 
-cache = TTLCache(maxsize=1000, ttl=settings.cache_duration)
+fetch_cache = TTLCache(maxsize=1000, ttl=settings.fetch_cache_duration)
 
 
-@cached(cache=cache)
+@cached(cache=fetch_cache)
 async def fetch_film(
     title: str,
     year: Optional[int] = None,

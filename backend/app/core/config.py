@@ -84,7 +84,8 @@ class Settings(BaseSettings):
             path=f"/{values.get('postgres_db') or ''}",
         )
 
-    cache_duration: int = 60 * 60 * 24 * 7 * 3  # 3 weeks
+    search_cache_duration: int = 60 * 60 * 24 * 7 * 1  # 1 week
+    fetch_cache_duration: int = 60 * 60 * 24 * 7 * 3  # 3 weeks
     persist_day_limit: int = 30 * 6  # 6 months
 
 

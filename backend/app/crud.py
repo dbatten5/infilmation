@@ -73,9 +73,9 @@ async def create_film(
     Returns:
         a `Film` object
     """
-    phylm = await Phylm(title=title, imdb_id=imdb_id, year=year).load_sources(
-        ["imdb", "mtc", "rt", "tmdb"]
-    )
+    phylm = await Phylm(
+        title=title, imdb_id=imdb_id, year=year, tmdb_id=tmdb_id
+    ).load_sources(["imdb", "mtc", "rt", "tmdb"])
     film = await Film.objects.create(
         title=title,
         year=phylm.tmdb.year,

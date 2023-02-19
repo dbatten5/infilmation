@@ -1863,14 +1863,14 @@ ptyprocess = ">=0.5"
 
 [[package]]
 name = "phylm"
-version = "6.1.1"
+version = "6.1.2"
 description = "Phylm"
 category = "main"
 optional = false
 python-versions = ">=3.8.1,<4.0.0"
 files = [
-    {file = "phylm-6.1.1-py3-none-any.whl", hash = "sha256:f3214f069a6f9ab42d686f34d2b6063070ebeb29fe282a336253bacb6bc71efd"},
-    {file = "phylm-6.1.1.tar.gz", hash = "sha256:5d5076b8ed51c4049376e4910e407aecedafda43d2ea8c538f74677f6a1b6929"},
+    {file = "phylm-6.1.2-py3-none-any.whl", hash = "sha256:ef4c605afdec521b2b186fe19463c7d7d67d91d33860413990ed7a375518bfb1"},
+    {file = "phylm-6.1.2.tar.gz", hash = "sha256:54cd9ddd624c7c91af2597368fe19c48a852666bf62d32bb0f8f777c62e3070b"},
 ]
 
 [package.dependencies]

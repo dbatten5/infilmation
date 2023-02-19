@@ -153,7 +153,7 @@ def get_search_results(query: str) -> List[Dict[str, Union[str, int]]]:
         result
         for result in search_tmdb_movies(query=query)
         if "release_date" in result and result["release_date"]
-    ][:20]
+    ][:15]
 
 
 def get_film_streaming_providers(tmdb_id: str, region: str = "gb") -> Dict[str, bool]:

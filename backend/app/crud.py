@@ -203,7 +203,12 @@ async def fetch_film(
     Returns:
         a `Film` object
     """
-    phylm = await Phylm(title=title, imdb_id=imdb_id, year=year).load_sources(
+    phylm = await Phylm(
+        title=title,
+        imdb_id=imdb_id,
+        year=year,
+        tmdb_id=tmdb_id,
+    ).load_sources(
         ["imdb", "mtc", "rt", "tmdb"]
     )
     genres = [Genre.get_pydantic()(name=name) for name in phylm.tmdb.genres()]

@@ -41,7 +41,7 @@ jobs:
     needs: docker
     steps:
     - name: Deploy
-      uses: appleboy/ssh-action@v0.1.6
+      uses: appleboy/ssh-action@v0.1.8
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
